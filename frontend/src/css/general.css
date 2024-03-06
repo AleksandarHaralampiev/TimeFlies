@@ -3,6 +3,12 @@
     #B78F5D
     #818C72
     #E9D2A8
+
+    FONT SYSTEM (px)
+    10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+    
+    SPACING SYSTEM (px)
+    2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
 */
 
 :root {
@@ -11,4 +17,18 @@
     --secondary: #b78f5d;
 
     --tertiary: #818c72;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%; /* 10px */
+}
+
+body {
+    font-family: 'Madimi One', sans-serif;
 }
