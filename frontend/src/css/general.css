@@ -15,8 +15,11 @@
     --main: #625149;
 
     --secondary: #b78f5d;
+    --secondary-tint1: #c5a57d;
 
     --tertiary: #818c72;
+    --tertiary-tint1: #a7af9c;
+
 }
 
 * {
@@ -26,7 +29,8 @@
 }
 
 html {
-    font-size: 62.5%; /* 10px */
+    font-size: 62.5%;
+    /* 10px */
 }
 
 body {
