@@ -11,6 +11,21 @@ class UserAccountManager(BaseUserManager):
         user.set_password(password) # build in function in django to save the password and hash it
         user.save()
         return user
+    
+    def create_superuser(self, email, username, password=None):
+
+        user = self.create_user(
+            email=self.normalize_email(email),
+            username=username,
+            password=password,
+        )
+        user.is_admin = True
+        user.is_staff = True
+        user.is_superuser = True
+        user.save(using=self._db)
+        return user
+    
+
 
 class UserAccount(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length = 255, unique = True)
