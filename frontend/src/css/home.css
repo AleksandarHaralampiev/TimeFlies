@@ -1,6 +1,6 @@
 .home-main {
     /* background: linear-gradient(45deg, var(--secondary), white) */
-    background: linear-gradient(160deg, var(--secondary-tint1) 50%, var(--tertiary-tint1) 50%);
+    background: linear-gradient(160deg, var(--secondary) 50%, var(--secondary-tint1) 50%);
 
     min-height: 100vh;
 }
