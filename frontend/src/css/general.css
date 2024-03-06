@@ -12,10 +12,16 @@
 */
 
 :root {
+    --main-tint1: #81746d;
+    --main-tint2: #a19792;
     --main: #625149;
+    --main-shade1: #453933;
 
     --secondary: #b78f5d;
     --secondary-tint1: #c5a57d;
+    --secondary-tint2: #d4bc9e;
+    --secondary-tint3: #e2d2be;
+
 
     --tertiary: #818c72;
     --tertiary-tint1: #a7af9c;
@@ -26,6 +32,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Madimi One', sans-serif;
 }
 
 html {
@@ -34,5 +41,31 @@ html {
 }
 
 body {
-    font-family: 'Madimi One', sans-serif;
+    color: var(--main-shade1);
+}
+
+
+.container {
+    max-width: 128rem;
+    margin: auto;
+}
+
+.heading-primary {
+    font-size: 5.2rem;
+    margin-bottom: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+}
+
+.btn {
+    padding: 1.6rem 3.2rem;
+
+    border: none;
+
+    background-color: var(--main-shade1);
+    color: white;
+
+    font-size: 1.6rem;
+
+    cursor: pointer;
 }

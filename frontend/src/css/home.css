@@ -1,6 +1,33 @@
-.home-main {
+.section-main {
     /* background: linear-gradient(45deg, var(--secondary), white) */
-    background: linear-gradient(160deg, var(--secondary) 50%, var(--secondary-tint1) 50%);
+    /* background: linear-gradient(160deg, var(--secondary-tint2) 50%, var(--secondary-tint3) 50%); */
+    background: linear-gradient(160deg, #ebd7b1 50%, #f2e4cb 50%);
 
     min-height: 100vh;
+
+    padding: 9.6rem 0;
+}
+
+.main-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 9.6rem;
+
+    align-items: center;
+    /* justify-items: center; */
+}
+
+.main-text {
+    font-size: 2rem;
+    line-height: 1.8;
+    color: var(--main);
+    margin-bottom: 3.2rem;
+}
+
+.main-img {
+    width: 75%;
+    display: block;
+    margin: 0 auto;
+
+    filter: saturate(50%);
 }
