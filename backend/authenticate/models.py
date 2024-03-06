@@ -12,6 +12,7 @@ class UserAccountManager(BaseUserManager):
         user.save()
         return user
     
+<<<<<<< Updated upstream
     def create_superuser(self, email, username, password=None):
 
         user = self.create_user(
@@ -20,11 +21,19 @@ class UserAccountManager(BaseUserManager):
             password=password,
         )
         user.is_admin = True
+=======
+
+    def create_superuser(self, email, username, password=None):
+        user = self.create_user(email=email, username=username, password=password)
+>>>>>>> Stashed changes
         user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
         return user
+<<<<<<< Updated upstream
     
+=======
+>>>>>>> Stashed changes
 
 
 class UserAccount(AbstractBaseUser, PermissionsMixin):
