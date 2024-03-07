@@ -33,6 +33,10 @@
     color: var(--main-shade-1);
 }
 
+.pfp-container {
+    position: relative;
+}
+
 .pfp {
     width: 3.6rem;
     height: 3.6rem;
@@ -40,4 +44,20 @@
     border-radius: 50%;
 
     cursor: pointer;
+}
+
+.dropdown {
+    position: absolute;
+    background-color: white;
+    bottom: -10%;
+    right: 0;
+    z-index: 1;
+
+    transform: translateY(100%);
+
+    list-style: none;
+
+    padding: 3.2rem;
+
+    width: 20rem;
 }
