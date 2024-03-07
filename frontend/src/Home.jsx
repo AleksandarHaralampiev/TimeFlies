@@ -1,3 +1,4 @@
+import compass from './img/hourglass1.png'
 import compass from './img/compass.png'
 import { Link } from 'react-router-dom'
 
@@ -13,7 +14,7 @@ const Home = () => {
                 </div>
 
                 <div className="main-imgbox">
-                    <img src={compass} className='main-img'/>
+                    <img src={compass} className='main-img' />
                 </div>
             </div>
         </section>

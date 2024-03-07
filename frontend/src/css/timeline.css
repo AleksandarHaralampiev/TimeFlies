@@ -1,0 +1,54 @@
+.section-main {
+    /* background: linear-gradient(45deg, var(--secondary), white) */
+    /* background: linear-gradient(160deg, var(--secondary-tint2) 50%, var(--secondary-tint3) 50%); */
+    background: linear-gradient(160deg, #ebd7b1 50%, #f2e4cb 50%);
+
+    min-height: 100vh;
+
+    padding: 9.6rem 0;
+}
+
+/* timeline.css */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.grid {
+    display: flex;
+    align-items: center;
+}
+
+.circle {
+    width: 20px;
+    height: 20px;
+    background-color: black;
+    border-radius: 50%;
+    margin: 0 10px;
+}
+
+.pillar {
+    width: 2px;
+    height: 100%;
+    background-color: black;
+}
+
+.card {
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.heading {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.sub-heading {
+    font-size: 14px;
+    color: #555;
+}
