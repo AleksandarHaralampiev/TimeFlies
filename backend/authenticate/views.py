@@ -16,6 +16,6 @@ def isUser(request, *args, **kwargs):
     except UserAccount.DoesNotExist:
         return Response(data={"message": "The account doesn't exist"}, status=404)
     if check_password(password, user.password):
-        return Response(data = {"message": str(user.id)}, status=200)
+        return Response(data = {"id": str(user.id)}, status=200)
     else:
         return Response(data = {"message": "The passwords doesnt match"}, status=404)
