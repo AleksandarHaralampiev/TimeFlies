@@ -5,9 +5,17 @@ import { DataContext } from './context/DataContext'
 import pfp from './img/pfp.jpg'
 
 const Nav = () => {
-    const { loggedIn } = useContext(DataContext)
+    const { loggedIn, setLoggedIn, navigate } = useContext(DataContext)
 
     const [dropdown, setDropdown] = useState(false)
+
+    const handleLogout = () => {
+        setLoggedIn(false)
+
+        localStorage.setItem('loggedIn', false)
+
+        localStorage.removeItem('accData')
+    }
     
     return (
         <nav className="navbar">
@@ -38,7 +46,7 @@ const Nav = () => {
                                 <Link className='dropdown-link'>My Timelines</Link>
                             </li>
                             <li>
-                                <Link className='dropdown-link' id='sign-out'>Sign Out</Link>
+                                <Link className='dropdown-link' id='sign-out' onClick={handleLogout}>Sign Out</Link>
                             </li>
                         </ul>
                         :
