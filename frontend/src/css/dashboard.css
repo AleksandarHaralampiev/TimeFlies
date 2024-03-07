@@ -1,0 +1,68 @@
+.section-dashboard {
+    min-height: 100vh;
+
+    padding: 12.8rem 0 9.6rem 0;
+
+    background-color: var(--bg-tint1);
+}
+
+.timeline-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8rem;
+}
+
+.timeline-container {
+    background-color: var(--bg-shade1);
+
+    padding: 3.2rem;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.timeline-container:hover {
+    transform: scale(1.05);
+}
+
+.timeline-name {
+    display: block;
+
+    font-size: 2.4rem;
+
+    margin-bottom: 1.2rem;
+
+    font-weight: 600;
+
+    color: var(--main-shade1);
+    text-decoration: none;
+
+    /* background-color: aqua; */
+    padding-bottom: 0.3rem;
+    border-bottom: solid 2px var(--main-shade1);
+
+    letter-spacing: 1.75px;
+}
+
+.timeline-description {
+    font-size: 1.6rem;
+
+    line-height: 1.5;
+
+    margin-bottom: 3.2rem;
+}
+
+.timeline-img-box {
+    display: flex;
+}
+
+.timeline-pfp {
+    border-radius: 50%;
+
+    width: 3.2rem;
+
+    margin-right: -0.5rem;
+
+    border: solid 2px var(--bg-shade1);
+}
