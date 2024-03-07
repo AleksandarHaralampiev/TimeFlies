@@ -6,6 +6,7 @@ import DataProvider from "./context/DataContext"
 import Timeline from "./Timeline"
 import Nav from "./Nav"
 import Dashboard from "./Dashboard"
+import MyTimelines from "./MyTimelines"
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/timeline" element={<Timeline />} />
           <Route path="/dashboard" element={<Dashboard/>} />
+          <Route path="/mytimelines" element={<MyTimelines/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
