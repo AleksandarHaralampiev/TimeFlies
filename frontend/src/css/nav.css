@@ -1,0 +1,43 @@
+.navbar {
+    position: absolute;
+    /* background-color: var(--bg-shade1); */
+    background: transparent;
+    /* background-color: white; */
+    
+    padding: 3.2rem 6.4rem;
+
+    font-size: 1.8rem;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links {
+    list-style: none;
+
+    display: flex;
+    gap: 1.6rem;
+}
+
+.nav-link:link, .nav-link:visited {
+    text-decoration: none;
+    color: var(--main);
+
+    transition: 0.3s;
+}
+
+.nav-link:hover, .nav-link:active {
+    color: var(--main-shade-1);
+}
+
+.pfp {
+    width: 3.6rem;
+    height: 3.6rem;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+}

@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from 'axios'
+import { DataContext } from "./context/DataContext";
 
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    const { loggedIn, navigate } = useContext(DataContext)
+
+    useEffect(() => {
+        if(loggedIn) navigate('/dashboard')
+    }, [])
     
     const handleSubmit = async (e) => {
         e.preventDefault();
