@@ -1,4 +1,4 @@
-import compass from './img/compass.png'
+import compass from './img/hourglass1.png'
 
 const Home = () => {
     return (
@@ -12,7 +12,7 @@ const Home = () => {
                 </div>
 
                 <div className="main-imgbox">
-                    <img src={compass} className='main-img'/>
+                    <img src={compass} className='main-img' />
                 </div>
             </div>
         </main>
