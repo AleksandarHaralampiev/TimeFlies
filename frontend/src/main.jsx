@@ -5,6 +5,7 @@ import './css/general.css'
 import './css/home.css'
 import './css/nav.css'
 import './css/account.css'
+import './css/timeline.css'
 
 import { BrowserRouter } from 'react-router-dom'
 

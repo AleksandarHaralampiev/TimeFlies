@@ -68,7 +68,8 @@ const Timeline = () => {
                             )
                             }
 
-                            <Pillar />
+                            {/* <Pillar /> */}
+                            <div>test</div>
 
                             {event.direction === 'right' ? (
                                 <EventCard heading={event.Heading} subHeading={event.subheading} />
