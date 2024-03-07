@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react"
 import axios from "axios"
 import { DataContext } from "./context/DataContext";
+import { IoPersonOutline } from "react-icons/io5";
 
 const Register = () => {
     const [email, setEmail] = useState('')
@@ -42,37 +43,47 @@ const Register = () => {
     }
 
     return (
-        <form onSubmit={(e) => handleSubmit(e)}>
-            <input
-                type="email"
-                placeholder="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
+        <section className="section-account">
+            <div className="account-container">
+                <div className="account-text-box">
+                    <IoPersonOutline className="account-icon"/>
 
-            <input
-                type="text"
-                placeholder="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
+                    <h2 className="heading-secondary">Register An Account</h2>
+                </div>
 
-            <input
-                type="password"
-                placeholder="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
+                <form className="account-form" onSubmit={(e) => handleSubmit(e)}>
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
 
-            <input
-                type="password"
-                placeholder="confirm password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-            />
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
 
-            <button type="submit">Register</button>
-        </form>
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+
+                    <input
+                        type="password"
+                        placeholder="Confirm Password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+
+                    <button className="btn" type="submit">Register</button>
+                </form>
+            </div>
+        </section>
     )
 }
 

@@ -1,5 +1,4 @@
 import compass from './img/hourglass1.png'
-import compass from './img/compass.png'
 import { Link } from 'react-router-dom'
 
 const Home = () => {

@@ -1,4 +1,4 @@
-.section-login {
+.section-account {
     background-color: var(--bg-tint1);
     min-height: 100vh;
 
@@ -9,18 +9,18 @@
     justify-content: center;
 }
 
-.login-text-box {
+.account-text-box {
     text-align: center;
     margin-bottom: 3.2rem;
 }
 
-.login-icon {
+.account-icon {
     width: 4.8rem;
     height: 4.8rem;
     margin-bottom: 1.2rem;
 }
 
-.login-container {
+.account-container {
     width: 35%;
     margin: 0 auto;
     background-color: var(--bg-shade1);
@@ -28,14 +28,19 @@
     padding: 2.4rem 4.8rem;
 }
 
-.login-form {
+.account-form {
     display: flex;
     flex-direction: column;
-    gap: 2.4rem;
 }
 
-.login-form input {
-    background-color: var(--main-tint2);
+.account-form input {
+    background-color: var(--bg-tint1);
     padding: 1.6rem 2.4rem;
     border: solid 1px var(--main);
+    color: var(--main-shade1);
+    margin-bottom: 2.4rem;
+}
+
+.account-form input:active, .account-form input:focus {
+    outline: none;
 }

@@ -4,7 +4,7 @@ import App from './App.jsx'
 import './css/general.css'
 import './css/home.css'
 import './css/nav.css'
-import './css/login.css'
+import './css/account.css'
 
 import { BrowserRouter } from 'react-router-dom'
 

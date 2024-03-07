@@ -35,31 +35,31 @@ const Login = () => {
     }
 
     return (
-        <section className="section-login">
-            <div className="login-container">
-                <div className="login-text-box">
-                    <IoPersonOutline className="login-icon"/>
+        <section className="section-account">
+            <div className="account-container">
+                <div className="account-text-box">
+                    <IoPersonOutline className="account-icon"/>
 
                     <h2 className="heading-secondary">Log In To Your Account</h2>
                 </div>
 
 
-                <form className="login-form" onSubmit={(e) => handleSubmit(e)}>
+                <form className="account-form" onSubmit={(e) => handleSubmit(e)}>
                     <input
                         type="email"
-                        placeholder="email"
+                        placeholder="Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
 
                     <input
                         type="password"
-                        placeholder="password"
+                        placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
 
-                    <button type="submit">Login</button>
+                    <button type="submit" className="btn">Log In</button>
                 </form>
             </div>
         </section>
