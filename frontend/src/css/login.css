@@ -1,0 +1,41 @@
+.section-login {
+    background-color: var(--bg-tint1);
+    min-height: 100vh;
+
+    padding: 12.8rem 0 9.6rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-text-box {
+    text-align: center;
+    margin-bottom: 3.2rem;
+}
+
+.login-icon {
+    width: 4.8rem;
+    height: 4.8rem;
+    margin-bottom: 1.2rem;
+}
+
+.login-container {
+    width: 35%;
+    margin: 0 auto;
+    background-color: var(--bg-shade1);
+
+    padding: 2.4rem 4.8rem;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+}
+
+.login-form input {
+    background-color: var(--main-tint2);
+    padding: 1.6rem 2.4rem;
+    border: solid 1px var(--main);
+}

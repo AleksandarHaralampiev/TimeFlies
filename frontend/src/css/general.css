@@ -50,7 +50,6 @@ body {
 #root {
     position: relative;
 }
-
 .container {
     max-width: 128rem;
     margin: auto;
@@ -62,6 +61,12 @@ body {
     margin-bottom: 1.6rem;
     font-weight: 600;
     letter-spacing: 1.5px;
+}
+
+.heading-secondary {
+    font-size: 3rem;
+    margin-bottom: 1.6rem;
+    line-height: 1;
 }
 
 .btn:link, .btn:visited, .btn:active {

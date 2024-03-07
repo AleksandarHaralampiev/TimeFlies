@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const Home = () => {
     return (
-        <main className="section-main">
+        <section className="section-main">
             <div className="container main-container">
                 <div className="main-textbox">
                     <h1 className="heading-primary">Write your own history</h1>
@@ -16,7 +16,7 @@ const Home = () => {
                     <img src={compass} className='main-img'/>
                 </div>
             </div>
-        </main>
+        </section>
     )
 }
 

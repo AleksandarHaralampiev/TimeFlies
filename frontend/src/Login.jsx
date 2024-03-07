@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import axios from 'axios'
 import { DataContext } from "./context/DataContext";
+import { IoPersonOutline } from "react-icons/io5";
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -34,23 +35,34 @@ const Login = () => {
     }
 
     return (
-        <form onSubmit={(e) => handleSubmit(e)}>
-            <input
-                type="email"
-                placeholder="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
+        <section className="section-login">
+            <div className="login-container">
+                <div className="login-text-box">
+                    <IoPersonOutline className="login-icon"/>
 
-            <input
-                type="password"
-                placeholder="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
+                    <h2 className="heading-secondary">Log In To Your Account</h2>
+                </div>
 
-            <button type="submit">Login</button>
-        </form>
+
+                <form className="login-form" onSubmit={(e) => handleSubmit(e)}>
+                    <input
+                        type="email"
+                        placeholder="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+
+                    <input
+                        type="password"
+                        placeholder="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+        </section>
     )
 }
 
