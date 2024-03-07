@@ -31,9 +31,15 @@ const Nav = () => {
                     {
                         dropdown ?
                         <ul className="dropdown">
-                            <li>My Profile</li>
-                            <li>My Timelines</li>
-                            <li>Sign Out</li>
+                            <li>
+                                <Link className='dropdown-link'>My Profile</Link>
+                            </li>
+                            <li>
+                                <Link className='dropdown-link'>My Timelines</Link>
+                            </li>
+                            <li>
+                                <Link className='dropdown-link' id='sign-out'>Sign Out</Link>
+                            </li>
                         </ul>
                         :
                         null
