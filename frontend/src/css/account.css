@@ -41,6 +41,7 @@
     margin-bottom: 2.4rem;
 }
 
-.account-form input:active, .account-form input:focus {
+.account-form input:active,
+.account-form input:focus {
     outline: none;
 }
