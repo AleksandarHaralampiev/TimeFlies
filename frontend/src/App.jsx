@@ -4,6 +4,7 @@ import Login from "./Login"
 import Register from "./Register"
 import DataProvider from "./context/DataContext"
 import Nav from "./Nav"
+import Dashboard from "./Dashboard"
 
 function App() {
 
@@ -17,6 +18,8 @@ function App() {
 
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
+
+          <Route path="/dashboard" element={<Dashboard/>}/>
         </Routes>
       </DataProvider>
     </>

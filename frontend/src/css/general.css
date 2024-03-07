@@ -64,7 +64,7 @@ body {
     letter-spacing: 1.5px;
 }
 
-.btn:link, .btn:visited {
+.btn:link, .btn:visited, .btn:active {
     padding: 1.6rem 3.2rem;
 
     border: none;
