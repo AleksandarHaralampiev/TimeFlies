@@ -62,29 +62,34 @@ const Timeline = () => {
                     <Fragment key={key}>
                         <div className="grid">
                             {event.direction === 'left' ? (
-                                <EventCard heading={event.Heading} subHeading={event.subheading} />
+                                <div className="card-container-left"><EventCard heading={event.Heading} subHeading={event.subheading} /></div>
                             ) : (
-                                <div></div>
+                                <div className="circle-container">
+                                    <Circle />
+                                </div>
                             )
                             }
 
-                            {/* <Pillar /> */}
-                            <div>test</div>
 
                             {event.direction === 'right' ? (
-                                <EventCard heading={event.Heading} subHeading={event.subheading} />
+                                <div className="card-container-right"><EventCard heading={event.Heading} subHeading={event.subheading} /></div>
                             ) : (
-                                <div></div>
+                                <div className="circle-container">
+                                    <Circle />
+                                </div>
                             )
                             }
+
+
                         </div>
-                        {key < (events.length - 1) && <Circle />}
+                        {key < (events.length - 1) && <Pillar />}
                     </Fragment>
                 ))}
             </div>
         </main>
 
     );
+
 }
 
 const Circle = () => {

@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 export const DataContext = createContext({})
 
 const DataProvider = ({ children }) => {
-    const [loggedIn, setLoggedIn] = useState(true)
+    const [loggedIn, setLoggedIn] = useState(false)
 
     const navigate = useNavigate()
-    
+
     return (
         <DataContext.Provider value={{
             loggedIn, navigate
