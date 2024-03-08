@@ -1,12 +1,16 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { DataContext } from "./context/DataContext"
 import pfp from './img/pfp.jpg'
 import { IoAddOutline } from "react-icons/io5"
 
 const MyTimelines = () => {
-    const { navigate } = useContext(DataContext)
+    const { navigate, loggedIn } = useContext(DataContext)
 
     const profiles = Array.from({ length: 12 }, () => pfp)
+
+    useEffect(() => {
+        if(!loggedIn) navigate('/login')
+    }, [loggedIn])
 
     const timelines = [
         {
