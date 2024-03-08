@@ -39,6 +39,10 @@
     font-family: 'Madimi One', sans-serif;
 }
 
+*:focus {
+    outline: none;
+}
+
 html {
     font-size: 62.5%;
     /* 10px */

@@ -48,6 +48,8 @@
 .timeline-description {
     font-size: 1.6rem;
 
+    color: var(--main);
+
     line-height: 1.5;
 
     margin-bottom: 3.2rem;
@@ -65,4 +67,52 @@
     margin-right: -0.5rem;
 
     border: solid 2px var(--bg-shade1);
+}
+
+.text-box {
+    margin-bottom: 2.4rem;
+    max-width: 40rem;
+}
+
+.dashboard-heading {
+    font-size: 4.8rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.3rem;
+}
+
+.dashboard-text {
+    font-size: 1.8rem;
+    line-height: 1.8;
+}
+
+.dashboard-empty {
+    font-size: 1.6rem;
+}
+
+.dashboard-empty a:link, .dashboard-empty a:visited {
+    color: var(--main);
+    text-decoration: none;
+    /* border-bottom: solid 1px var(--main); */
+    transition: .2s;
+}
+
+.dashboard-empty a:hover, .dashboard-empty a:active {
+    color: var(--main-shade1);
+}
+
+.search-box {
+    position: relative;
+    margin-bottom: 4.8rem;
+}
+
+.search-box input {
+    background-color: white;
+    padding: 1.2rem 2.4rem;
+    padding-right: 2.8rem;
+    border: solid 1px var(--main-tint2);
+    box-shadow: 0 0 1.2rem rgba(0,0,0,0.05);
+
+    font-size: 1.8rem;
+    color: #555;
 }
