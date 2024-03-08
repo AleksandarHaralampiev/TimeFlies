@@ -32,6 +32,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length = 255)
     is_active = models.BooleanField(default = True)
     is_staff = models.BooleanField(default = False)
+    profile_picture = models.ImageField(upload_to='post_images', default='default.png')
 
     objects = UserAccountManager()
     USERNAME_FIELD = 'email' # indicating that the email field will be used as the unique identifier for authentication.
