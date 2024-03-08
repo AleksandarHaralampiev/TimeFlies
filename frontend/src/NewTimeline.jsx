@@ -5,7 +5,7 @@ import { IoHourglass, IoHourglassOutline } from "react-icons/io5"
 const NewTimeline = () => {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [access, setAccess] = useState('')
+    const [access, setAccess] = useState('0')
 
     const handleSubmit = async (e) => {
         e.preventDefault()
