@@ -8,6 +8,15 @@ const Nav = () => {
     const { loggedIn, setLoggedIn, navigate } = useContext(DataContext)
 
     const [dropdown, setDropdown] = useState(false)
+    const [sticky, setSticky] = useState(false)
+
+    const handleSticky = () => {
+        if(!sticky && window.scrollY > 50) setSticky(true)
+        if(sticky && window.scrollY < 50) setSticky(false)
+        console.log(sticky)
+      }
+    
+      window.addEventListener('scroll', handleSticky)
 
     const handleLogout = () => {
         setLoggedIn(false)
@@ -18,7 +27,7 @@ const Nav = () => {
     }
     
     return (
-        <nav className="navbar">
+        <nav className={sticky ? "navbar sticky" : "navbar"}>
             <ul className="nav-links">
                 <li>
                     <Link to='/' className='nav-link'>Home</Link>
