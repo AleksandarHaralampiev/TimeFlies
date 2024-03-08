@@ -13,7 +13,8 @@ const NewTimeline = () => {
         const obj = {
             name,
             description,
-            public: access
+            public: access,
+            owner_id: localStorage.getItem('accData').id
         }
 
         try {
