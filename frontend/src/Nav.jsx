@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { DataContext } from './context/DataContext'
+import { useContext, useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { DataContext } from './context/DataContext';
 
 import pfp from './img/pfp.jpg'
 
@@ -38,27 +38,49 @@ const Nav = () => {
 
     document.addEventListener('click', (e) => dropdown ? handleCollapse(e) : null)
 
+    const location = useLocation();
+    const currentPath = location.pathname;
+    console.log(currentPath);
+
     return (
         <nav className={sticky ? "navbar sticky" : "navbar"}>
-            <ul className="nav-links">
-                <li>
-                    <Link to='/' className='nav-link'>Home</Link>
-                </li>
-                <li>
-                    <Link to='/' className='nav-link'>About</Link>
-                </li>
-                <li>
-                    <Link to='/' className='nav-link'>Contact Us</Link>
-                </li>
-                {loggedIn ? (
+
+            {currentPath !== '/' ? (
+                <ul className="nav-links">
                     <li>
-                        <Link to='/dashboard' className='nav-link'>Dashboard</Link>
+                        <Link to='/' className='nav-link'>Home</Link>
                     </li>
-                ) : (
-                    <li></li>
-                )
-                }
-            </ul>
+                    <li>
+                        <a href='/#about-us' className='nav-link'>About</a>
+                    </li>
+                    <li>
+                        <Link to='/#contact' className='nav-link'>Contact Us</Link>
+                    </li>
+                    {loggedIn && (
+                        <li>
+                            <Link to='/dashboard' className='nav-link'>Dashboard</Link>
+                        </li>
+                    )}
+                </ul>
+            ) : (
+                <ul className="nav-links">
+                    <li>
+                        <a href='#home' className='nav-link'>Home</a>
+                    </li>
+                    <li>
+                        <a href='#about-us' className='nav-link'>About</a>
+                    </li>
+                    <li>
+                        <a href='#contact-us' className='nav-link'>Contact Us</a>
+                    </li>
+                    {loggedIn && (
+                        <li>
+                            <Link to='/dashboard' className='nav-link'>Dashboard</Link>
+                        </li>
+                    )}
+                </ul>
+            )}
+
 
             {
                 loggedIn ?
