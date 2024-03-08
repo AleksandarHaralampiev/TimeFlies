@@ -31,7 +31,7 @@ const Nav = () => {
 
     // DROPDOWN
     const handleCollapse = (e) => {
-        const dropdownContainer = document.querySelector('.pfp-container')
+        const dropdownContainer = document.querySelector('.nav-pfp-container')
 
         if (!dropdownContainer.contains(e.target) || e.target.classList.contains('dropdown-link')) setDropdown(false)
     }
