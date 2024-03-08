@@ -1,11 +1,18 @@
 import axios from "axios"
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { IoHourglass, IoHourglassOutline } from "react-icons/io5"
+import { DataContext } from "./context/DataContext"
 
 const NewTimeline = () => {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [access, setAccess] = useState('0')
+
+    const { loggedIn, navigate } = useContext(DataContext)
+
+    useEffect(() => {
+        if(!loggedIn) navigate('/login')
+    }, [loggedIn])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -23,6 +30,8 @@ const NewTimeline = () => {
             const response = await axios.post('http://127.0.0.1:8000/server/create/', obj)
 
             console.log(response)
+
+            if(response.status == 200) navigate('/mytimelines')
         } catch(err) {
             console.log(err)
         } finally {
