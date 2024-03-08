@@ -14,8 +14,10 @@ const NewTimeline = () => {
             name,
             description,
             public: access,
-            owner_id: localStorage.getItem('accData').id
+            owner_id: JSON.parse(localStorage.getItem('accData')).id
         }
+
+        console.log(obj)
 
         try {
             const response = await axios.post('http://127.0.0.1:8000/server/create/', obj)
