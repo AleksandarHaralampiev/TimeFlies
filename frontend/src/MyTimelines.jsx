@@ -1,47 +1,53 @@
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import { DataContext } from "./context/DataContext"
 import pfp from './img/pfp.jpg'
 import { IoAddOutline } from "react-icons/io5"
+import axios from "axios"
+import { Link } from "react-router-dom"
 
 const MyTimelines = () => {
-    const { navigate } = useContext(DataContext)
+    const { navigate, loggedIn } = useContext(DataContext)
 
     const profiles = Array.from({ length: 12 }, () => pfp)
 
-    const timelines = [
-        {
-            name: "Timeline 1",
-            description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae cum facilis laudantium consectetur perspiciatis doloremque eveniet ab, quibusdam voluptate sapiente nemo neque, eius molestias commodi eligendi labore illo, error magni corporis. Praesentium deserunt asperiores dignissimos autem, a, et eveniet quod at perferendis, accusantium tenetur quia omnis minus consectetur ratione harum."
-        },
-        {
-            name: "Timeline 1",
-            description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae cum facilis laudantium consectetur perspiciatis doloremque eveniet ab, quibusdam voluptate sapiente nemo neque, eius molestias commodi eligendi labore illo, error magni corporis. Praesentium deserunt asperiores dignissimos autem, a, et eveniet quod at perferendis, accusantium tenetur quia omnis minus consectetur ratione harum."
-        },
-        {
-            name: "Timeline 1",
-            description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae cum facilis laudantium consectetur perspiciatis doloremque eveniet ab, quibusdam voluptate sapiente nemo neque, eius molestias commodi eligendi labore illo, error magni corporis. Praesentium deserunt asperiores dignissimos autem, a, et eveniet quod at perferendis, accusantium tenetur quia omnis minus consectetur ratione harum."
-        },
-        {
-            name: "Timeline 1",
-            description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae cum facilis laudantium consectetur perspiciatis doloremque eveniet ab, quibusdam voluptate sapiente nemo neque, eius molestias commodi eligendi labore illo, error magni corporis. Praesentium deserunt asperiores dignissimos autem, a, et eveniet quod at perferendis, accusantium tenetur quia omnis minus consectetur ratione harum."
-        },
-        {
-            name: "Timeline 1",
-            description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae cum facilis laudantium consectetur perspiciatis doloremque eveniet ab, quibusdam voluptate sapiente nemo neque, eius molestias commodi eligendi labore illo, error magni corporis. Praesentium deserunt asperiores dignissimos autem, a, et eveniet quod at perferendis, accusantium tenetur quia omnis minus consectetur ratione harum."
-        },
-        {
-            name: "Timeline 1",
-            description: "Loorem ipsum dolor sit amet consectetur, adipisicing elit. Quae cum facilis laudantium consectetur perspiciatis doloremque eveniet ab, quibusdam voluptate sapiente nemo neque, eius molestias commodi eligendi labore illo, error magni corporis. Praesentium deserunt asperiores dignissimos autem, a, et eveniet quod at perferendis, accusantium tenetur quia omnis minus consectetur ratione harum."
-        },
-        {
-            name: "Timeline 1",
-            description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae cum facilis laudantium consectetur perspiciatis doloremque eveniet ab, quibusdam voluptate sapiente nemo neque, eius molestias commodi eligendi labore illo, error magni corporis. Praesentium deserunt asperiores dignissimos autem, a, et eveniet quod at perferendis, accusantium tenetur quia omnis minus consectetur ratione harum."
-        },
-        {
-            name: "Timeline 1",
-            description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae cum facilis laudantium consectetur perspiciatis doloremque eveniet ab, quibusdam voluptate sapiente nemo neque, eius molestias commodi eligendi labore illo, error magni corporis. Praesentium deserunt asperiores dignissimos autem, a, et eveniet quod at perferendis, accusantium tenetur quia omnis minus consectetur ratione harum."
+    const [timelines, setTimelines] = useState([])
+
+    const [loading, setLoading] = useState(false)
+    const [loadMessage, setLoadMessage] = useState('Loading')
+
+    useEffect(() => {
+        if(loading) {
+            setTimeout(() => {
+                if(loadMessage === 'Loading...') setLoadMessage('Loading')
+                // else setLoadMessage([...loadMessage + '.'])
+            }, 200)
         }
-    ]
+    }, [loading, loadMessage])
+
+
+    useEffect(() => {
+        const fetching = async () => {
+            setLoading(true)
+
+            try {
+                const response = await axios.get(`http://127.0.0.1:8000/server/list/?Content-Type=application-json&id=${JSON.parse(localStorage.getItem('accData')).id}`)
+
+                setTimelines(response.data.servers)
+            } catch(err) {
+                console.log(err)
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        fetching()
+    }, [])
+
+
+    useEffect(() => {
+        if(!loggedIn) navigate('/login')
+    }, [loggedIn])
+
 
     return (
         <section className="section-dashboard">
@@ -53,24 +59,23 @@ const MyTimelines = () => {
                 </div>
 
                 <div className="btn-box">
-                    <button className="btn">
-                        {/* <IoAddOutline className="add-icon"/>
-                        <span>Create a new timeline</span> */}
+                    <Link className="btn" to='/newtimeline'>
                         + Create a new timeline
-                    </button>
+                    </Link>
                 </div>
-
-                {/* <div className="search-box">
-                    <input type="text" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)}/>
-                </div> */}
             </div>
 
                 {
+                    loading ?
+                    <div className="container">
+                        <p className="dashboard-text">{loadMessage}</p>
+                    </div>
+                    :
                     timelines.length ?
                     <div className="container timeline-grid">
                         {
                             timelines.map(timeline => (
-                                <div className="timeline-container" onClick={() => navigate('/timeline')}>
+                                <div className="timeline-container" onClick={() => navigate(`/timeline/${timeline.id}`)}>
                                     
                                     <h3 to='/timeline' className="timeline-name">{timeline.name}</h3>
 

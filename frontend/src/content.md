@@ -5,3 +5,9 @@ Collect and share your stories with people all over the world. Create your own e
 # my profile
 # my timelines
 # sign out
+
+
+# name
+# description
+# icon
+# public/private

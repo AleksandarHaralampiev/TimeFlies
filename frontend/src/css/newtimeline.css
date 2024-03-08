@@ -1,0 +1,51 @@
+.section-new {
+    min-height: 100vh;
+    background-color: var(--bg-tint1);
+
+    padding: 12.8rem 0 9.6rem 0;
+}
+
+.header-new {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.icon-new {
+    width: 7.2rem;
+    height: 7.2rem;
+}
+
+.new-timeline-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+
+    width: 50%;
+
+    margin: 0 auto;
+}
+
+.new-timeline-form input,
+.new-timeline-form textarea,
+.new-timeline-form select {
+    border: none;
+    padding: 0.8rem 1.6rem;
+    font-size: 1.6rem;
+    line-height: 1.6;
+    resize: none;
+    color: var(--main-shade1);
+}
+
+.new-timeline-form textarea {
+    height: 9.6rem;
+}
+
+.new-timeline-form select {
+    cursor: pointer;
+}
+
+.new-timeline-form input::placeholder,
+.new-timeline-form textarea::placeholder,
+.new-timeline-form select {
+    color: var(--main-tint1);
+}
