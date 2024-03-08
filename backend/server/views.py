@@ -15,8 +15,6 @@ from .serializers import ServerSerializer
 import json
 
 @api_view(['POST', 'GET'])
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
 def createTimeLine(request, *args, **kwargs):
     body = request.body
     data = json.loads(body)
@@ -35,12 +33,11 @@ def createTimeLine(request, *args, **kwargs):
 
 
 @api_view(['GET'])
+
 def getTimeLine(request, *args, **kwargs):
     if request.method == "GET":
         try:
-            body = request.body
-            data = json.loads(body)
-            id = int(data['id'])
+            id = int(request.GET.get('id'))
             servers = Server.objects.filter(owner = id).all()
             servers_data = [{"id": server.id, "name": server.name, "description": server.description} for server in servers]
             return Response(data = {"servers": servers_data}, status=200)
