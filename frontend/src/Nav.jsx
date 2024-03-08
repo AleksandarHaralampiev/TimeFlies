@@ -54,7 +54,7 @@ const Nav = () => {
 
             {
                 loggedIn ?
-                <div className='pfp-container'>
+                <div className='nav-pfp-container'>
                     <img src={pfp} className="pfp" onClick={() => setDropdown(!dropdown)}/>
 
                     <ul className={dropdown ? "dropdown active" : "dropdown"}>
