@@ -7,6 +7,7 @@ from . import views
 
 urlpatterns = [
     path('create/', views.createTimeLine),
-    path('list/', views.getTimeLine)
+    path('list/', views.getTimeLine),
+    path('public/', views.getAllPublicTimeLine)
 ]
 
