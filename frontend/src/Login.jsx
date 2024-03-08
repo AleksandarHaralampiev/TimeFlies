@@ -7,17 +7,16 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const { loggedIn, navigate } = useContext(DataContext)
+    const [error, setError] = useState('')
+
+    const { loggedIn, setLoggedIn, navigate } = useContext(DataContext)
 
     useEffect(() => {
         if(loggedIn) navigate('/dashboard')
-    }, [])
+    }, [loggedIn])
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        console.log(email)
-        console.log(password)
 
         const obj = {
             email,
@@ -25,9 +24,31 @@ const Login = () => {
         }
 
         try {
-            const response = await axios.post('', obj)
+            const response = await axios.post('http://127.0.0.1:8000/authenticate/valid/?Content-Type=application/json', obj)
+
+            console.log(response)
+
+            if(response.status == 200) {
+                const response2 = await axios.post('http://127.0.0.1:8000/api/token/', obj)
+
+                console.log(response2)
+
+                if(response2.status == 200) {
+                    const accData = {
+                        id: response.data.id,
+                        access: response2.data.access,
+                        refresh: response2.data.refresh
+                    }
+
+                    setLoggedIn(true)
+
+                    localStorage.setItem('accData', JSON.stringify(accData))
+                    localStorage.setItem('loggedIn', true)
+                }
+            }
         } catch(err) {
             console.log(err)
+            setError(err.response.data.message)
         } finally {
             setEmail('')
             setPassword('')
@@ -41,6 +62,13 @@ const Login = () => {
                     <IoPersonOutline className="account-icon"/>
 
                     <h2 className="heading-secondary">Log In To Your Account</h2>
+
+                    {
+                        error.length ?
+                        <p className="err-message">{error}</p>
+                        :
+                        null
+                    }
                 </div>
 
 

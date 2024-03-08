@@ -9,11 +9,13 @@ const Register = () => {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
 
+    const [error, setError] = useState('')
+
     const { loggedIn, navigate } = useContext(DataContext)
 
     useEffect(() => {
         if(loggedIn) navigate('/dashboard')
-    }, [])
+    }, [loggedIn])
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,13 +29,21 @@ const Register = () => {
             email,
             username,
             password,
-            confirmPassword
+            re_password: confirmPassword
         }
 
         try {
-            const response = await axios.post('', obj)
+            const response = await axios.post('http://localhost:8000/auth/users/?Content-Type=application/json', obj)
+
+            console.log(response)
+
+            navigate('/login')
         } catch(err) {
             console.log(err)
+
+            const keys = Object.keys(err.response.data)
+
+            setError(err.response.data[keys[0]][0])
         } finally {
             setEmail('')
             setUsername('')
@@ -49,6 +59,13 @@ const Register = () => {
                     <IoPersonOutline className="account-icon"/>
 
                     <h2 className="heading-secondary">Register An Account</h2>
+
+                    {
+                        error.length ?
+                        <p className="err-message">{error}</p>
+                        :
+                        null
+                    }
                 </div>
 
                 <form className="account-form" onSubmit={(e) => handleSubmit(e)}>

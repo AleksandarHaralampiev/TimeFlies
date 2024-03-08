@@ -33,6 +33,10 @@
     color: var(--main-shade-1);
 }
 
+.pfp-container {
+    position: relative;
+}
+
 .pfp {
     width: 3.6rem;
     height: 3.6rem;
@@ -40,4 +44,48 @@
     border-radius: 50%;
 
     cursor: pointer;
+}
+
+.dropdown {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+
+    position: absolute;
+    background-color: white;
+    bottom: -10%;
+    right: -50%;
+    z-index: 1;
+
+    border-radius: 5px;
+
+    transform: translateY(100%);
+
+    list-style: none;
+
+    padding: 2.4rem 3.2rem;
+
+    width: 18rem;
+
+    text-align: center;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-link:link, .dropdown-link:visited {
+    display: inline-block;
+
+    text-decoration: none;
+    color: var(--main);
+
+    transition: 0.2s;
+}
+
+.dropdown-link:hover, .dropdown-link:active {
+    color: var(--main-shade1);
+}
+
+#sign-out {
+    margin-top: 1.2rem;
+    color: var(--main-shade1);
 }

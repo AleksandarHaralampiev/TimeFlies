@@ -46,7 +46,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         if(!loggedIn) navigate('/login')
-    }, [])
+    }, [loggedIn])
     
     return (
         <section className="section-dashboard">

@@ -2,7 +2,7 @@
     background-color: var(--bg-tint1);
     min-height: 100vh;
 
-    padding: 12.8rem 0 9.6rem;
+    padding: 12.8rem 6.4rem 9.6rem 6.4rem;
 
     display: flex;
     flex-direction: column;
@@ -21,7 +21,10 @@
 }
 
 .account-container {
-    width: 35%;
+    width: 55rem;
+    min-width: 0;
+    max-width: 100%;
+
     margin: 0 auto;
     background-color: var(--bg-shade1);
 
@@ -44,4 +47,11 @@
 .account-form input:active,
 .account-form input:focus {
     outline: none;
+}
+
+.err-message {
+    font-size: 1.4rem;
+    color: #7b0800;
+    font-style: italic;
+    letter-spacing: 1px;
 }
