@@ -27,6 +27,7 @@
     --tertiary-tint1: #a7af9c;
 
     --bg-tint1: #f2e4cb;
+    --bg-tint1-transparent: rgba(242, 228, 203, 0.95);
     --bg: #e9d2a8;
     --bg-shade1: #ebd7b1;
 }
@@ -36,6 +37,10 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Madimi One', sans-serif;
+}
+
+*:focus {
+    outline: none;
 }
 
 html {
