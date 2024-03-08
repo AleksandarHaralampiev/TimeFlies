@@ -13,8 +13,8 @@ def createTimeLine(request, *args, **kwargs):
     data = json.loads(body)
     name = data['name']
     description = data['description']
-    public = 0
-    owner_id = 1
+    public = int(data['public'])
+    owner_id = int(data['owner_id'])
     owner = UserAccount.objects.filter(id=owner_id).first()
   
     server = Server(name = name, description = description, owner = owner, public = public)
