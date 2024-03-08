@@ -10,7 +10,8 @@ class Server( models.Model):
     owner = models.ForeignKey('authenticate.UserAccount', on_delete=models.CASCADE)
     editors = models.ManyToManyField('authenticate.UserAccount', related_name='editors')
     members = models.ManyToManyField('authenticate.UserAccount', related_name='members')
-    icon = models.ImageField(upload_to='icons/', null=True, blank=True)
+    #icon = models.ImageField(upload_to='icons/', null=True, blank=True)
+    public = models.BooleanField(default = 0, null = 0)
     created_at = models.DateTimeField(auto_now_add=True)
     #timeline = models.ManyToManyField('timeline.Timeline', related_name='timelines', blank=True)
     
