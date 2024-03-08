@@ -49,8 +49,7 @@
 }
 
 .pfp-container img {
-    /* width: 100%;
-    height: 100%; */
+
     display: block;
     align-items: start;
     justify-content: center;
@@ -79,12 +78,6 @@
 
 }
 
-/* .icon-pencil {
-    height: 70%;
-    width: 50%;
-    background-color: azure;
-} */
-
 .username-container {
     display: flex;
     position: relative;
@@ -92,7 +85,6 @@
     height: 6rem;
     justify-content: center;
     align-items: center;
-    /* background-color: azure; */
     border-bottom: solid 2px var(--secondary-tint3);
     margin-bottom: 5px;
 }
@@ -204,4 +196,9 @@
     color: var(--main-shade1);
     opacity: 60%;
     /* text-align: center; */
+}
+
+.btn-container {
+    margin-top: auto;
+    margin-bottom: 50px;
 }

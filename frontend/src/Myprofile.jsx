@@ -111,8 +111,11 @@ const MyProfile = () => {
                             <IoPencilOutline className="pencil-icon" />
                         )}
                     </button>
-
                 </div>
+                <div className="btn-container">
+                    <button className="btn">Save changes</button>
+                </div>
+
             </div>
         </main>
     );
