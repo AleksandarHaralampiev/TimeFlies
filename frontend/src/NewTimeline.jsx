@@ -28,7 +28,7 @@ const NewTimeline = () => {
         } finally {
             setName('')
             setDescription('')
-            setAccess('')
+            setAccess('0')
         }
     }
 
