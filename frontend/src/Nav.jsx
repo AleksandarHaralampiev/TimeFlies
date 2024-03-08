@@ -50,6 +50,14 @@ const Nav = () => {
                 <li>
                     <Link to='/' className='nav-link'>Contact Us</Link>
                 </li>
+                {loggedIn ? (
+                    <li>
+                        <Link to='/dashboard' className='nav-link'>Dashboard</Link>
+                    </li>
+                ) : (
+                    <li></li>
+                )
+                }
             </ul>
 
             {
