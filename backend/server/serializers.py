@@ -8,3 +8,9 @@ class ServerSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     
+
+
+class GetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Server
+        fields = '__all__'

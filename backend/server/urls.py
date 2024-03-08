@@ -6,6 +6,7 @@ from . import views
 
 
 urlpatterns = [
-    path('create/', views.createTimeLine)
+    path('create/', views.createTimeLine),
+    path('list/', views.getTimeLine)
 ]
 
