@@ -75,7 +75,7 @@ const MyTimelines = () => {
                     <div className="container timeline-grid">
                         {
                             timelines.map(timeline => (
-                                <div className="timeline-container" onClick={() => navigate('/timeline')}>
+                                <div className="timeline-container" onClick={() => navigate(`/timeline/${timeline.id}`)}>
                                     
                                     <h3 to='/timeline' className="timeline-name">{timeline.name}</h3>
 
