@@ -59,7 +59,6 @@
 
 }
 
-
 .card {
     background-color: #f0f0f0;
     padding: 10px;
@@ -69,7 +68,6 @@
     width: 450px;
 }
 
-
 .pillar {
     width: 20px;
     height: 80px;
@@ -77,7 +75,6 @@
     background-color: var(--main);
     padding-top: 5px;
 }
-
 
 .heading {
     font-size: 18px;

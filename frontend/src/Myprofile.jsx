@@ -2,7 +2,8 @@ import { useState, useRef } from "react";
 import pfp from './img/pfp.jpg';
 import { IoPencilOutline, IoCheckmarkDoneOutline } from "react-icons/io5";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import axios from "axios";
+import { VscMail, VscLock } from "react-icons/vsc";
+
 
 {/* <FaRegEye />     */ }
 {/* <FaRegEyeSlash /> */ }
@@ -90,27 +91,30 @@ const MyProfile = () => {
                     )}
                 </div>
                 <div className="email-container">
-                    <span className="email">email: {users.email}</span>
+                    <VscMail className="email-icon" />
+                    <span className="email">{users.email}</span>
                 </div>
                 <div className="password-container">
                     <div className={editField === 'password' ? "pas-container-1" : 'pas-container'}>
+                        <VscLock className="pass-icon" />
                         {editField === 'password' ? (
                             <input className='password-input' type={visible ? 'text' : 'password'} placeholder="password" required value={value} onChange={handleChange} />
                         ) : (
-                            <span className="password">password: {visible ? users.password : '*********'}</span>
+                            <span className="password">{visible ? users.password : '*********'}</span>
                         )}
                         <div onClick={() => setVisible(!visible)}>
                             {visible ? <FaRegEye className="eye-icon" /> : <FaRegEyeSlash className="eye-icon" />}
                         </div>
+                        <button className='icon' onClick={() => editField === 'password' ? handleSave() : handleEdit('password')}>
+                            {editField === 'password' ? (
+                                <IoCheckmarkDoneOutline className="pencil-icon" onClick={handleSave} />
+                            ) : (
+                                <IoPencilOutline className="pencil-icon" />
+                            )}
+                        </button>
                     </div>
 
-                    <button className='icon' onClick={() => editField === 'password' ? handleSave() : handleEdit('password')}>
-                        {editField === 'password' ? (
-                            <IoCheckmarkDoneOutline className="pencil-icon" onClick={handleSave} />
-                        ) : (
-                            <IoPencilOutline className="pencil-icon" />
-                        )}
-                    </button>
+
                 </div>
                 <div className="btn-container">
                     <button className="btn">Save changes</button>

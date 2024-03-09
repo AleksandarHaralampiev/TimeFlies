@@ -1,0 +1,39 @@
+.tertiary-section {
+    background-color: var(--bg);
+    min-height: 100vh;
+    padding: 6rem 0 9.6rem 0;
+    background-color: var(--bg);
+}
+
+.contact-us-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+.contact-form {
+    display: grid;
+    gap: 20px;
+}
+
+.contact-form label {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 10px;
+    /* border: 1px solid #ccc; */
+    border-radius: 5px;
+    width: 100%;
+    background-color: var(--bg-tint1);
+    border: none;
+}
+
+.contact-form textarea {
+    height: 150px;
+    background-color: var(--bg-tint1);
+    border: none;
+
+}
