@@ -4,12 +4,14 @@ import { Link } from "react-router-dom"
 
 import pfp from './img/pfp.jpg'
 import axios from "axios"
+import TimelineSettings from "./TimelineSettings"
 
 const Dashboard = () => {
     const { loggedIn, navigate, publicTimelines, dashboardLoading, dashboardError } = useContext(DataContext)
 
     const profiles = Array.from({ length: 12 }, () => pfp)
     
+    const [settings, setSettings] = useState(null)
     
     
     // SETTING THE SHOWN TIMELINES
@@ -31,6 +33,7 @@ const Dashboard = () => {
 
 
 
+
     // CHECKING IF USER IS LOGGED IN
     useEffect(() => {
         if(!loggedIn) navigate('/login')
@@ -41,6 +44,14 @@ const Dashboard = () => {
 
     return (
         <section className="section-dashboard">
+            {
+                settings ?
+                <TimelineSettings
+                    setSettings={setSettings}
+                />
+                :
+                null
+            }
             <div className="container">
                 <div className="text-box">
                     <h1 className="dashboard-heading">Dashboard</h1>
@@ -69,18 +80,20 @@ const Dashboard = () => {
                         <div className="container timeline-grid">
                             {
                                 shownTimelines.map(timeline => (
-                                    <div className="timeline-container" onClick={() => navigate(`/timeline/${timeline.id}`)}>
+                                    <div className="timeline-container" onClick={() => setSettings(timeline.id)}>
                                         
-                                        <h3 to='/timeline' className="timeline-name">{timeline.name}</h3>
+                                        <div className="timeline-text-box">
+                                            <h3 to='/timeline' className="timeline-name">{timeline.name}</h3>
 
-                                        <p className="timeline-description">
-                                            {
-                                                timeline.description.length < 100 ?
-                                                timeline.description
-                                                :
-                                                `${timeline.description.slice(0, 100)}...`
-                                            }
-                                        </p>
+                                            <p className="timeline-description">
+                                                {
+                                                    timeline.description.length < 100 ?
+                                                    timeline.description
+                                                    :
+                                                    `${timeline.description.slice(0, 100)}...`
+                                                }
+                                            </p>
+                                        </div>
 
                                         <div className="timeline-img-box">
                                             {

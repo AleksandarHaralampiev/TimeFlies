@@ -88,3 +88,35 @@
     font-size: 14px;
     color: #555;
 }
+
+
+
+/* TIMELINE SETTINGS */
+.timeline-settings {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+
+    width: 100vw;
+    height: 100vh;
+
+    background-color: rgba(0, 0, 0, 0.5);
+
+    z-index: 1000;
+}
+
+.timeline-settings-container {
+    width: 100rem;
+    margin: 0 auto;
+    padding: 3.2rem;
+    background-color: var(--bg-shade1);
+}
+
+.timeline-settings-close {
+    width: 2.4rem;
+    height: 2.4rem;
+    cursor: pointer;
+}
