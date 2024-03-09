@@ -85,25 +85,37 @@ def getUserCredentials(request, *args, **kwargs):
         except:
             return Response(data = {"Message": "There is no such account"}, status=404)
 
+import requests
+from django.http import JsonResponse
+from django.core.files.base import ContentFile
+from .models import UserAccount
+
+from django.core.files.base import ContentFile
+from .models import UserAccount
+import base64
+
 @api_view(['POST'])
 @login_required
 def saveChanges(request):
     if request.method == 'POST':
         user = request.user
-        
+
         new_username = request.data.get('username')
-        new_profile_picture = request.data.get('profile_picture')
+        new_profile_picture_blob = request.data.get('profile_picture_blob')
         
         if new_username:
             user.username = new_username
-        if new_profile_picture:
-            user.profile_picture = new_profile_picture
+        
+        if new_profile_picture_blob:
+            base64_str = new_profile_picture_blob.split(',')[1]
+            
+            image_data = base64.b64decode(base64_str)
+            
+            user.profile_picture.save('profile_picture.jpg', ContentFile(image_data))
         
         user.save()
         
         return JsonResponse({'message': 'Changes saved successfully'}, status=200)
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=400)
-
-
 
