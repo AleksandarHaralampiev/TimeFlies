@@ -4,7 +4,7 @@ from django.contrib.auth.hashers import check_password
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import UserAccount
-import base64
+from base64 import b64encode
 
 @api_view(['POST', 'GET'])
 def isUser(request, *args, **kwargs):
@@ -30,7 +30,12 @@ def getUserCredentials(request, *args, **kwargs):
             user_data = {
                 "email": user.email,
                 "username": user.username,
+                "profile_picture": None  
             }
+            if user.profile_picture:
+                with user.profile_picture.open('rb') as image_file:
+                    encoded_string = b64encode(image_file.read()).decode('utf-8')
+                    user_data["profile_picture"] = encoded_string
             return Response(data = {"data": user_data}, status=200)
         except:
             return Response(data = {"Message": "There is no such account"}, status=404)
