@@ -6,49 +6,39 @@ import pfp from './img/pfp.jpg'
 import axios from "axios"
 
 const Dashboard = () => {
-    const { loggedIn, navigate } = useContext(DataContext)
+    const { loggedIn, navigate, publicTimelines, dashboardLoading, dashboardError } = useContext(DataContext)
 
     const profiles = Array.from({ length: 12 }, () => pfp)
-
+    
+    
+    
+    // SETTING THE SHOWN TIMELINES
     const [search, setSearch] = useState('')
-
-    const [loading, setLoading] = useState(true)
-
     const [shownTimelines, setShownTimelines] = useState([])
-    const [timelines, setTimelines] = useState([])
 
     useEffect(() => {
-        const fetching = async () => {
-            setLoading(true)
-
-            try {
-                const response = await axios.get(`http://127.0.0.1:8000/server/public/`)
-
-                console.log(response)
-
-                setTimelines(response.data.servers)
-                setShownTimelines(response.data.servers)
-            } catch(err) {
-                console.log(err)
-            } finally {
-                setLoading(false)
-            }
-        }
-
-        fetching()
-    }, [])
-
-
-    useEffect(() => {
-        setShownTimelines(timelines.filter(timeline => 
+        setShownTimelines(publicTimelines.filter(timeline => 
             timeline.name.toLowerCase().includes(search.toLowerCase()) || timeline.description.toLowerCase().includes(search.toLowerCase())
         ))
     }, [search])
 
     useEffect(() => {
+        setShownTimelines(publicTimelines.filter(timeline => 
+            timeline.name.toLowerCase().includes(search.toLowerCase()) || timeline.description.toLowerCase().includes(search.toLowerCase())
+        ))
+    }, [publicTimelines])
+
+
+
+
+    // CHECKING IF USER IS LOGGED IN
+    useEffect(() => {
         if(!loggedIn) navigate('/login')
     }, [loggedIn])
     
+
+
+
     return (
         <section className="section-dashboard">
             <div className="container">
@@ -64,12 +54,17 @@ const Dashboard = () => {
             </div>
 
                 {
-                    loading ?
+                    dashboardLoading ?
                     <div className="container">
                         <p className="dashboard-text">Loading</p>
                     </div>
                     :
-                    timelines.length ?
+                    dashboardError.length ?
+                    <div className="container">
+                        <p className="dashboard-text">{dashboardError}</p>
+                    </div>
+                    :
+                    publicTimelines.length ?
                     shownTimelines.length ?
                         <div className="container timeline-grid">
                             {
@@ -106,7 +101,7 @@ const Dashboard = () => {
                         </div>
                     :
                     <div className="container">
-                        <p className="dashboard-empty">No timelines yet. Perhaps you can <Link to=''>create your own</Link></p>
+                        <p className="dashboard-empty">No timelines yet. Perhaps you can <Link to='/newtimeline'>create your own</Link></p>
                     </div>
                 }
         </section>

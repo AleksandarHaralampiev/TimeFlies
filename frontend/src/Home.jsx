@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import compass from './img/hourglass1.png'
 import { Link } from 'react-router-dom';
 import { Fragment } from 'react';
@@ -19,8 +20,10 @@ const information = [
         "text": "Customizable Timelines: Our intuitive timeline creator allows users to customize every aspect of their timeline, from choosing the layout and design to adding text, images, videos, and more. Privacy and Sharing: Users have full control over the privacy settings of their timelines. Whether you want to keep your timeline private, share it with select individuals, or make it public, the choice is yours. Collaboration: Collaborate with friends, family, or colleagues to create collective timelines that capture shared experiences and memories. Memory Preservation: TimeFlies serves as a digital archive for your memories, ensuring that your stories are preserved for future generations to cherish and enjoy."
     }
 ];
+import { DataContext } from './context/DataContext'
 
 const Home = () => {
+    const { handleAlert } = useContext(DataContext)
 
     return (
         <>
@@ -32,7 +35,15 @@ const Home = () => {
 
                         <Link to='/register' className="btn">Start now</Link>
                     </div>
-
+                    <Link to='/register' className="btn">Start now</Link>
+                    {/* <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <button className="btn" onClick={() => handleAlert('success', 'testing the alerts')}>Alert</button> */}
+                </div>
+                <div>
                     <div className="main-imgbox">
                         <img src={compass} className='main-img' />
                     </div>
