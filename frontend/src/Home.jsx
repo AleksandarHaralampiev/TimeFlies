@@ -14,12 +14,12 @@ const Home = () => {
                     <p className="main-text">Collect and share your stories with people all over the world. Create your own exciting timeline and collaborate with your friends and family.</p>
 
                     <Link to='/register' className="btn">Start now</Link>
+                    {/* <br/>
                     <br/>
                     <br/>
                     <br/>
                     <br/>
-                    <br/>
-                    <button className="btn" onClick={() => handleAlert('success', 'testing the alerts')}>Alert</button>
+                    <button className="btn" onClick={() => handleAlert('success', 'testing the alerts')}>Alert</button> */}
                 </div>
 
                 <div className="main-imgbox">

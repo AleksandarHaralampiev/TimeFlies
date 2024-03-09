@@ -73,24 +73,26 @@ const DataProvider = ({ children }) => {
     const [myLoading, setMyLoading] = useState(false)
     const [myError, setMyError] = useState('')
 
-    useEffect(() => {
-        const fetchMyTimelines = async () => {
-            setMyLoading(true)
 
-            try {
-                const response = await axios.get(`http://127.0.0.1:8000/server/list/?Content-Type=application-json&id=${JSON.parse(localStorage.getItem('accData')).id}`)
+    const fetchMyTimelines = async () => {
+        setMyLoading(true)
 
-                setMyTimelines(response.data.servers)
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/server/list/?Content-Type=application-json&id=${JSON.parse(localStorage.getItem('accData')).id}`)
 
-                setMyError('')
-            } catch(err) {
-                console.log(err)
-                setMyError('Something went wrong! If the issue persists, consider reporting it to the devs.')
-            } finally {
-                setMyLoading(false)
-            }
+            setMyTimelines(response.data.servers)
+
+            setMyError('')
+        } catch(err) {
+            console.log(err)
+            setMyError('Something went wrong! If the issue persists, consider reporting it to the devs.')
+        } finally {
+            setMyLoading(false)
         }
+    }
 
+
+    useEffect(() => {
         if(loggedIn) fetchMyTimelines()
     }, [loggedIn])
 
@@ -102,7 +104,7 @@ const DataProvider = ({ children }) => {
         <DataContext.Provider value={{
             loggedIn, setLoggedIn, navigate, alerts, setAlerts, handleAlert,            //GENERAL 
             publicTimelines, dashboardLoading, dashboardError,                          //DASHBOARD
-            myTimelines, myLoading, myError                                             //MY TIMELINES
+            myTimelines, myLoading, myError, fetchMyTimelines                           //MY TIMELINES
         }}>
             {children}
         </DataContext.Provider>
