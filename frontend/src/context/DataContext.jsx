@@ -9,9 +9,30 @@ const DataProvider = ({ children }) => {
     const navigate = useNavigate()
 
 
+    // FETCHING ACCOUNT INFO
+    const [account, setAccount] = useState({})
+
+    useEffect(() => {
+        const fetchAccount = async () => {
+            try {
+                const response = await axios.get(`http://127.0.0.1:8000/authenticate/info/?Content-Type=application-json&id=${JSON.parse(localStorage.getItem('accData')).id}`)
+
+                if(response.status == 200) {
+                    console.log(response)
+                    setAccount(response.data.data)
+                }
+            } catch(err) {
+                console.log(err)
+            }
+        }
+
+        if(loggedIn) fetchAccount()
+    }, [loggedIn])
+
 
 
     // SETTING UP ALERTS
+
     const [alerts, setAlerts] = useState([])
 
     const handleAlert = (type, message, autoClose, closeTime) => {
@@ -104,7 +125,8 @@ const DataProvider = ({ children }) => {
         <DataContext.Provider value={{
             loggedIn, setLoggedIn, navigate, alerts, setAlerts, handleAlert,            //GENERAL 
             publicTimelines, dashboardLoading, dashboardError,                          //DASHBOARD
-            myTimelines, myLoading, myError, fetchMyTimelines                           //MY TIMELINES
+            myTimelines, myLoading, myError, fetchMyTimelines,                          //MY TIMELINES
+            account
         }}>
             {children}
         </DataContext.Provider>

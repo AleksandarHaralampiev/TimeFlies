@@ -4,7 +4,7 @@ import { IoCloseOutline } from "react-icons/io5"
 const TimelineSettings = ({ setSettings }) => {
     useEffect(() => {
         const handleClose = (e) => {
-            
+            // const container = document.getElementsByClassName('.timelin')
         }
 
         document.addEventListener('click', handleClose)
