@@ -6,43 +6,8 @@ import axios from "axios"
 import { Link } from "react-router-dom"
 
 const MyTimelines = () => {
-    const { navigate, loggedIn } = useContext(DataContext)
-
+    const { navigate, loggedIn, myTimelines, myLoading, myError } = useContext(DataContext)
     const profiles = Array.from({ length: 12 }, () => pfp)
-
-    const [timelines, setTimelines] = useState([])
-
-    const [loading, setLoading] = useState(false)
-    const [loadMessage, setLoadMessage] = useState('Loading')
-
-    useEffect(() => {
-        if(loading) {
-            setTimeout(() => {
-                if(loadMessage === 'Loading...') setLoadMessage('Loading')
-                // else setLoadMessage([...loadMessage + '.'])
-            }, 200)
-        }
-    }, [loading, loadMessage])
-
-
-    useEffect(() => {
-        const fetching = async () => {
-            setLoading(true)
-
-            try {
-                const response = await axios.get(`http://127.0.0.1:8000/server/list/?Content-Type=application-json&id=${JSON.parse(localStorage.getItem('accData')).id}`)
-
-                setTimelines(response.data.servers)
-            } catch(err) {
-                console.log(err)
-            } finally {
-                setLoading(false)
-            }
-        }
-
-        fetching()
-    }, [])
-
 
     useEffect(() => {
         if(!loggedIn) navigate('/login')
@@ -66,18 +31,23 @@ const MyTimelines = () => {
             </div>
 
                 {
-                    loading ?
+                    myLoading ?
                     <div className="container">
-                        <p className="dashboard-text">{loadMessage}</p>
+                        <p className="dashboard-text">Loading</p>
                     </div>
                     :
-                    timelines.length ?
+                    myError ?
+                    <div className="container">
+                        <p className="dashboard-text">{myError}</p>
+                    </div>
+                    :
+                    myTimelines.length ?
                     <div className="container timeline-grid">
                         {
-                            timelines.map(timeline => (
+                            myTimelines.map(timeline => (
                                 <div className="timeline-container" onClick={() => navigate(`/timeline/${timeline.id}`)}>
                                     
-                                    <h3 to='/timeline' className="timeline-name">{timeline.name}</h3>
+                                    <h3 className="timeline-name">{timeline.name}</h3>
 
                                     <p className="timeline-description">
                                         {
@@ -103,7 +73,7 @@ const MyTimelines = () => {
                     </div>
                     :
                     <div className="container">
-                        <p className="dashboard-empty">No timelines yet. Perhaps you can <Link to=''>create your own</Link></p>
+                        <p className="dashboard-empty">You don't contribute in any timelines yet.</p>
                     </div>
                 }
         </section>

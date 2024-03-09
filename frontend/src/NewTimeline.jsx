@@ -8,7 +8,7 @@ const NewTimeline = () => {
     const [description, setDescription] = useState('')
     const [access, setAccess] = useState('0')
 
-    const { loggedIn, navigate } = useContext(DataContext)
+    const { loggedIn, navigate, myTimelines } = useContext(DataContext)
 
     useEffect(() => {
         if(!loggedIn) navigate('/login')
@@ -31,7 +31,9 @@ const NewTimeline = () => {
 
             console.log(response)
 
-            if(response.status == 200) navigate('/mytimelines')
+            if(response.status == 200) {
+                navigate('/mytimelines')
+            }
         } catch(err) {
             console.log(err)
         } finally {
