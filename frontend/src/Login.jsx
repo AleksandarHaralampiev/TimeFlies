@@ -9,7 +9,7 @@ const Login = () => {
 
     const [error, setError] = useState('')
 
-    const { loggedIn, setLoggedIn, navigate } = useContext(DataContext)
+    const { loggedIn, setLoggedIn, navigate, handleAlert } = useContext(DataContext)
 
     useEffect(() => {
         if(loggedIn) navigate('/dashboard')
@@ -39,6 +39,8 @@ const Login = () => {
                         access: response2.data.access,
                         refresh: response2.data.refresh
                     }
+
+                    handleAlert('success', 'You successfully logged in.')
 
                     setLoggedIn(true)
 

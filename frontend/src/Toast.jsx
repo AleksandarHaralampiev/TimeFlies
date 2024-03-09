@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { memo, useContext, useEffect, useState } from "react"
 import { IoCheckmarkCircle, IoCloseCircle, IoCloseOutline, IoInformationCircle, IoInformationCircleOutline } from "react-icons/io5"
 import { DataContext } from "./context/DataContext"
 
@@ -6,7 +6,6 @@ const Toast = () => {
     const { alerts } = useContext(DataContext)
 
     return (
-        alerts.length ?
         <div className="toast-container">
             {
                 alerts.map(alert => (
@@ -15,56 +14,39 @@ const Toast = () => {
                         id={alert.id}
                         type={alert.type}
                         message={alert.message}
+                        autoClose={alert.autoClose}
+                        closeTime={alert.closeTime}
                     />
                 ))
             }
         </div>
-        :
-        null
-
     )
 }
 
 const ToastAlert = ({ id = 0, type, message = 'Alert', autoClose = true, closeTime = 5000 }) => {
     const { alerts, setAlerts } = useContext(DataContext)
 
-    // const closeAlert = () => {
-    //     const toast = document.getElementById(`toast-${id}`)
-    //     console.log(toast)
-    //     // toast.classList.add('toast-closed')
+    const [closed, setClosed] = useState(0)
 
-    //     setTimeout(() => {
-    //         setAlerts(alerts.filter(alert => alert.id !== id))
-    //     }, 500)
-    // }
+    const closeAlert = () => {
+        setClosed(id)
+        console.log(`Closed alert ${id}`)
 
+        setTimeout(() => {
+            setAlerts(alerts.filter(alert => alert.id !== id))
+        }, 500)
+    }
 
-    // // const [time, setTime] = useState(closeTime)
-    // // const [percent, setPercent] = useState(100)
-    
-    // // useEffect(() => {
-    // //     if(autoClose) {
-    // //         setTimeout(() => {
-
-    // //             if(time > 0) {
-    // //                 setPercent((time / closeTime) * 100)
-    // //                 setTime(time - 10)
-    // //             }
-
-    // //         }, 10)
-    // //     }
-    // // }, [time])
-
-    // useEffect(() => {
-    //     if(autoClose) {
-    //         setTimeout(() => {
-    //             closeAlert()
-    //         }, closeTime)
-    //     }
-    // }, [])
+    useEffect(() => {
+        if(autoClose) {
+            setTimeout(() => {
+                closeAlert()
+            }, closeTime)
+        }
+    }, [])
 
     return (
-        <div className={"toast-alert"} id={`toast-${id}`}>
+        <div className={closed === id ? "toast-alert toast-closed" : "toast-alert"}>
             <div className="toast-text-box">
                 {
                     type === 'success' ?
@@ -76,13 +58,13 @@ const ToastAlert = ({ id = 0, type, message = 'Alert', autoClose = true, closeTi
                     <IoInformationCircle className="toast-icon" />
                 }
 
-                <p className="toast-text">{id} {message}</p>
+                <p className="toast-text">{message}</p>
 
                 {
                     autoClose ?
                     <div
                         className="toast-timer"
-                        // style={{ width: `${(time / closeTime) * 100}%` }}
+                        style={{ animation: `toast-timer ${closeTime / 1000}s linear 1 forwards` }}
                     >
                     </div>
                     :
@@ -91,7 +73,7 @@ const ToastAlert = ({ id = 0, type, message = 'Alert', autoClose = true, closeTi
             </div>
 
 
-            <IoCloseOutline className="toast-close"/>
+            <IoCloseOutline className="toast-close" onClick={closeAlert}/>
         </div>
     )
 }

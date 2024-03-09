@@ -150,6 +150,7 @@ body {
 .toast-timer {
     position: absolute;
     height: 3px;
+    width: 100%;
     bottom: 0;
     left: 0;
     background-color: var(--main-shade1);
@@ -176,5 +177,14 @@ body {
     }
     to {
         transform: translateX(150%);
+    }
+}
+
+@keyframes toast-timer {
+    from {
+        width: 100%;
+    }
+    to {
+        width: 0%;
     }
 }

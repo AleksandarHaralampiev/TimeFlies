@@ -14,14 +14,15 @@ const DataProvider = ({ children }) => {
     // SETTING UP ALERTS
     const [alerts, setAlerts] = useState([])
 
-    const handleAlert = (type, message) => {
+    const handleAlert = (type, message, autoClose, closeTime) => {
         const id = alerts.length ? alerts[alerts.length - 1].id + 1 : 1
-
 
         const newAlert = {
             id,
             type,
-            message
+            message,
+            autoClose,
+            closeTime
         }
 
         setAlerts([...alerts, newAlert])
