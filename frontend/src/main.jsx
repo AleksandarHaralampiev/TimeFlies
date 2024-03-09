@@ -9,7 +9,11 @@ import './css/timeline.css'
 import './css/dashboard.css'
 import './css/myprofile.css'
 import './css/mytimelines.css'
-import './css/newtimeline.css'
+import './css/newtimeline.css';
+import './css/about.css';
+import './css/contact.css';
+import './css/components.css';
+import './css/TimelineMark.css'
 
 import { BrowserRouter } from 'react-router-dom'
 

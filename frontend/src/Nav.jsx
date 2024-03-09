@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { DataContext } from './context/DataContext'
-
+import { useContext, useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { DataContext } from './context/DataContext';
+import { HashLink } from 'react-router-hash-link';
 import pfp from './img/pfp.jpg'
 
 const Nav = () => {
@@ -38,27 +38,28 @@ const Nav = () => {
 
     document.addEventListener('click', (e) => dropdown ? handleCollapse(e) : null)
 
+
+
     return (
         <nav className={sticky ? "navbar sticky" : "navbar"}>
+
             <ul className="nav-links">
                 <li>
                     <Link to='/' className='nav-link'>Home</Link>
                 </li>
                 <li>
-                    <Link to='/' className='nav-link'>About</Link>
+                    <HashLink to='/#about-us' className='nav-link'>About</HashLink>
                 </li>
                 <li>
-                    <Link to='/' className='nav-link'>Contact Us</Link>
+                    <HashLink to='/#contact-us' className='nav-link'>Contact Us</HashLink>
                 </li>
-                {loggedIn ? (
+                {loggedIn && (
                     <li>
                         <Link to='/dashboard' className='nav-link'>Dashboard</Link>
                     </li>
-                ) : (
-                    <li></li>
-                )
-                }
+                )}
             </ul>
+
 
             {
                 loggedIn ?
