@@ -4,6 +4,7 @@ import { IoPencilOutline, IoCheckmarkDoneOutline } from "react-icons/io5";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { VscMail, VscLock } from "react-icons/vsc";
 import { DataContext } from "./context/DataContext";
+import axios from "axios";
 
 
 
@@ -24,8 +25,23 @@ const MyProfile = () => {
 
 
     // SENDING DATA
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+
+        console.log(profilePicture)
+
+        const obj = {
+            username: name,
+            profile_picture: profilePicture
+        }
+
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/save_changes/', obj)
+
+            console.log(response)
+        } catch(err) {
+            console.log(err)
+        }
     }
 
 
