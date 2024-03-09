@@ -6,10 +6,12 @@ from rest_framework.response import Response
 from .models import UserAccount
 from base64 import b64encode
 import mimetypes
-from rest_framework import status
-from rest_framework.views import APIView
 from .models import UserAccount
-from .serializers import UserCreateSerializer
+from django.http import JsonResponse
+from .models import UserAccount
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from .models import UserAccount
 
 @api_view(['POST', 'GET'])
 def isUser(request, *args, **kwargs):
@@ -83,19 +85,25 @@ def getUserCredentials(request, *args, **kwargs):
         except:
             return Response(data = {"Message": "There is no such account"}, status=404)
 
-class PostView(APIView):
-    def get(self, request, *args, **kwargs):
-        posts = UserAccount.objects.all()
-        serializer = UserCreateSerializer(posts, many=True)
-        return Response(serializer.data)
+@api_view(['POST'])
+@login_required
+def saveChanges(request):
+    if request.method == 'POST':
+        user = request.user
+        
+        new_username = request.data.get('username')
+        new_profile_picture = request.data.get('profile_picture')
+        
+        if new_username:
+            user.username = new_username
+        if new_profile_picture:
+            user.profile_picture = new_profile_picture
+        
+        user.save()
+        
+        return JsonResponse({'message': 'Changes saved successfully'}, status=200)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=400)
 
-    def post(self, request, *args, **kwargs):
-        posts_serializer = UserCreateSerializer(data=request.data)
-        if posts_serializer.is_valid():
-            posts_serializer.save()
-            return Response(posts_serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            print('error', posts_serializer.errors)
-            return Response(posts_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
