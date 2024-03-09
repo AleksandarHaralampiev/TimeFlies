@@ -11,6 +11,25 @@ const DataProvider = ({ children }) => {
 
 
 
+    // SETTING UP ALERTS
+    const [alerts, setAlerts] = useState([])
+
+    const handleAlert = (type, message) => {
+        const id = alerts.length ? alerts[alerts.length - 1].id + 1 : 1
+
+
+        const newAlert = {
+            id,
+            type,
+            message
+        }
+
+        setAlerts([...alerts, newAlert])
+    }
+
+
+
+
 
     //FETCHING PUBLIC TIMELINES
 
@@ -77,11 +96,12 @@ const DataProvider = ({ children }) => {
 
 
 
+
     return (
         <DataContext.Provider value={{
-            loggedIn, setLoggedIn, navigate,                        //GENERAL 
-            publicTimelines, dashboardLoading, dashboardError,      //DASHBOARD
-            myTimelines, myLoading, myError                         //MY TIMELINES
+            loggedIn, setLoggedIn, navigate, alerts, setAlerts, handleAlert,            //GENERAL 
+            publicTimelines, dashboardLoading, dashboardError,                          //DASHBOARD
+            myTimelines, myLoading, myError                                             //MY TIMELINES
         }}>
             {children}
         </DataContext.Provider>
