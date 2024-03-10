@@ -47,6 +47,7 @@
 html {
     font-size: 62.5%;
     /* 10px */
+    overflow-x: hidden;
 }
 
 body {
