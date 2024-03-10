@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
+
+def server_icon_upload_path(instance, filename):
+    return f"user/{instance.id}/profile_picutre/{filename}"
+
 class UserAccountManager(BaseUserManager):
     def create_user(self, email, username, password = None):
         if not email:
@@ -24,7 +28,7 @@ class UserAccountManager(BaseUserManager):
         user.is_superuser = True
         user.save(using=self._db)
         return user
-    
+
 
 
 class UserAccount(AbstractBaseUser, PermissionsMixin):
@@ -32,7 +36,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length = 255)
     is_active = models.BooleanField(default = True)
     is_staff = models.BooleanField(default = False)
-    profile_picture = models.ImageField(upload_to='post_images', default='default.png')
+    profile_picture = models.ImageField(upload_to = server_icon_upload_path, default='default.png')
 
     objects = UserAccountManager()
     USERNAME_FIELD = 'email' # indicating that the email field will be used as the unique identifier for authentication.

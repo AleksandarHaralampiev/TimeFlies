@@ -11,6 +11,10 @@ import matplotlib.pyplot as plt
 from base64 import b64encode
 import mimetypes
 
+
+def server_icon_upload_path(instance, filename):
+    return f"user/{instance.id}/profile_picutre/{filename}"
+
 @api_view(['POST', 'GET'])
 def isUser(request, *args, **kwargs):
     body = request.body
@@ -95,8 +99,11 @@ def saveChanges(request, *args, **kwargs):
 
             user = UserAccount.objects.filter(id = user_id).first()
             if new_profile_picture_blob:
-                user.profile_picture = new_profile_picture_blob
-                user.save()
+                if user.profile_picture != new_profile_picture_blob:
+                    user.profile_picture.delete(save=False)
+                    user.profile_picture = new_profile_picture_blob
+                    user.save()
+               
                 message['image'] = "Image saved successfully" 
             if username:
                 user.username = username
