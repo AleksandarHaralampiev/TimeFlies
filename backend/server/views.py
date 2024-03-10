@@ -37,9 +37,9 @@ def getTimeLine(request, *args, **kwargs):
     if request.method == "GET":
         try:
             id = int(request.GET.get('id'))
-            servers = Server.objects.filter(owner=id).all()
-            servers_data = [{"id": server.id, "name": server.name, "description": server.description, "public": server.public, "owner_id": server.owner_id, "owner": server.owner} for server in servers]
-            return Response(data={"servers": servers_data}, status=200)
+            servers = Server.objects.filter(owner = id).all()
+            servers_data = [{"id": server.id, "name": server.name, "description": server.description, "public": server.public, "owner_id": server.owner_id} for server in servers]
+            return Response(data = {"servers": servers_data}, status=200)
         except:
             return Response(data={"error": "Invalid request"}, status=400)
 
@@ -48,9 +48,10 @@ def getTimeLine(request, *args, **kwargs):
 def getAllPublicTimeLine(request, *args, **kwargs):
     if request.method == "GET":
         try:
-            publicServers = Server.objects.filter(public=1).all()
-            servers_data = [{"id": server.id, "name": server.name, "description": server.description, "public": server.public, "owner_id": server.owner_id, "owner": server.owner} for server in publicServers]
-            return Response(data={"servers": servers_data}, status=200)
+            publicServers = Server.objects.filter(public = 1).all()
+            
+            servers_data = [{"id": server.id, "name": server.name, "description": server.description, "public": server.public, "owner_id": server.owner_id} for server in publicServers]
+            return Response(data = {"servers": servers_data}, status=200)
         except:
             return Response(data={"error": "Invalid request"}, status=400)
     
