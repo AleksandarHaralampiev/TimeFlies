@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
-
+import TimeLineMark from "./components/TimeLineMark";
+import EventCard from "./components/EventCard";
 
 
 const Timeline = () => {
@@ -65,7 +66,7 @@ const Timeline = () => {
                                 <div className="card-container-left"><EventCard heading={event.Heading} subHeading={event.subheading} /></div>
                             ) : (
                                 <div className="circle-container">
-                                    <Circle />
+                                    <TimeLineMark name='circle' />
                                 </div>
                             )
                             }
@@ -75,14 +76,14 @@ const Timeline = () => {
                                 <div className="card-container-right"><EventCard heading={event.Heading} subHeading={event.subheading} /></div>
                             ) : (
                                 <div className="circle-container">
-                                    <Circle />
+                                    <TimeLineMark name='circle' />
                                 </div>
                             )
                             }
 
 
                         </div>
-                        {key < (events.length - 1) && <Pillar />}
+                        {key < (events.length - 1) && <TimeLineMark name="pillar" />}
                     </Fragment>
                 ))}
             </div>
@@ -91,31 +92,6 @@ const Timeline = () => {
 
     );
 
-}
-
-const Circle = () => {
-    return (
-        <div className="circle">
-
-        </div>
-    );
-}
-
-const Pillar = () => {
-    return (
-        <div className="pillar">
-
-        </div>
-    );
-}
-
-const EventCard = ({ heading, subHeading }) => {
-    return (
-        <div className="card">
-            <div className="heading">{heading}</div>
-            <div className="sub-heading">{subHeading}</div>
-        </div>
-    )
 }
 
 export default Timeline;

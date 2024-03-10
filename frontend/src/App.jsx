@@ -9,6 +9,7 @@ import Dashboard from "./Dashboard"
 import MyProfile from "./Myprofile"
 import MyTimelines from "./MyTimelines"
 import NewTimeline from "./NewTimeline"
+import Toast from "./Toast"
 
 function App() {
 
@@ -19,7 +20,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/timeline" element={<Timeline />} />
+          <Route path="/timeline/:id" element={<Timeline />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/mytimelines" element={<MyTimelines />} />
           <Route path="/newtimeline" element={<NewTimeline />} />
@@ -27,6 +28,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/myprofile" element={<MyProfile />} />
         </Routes>
+
+        <Toast />
       </DataProvider>
     </>
   )

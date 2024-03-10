@@ -11,7 +11,7 @@ const Register = () => {
 
     const [error, setError] = useState('')
 
-    const { loggedIn, navigate } = useContext(DataContext)
+    const { loggedIn, navigate, handleAlert } = useContext(DataContext)
 
     useEffect(() => {
         if(loggedIn) navigate('/dashboard')
@@ -38,6 +38,8 @@ const Register = () => {
             console.log(response)
 
             navigate('/login')
+
+            handleAlert('success', 'You successfully made an account!')
         } catch(err) {
             console.log(err)
 

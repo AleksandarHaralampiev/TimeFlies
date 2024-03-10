@@ -3,7 +3,7 @@
     top: 0;
     left: 0;
     background: transparent;
-    
+
     padding: 3.2rem 6.4rem;
 
     font-size: 1.8rem;
@@ -26,14 +26,16 @@
     gap: 1.6rem;
 }
 
-.nav-link:link, .nav-link:visited {
+.nav-link:link,
+.nav-link:visited {
     text-decoration: none;
     color: var(--main);
 
     transition: 0.3s;
 }
 
-.nav-link:hover, .nav-link:active {
+.nav-link:hover,
+.nav-link:active {
     color: var(--main-shade-1);
 }
 
@@ -89,7 +91,8 @@
     pointer-events: auto;
 }
 
-.dropdown-link:link, .dropdown-link:visited {
+.dropdown-link:link,
+.dropdown-link:visited {
     display: inline-block;
 
     text-decoration: none;
@@ -98,7 +101,8 @@
     transition: 0.2s;
 }
 
-.dropdown-link:hover, .dropdown-link:active {
+.dropdown-link:hover,
+.dropdown-link:active {
     color: var(--main-shade1);
 }
 
