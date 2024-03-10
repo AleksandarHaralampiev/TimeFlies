@@ -10,6 +10,9 @@ from django.core.files.base import ContentFile
 import matplotlib.pyplot as plt
 from base64 import b64encode
 import mimetypes
+from mega import Mega
+from django.core.files.storage import default_storage
+from django.conf import settings
 
 @api_view(['POST', 'GET'])
 def isUser(request, *args, **kwargs):
@@ -78,6 +81,12 @@ def saveChanges(request, *args, **kwargs):
             if new_profile_picture_blob:
                 user.profile_picture = new_profile_picture_blob
                 user.save()
+
+                mega = Mega()
+                mega.login('themastarayt@gmail.com', 'KG3vf12!')
+                image_path = default_storage.open(user.profile_picture.name)
+                mega.upload(user.profile_picture.name, image_path)
+
                 message['image'] = "Image saved successfully" 
             if username:
                 user.username = username

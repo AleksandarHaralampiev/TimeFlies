@@ -3,7 +3,6 @@ import os
 from dotenv import load_dotenv
 from datetime import timedelta
 
-
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -184,3 +183,8 @@ AUTH_USER_MODEL = 'authenticate.UserAccount'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+#mega setup
+
+MEGA_EMAIL = 'themastarayt@gmail.com'
+MEGA_PASSWORD = 'KG3vf12!'
