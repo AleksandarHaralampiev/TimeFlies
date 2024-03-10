@@ -1,6 +1,9 @@
 import { useContext, useEffect, useState } from "react"
 import { IoCloseOutline } from "react-icons/io5"
 import { DataContext } from "./context/DataContext"
+import { Link } from "react-router-dom"
+
+import pfp from './img/pfp.jpg'
 
 const TimelineSettings = ({ id, setSettings }) => {
     const [closed, setClosed] = useState(false)
@@ -9,10 +12,10 @@ const TimelineSettings = ({ id, setSettings }) => {
 
     const [timeline, setTimeline] = useState({})
 
+    const profiles = Array.from({ length: 12 }, () => pfp)
+
     useEffect(() => {
         setTimeline(publicTimelines.find(currentTimeline => currentTimeline.id === id))
-        console.log('current timeline')
-        console.log(timeline)
     }, [publicTimelines])
 
     const handleClose = () => {
@@ -44,7 +47,18 @@ const TimelineSettings = ({ id, setSettings }) => {
                 </div>
 
                 <div className="timeline-settings-btn-box">
+                    <div className="timeline-settings-members">
+                        <div className="timeline-img-box"></div>
+                    </div>
 
+                    {
+                        timeline.owner_id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
+                        <button className="btn">Edit</button>
+                        :
+                        null
+                    }
+
+                    <Link className="btn timeline-settings-view-btn" to={`/timeline/${id}`}>View</Link>
                 </div>
 
                 <IoCloseOutline className="timeline-settings-close" onClick={handleClose}/>

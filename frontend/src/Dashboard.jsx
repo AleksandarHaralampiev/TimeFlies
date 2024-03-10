@@ -99,8 +99,9 @@ const Dashboard = () => {
                                         </div>
 
                                         <div className="timeline-img-box">
+                                            <img src={timeline.owner_photo} className="timeline-pfp"/>
                                             {
-                                                profiles.slice(0, 5).map(pic => (
+                                                profiles.slice(0, 4).map(pic => (
                                                     <img src={pic} className="timeline-pfp"/>
                                                 ))
                                             }

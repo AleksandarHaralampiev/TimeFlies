@@ -79,6 +79,8 @@ body {
 .btn:link,
 .btn:visited,
 .btn:active {
+    text-align: center;
+
     padding: 1.6rem 3.2rem;
 
     border: none;
