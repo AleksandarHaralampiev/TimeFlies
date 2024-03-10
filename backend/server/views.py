@@ -158,9 +158,12 @@ def addUser(request, *args, **kwargs):
 @api_view(['POST'])
 def changeRole(request, *args, **kwargs):
     if request.method == "POST":
-        email = request.POST.get('email') 
-        server_id = int(request.POST.get("server_id"))
-        new_role = int(request.POST.get("role"))
+        body = request.body
+        data = json.loads(body)
+        email = data['email']
+        server_id = int(data['server_id'])
+        new_role = int(data['new_role'])
+
         user  = get_object_or_404(UserAccount, email = email)
         if user:
             server = get_object_or_404(Server, id = server_id)
