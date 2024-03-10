@@ -9,6 +9,6 @@ from .views import saveChanges
 urlpatterns = [
     path('valid/', views.isUser),
     path('info/', views.getUserCredentials),
-    path('api/save_changes/', saveChanges, name='save_changes'),
+    path('save_changes/', saveChanges, name='save_changes'),
 ]
 

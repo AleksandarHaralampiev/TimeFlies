@@ -31,7 +31,7 @@ const MyProfile = () => {
         }
 
         try {
-            const response = await axios.put('http://127.0.0.1:8000/api/save_changes/', obj)
+            const response = await axios.post('http://127.0.0.1:8000/authenticate/save_changes/', obj)
 
             console.log(response)
         } catch(err) {
