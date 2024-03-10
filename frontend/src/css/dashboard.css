@@ -120,3 +120,16 @@
     font-size: 1.8rem;
     color: #555;
 }
+
+
+
+.dashboard-link:link, .dashboard-link:visited {
+    text-decoration: none;
+    color: var(--main);
+
+    transition: .2s;
+}
+
+.dashboard-link:hover, .dashboard-link:active {
+    color: var(--main-shade1);
+}
