@@ -182,8 +182,10 @@ def changeRole(request, *args, **kwargs):
 @api_view(['GET'])
 def checkUser(request, *args, **kwargs):
     if request.method == "GET":
-        user_id = int(request.GET.get('id'))
-        server_id = int(request.GET.get("server_id"))
+        body = request.body
+        data = json.loads(body)
+        user_id = data['id']
+        server_id = int(data['server_id'])
         user = get_object_or_404(UserAccount, id = user_id)
         server = get_object_or_404(Server, id = server_id)
         is_member = server.members.filter(id=user_id).exists()
