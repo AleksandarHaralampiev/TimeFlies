@@ -10,7 +10,7 @@ import { HashLink } from "react-router-hash-link"
 const Dashboard = () => {
     const { loggedIn, navigate, publicTimelines, dashboardLoading, dashboardError } = useContext(DataContext)
 
-    const profiles = Array.from({ length: 12 }, () => pfp)
+    // const profiles = Array.from({ length: 12 }, () => pfp)
     
     const [settings, setSettings] = useState(null)
     
@@ -99,10 +99,9 @@ const Dashboard = () => {
                                         </div>
 
                                         <div className="timeline-img-box">
-                                            <img src={timeline.owner_photo} className="timeline-pfp"/>
                                             {
-                                                profiles.slice(0, 4).map(pic => (
-                                                    <img src={pic} className="timeline-pfp"/>
+                                                timeline.contributors.slice(0, 5).map(user => (
+                                                    <img src={user.profile_picture} className="timeline-pfp"/>
                                                 ))
                                             }
 
