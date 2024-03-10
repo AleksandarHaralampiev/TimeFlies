@@ -18,7 +18,7 @@ const DataProvider = ({ children }) => {
                 const response = await axios.get(`http://127.0.0.1:8000/authenticate/info/?Content-Type=application-json&id=${JSON.parse(localStorage.getItem('accData')).id}`)
 
                 if(response.status == 200) {
-                    console.log(response)
+                    // console.log(response)
                     setAccount(response.data.data)
                 }
             } catch(err) {
@@ -66,6 +66,7 @@ const DataProvider = ({ children }) => {
             try {
                 const response = await axios.get(`http://127.0.0.1:8000/server/public/`)
 
+                console.log('public')
                 console.log(response)
             
                 setPublicTimelines(response.data.servers)
@@ -101,6 +102,8 @@ const DataProvider = ({ children }) => {
         try {
             const response = await axios.get(`http://127.0.0.1:8000/server/list/?Content-Type=application-json&id=${JSON.parse(localStorage.getItem('accData')).id}`)
 
+            console.log('my timelines')
+            console.log(response)
             setMyTimelines(response.data.servers)
 
             setMyError('')

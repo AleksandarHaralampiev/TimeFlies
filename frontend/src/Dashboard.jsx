@@ -47,6 +47,7 @@ const Dashboard = () => {
             {
                 settings ?
                 <TimelineSettings
+                    id={settings}
                     setSettings={setSettings}
                 />
                 :

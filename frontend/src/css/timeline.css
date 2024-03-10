@@ -94,37 +94,97 @@
     top: 0;
     left: 0;
 
-    display: flex;
-    align-items: center;
+    /* display: flex; */
+    /* align-items: center; */
 
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+
+    padding: 0 3.2rem;
 
     background-color: rgba(0, 0, 0, 0.5);
 
     z-index: 1000;
+
+    overflow: auto;
 }
 
 .timeline-settings-container {
-    width: 100rem;
-    margin: 0 auto;
+    max-width: 100rem;
+    margin: 16rem auto;
     padding: 3.2rem;
     background-color: var(--bg-shade1);
 
-    animation: scale 0.5s;
+    animation: scaleOpen 0.5s;
+
+    position: relative;
+}
+
+.timeline-settings-closed {
+    animation: scaleClose 0.5s;
 }
 
 .timeline-settings-close {
     width: 2.4rem;
     height: 2.4rem;
     cursor: pointer;
+
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
 }
 
-@keyframes scale {
-    from {
+.timeline-settings-text-box {
+    text-align: center;
+}
+
+.timeline-settings-name {
+    font-size: 5.2rem;
+    letter-spacing: 1.75px;
+}
+
+.timeline-settings-owner {
+    margin-bottom: 2.4rem;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.timeline-settings-description {
+    font-size: 1.8rem;
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+}
+
+.timeline-settings-date {
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+    color: var(--main-tint1);
+}
+
+
+
+
+@keyframes scaleOpen {
+    0% {
         transform: scale(0);
     }
-    to {
+    70% {
+        transform: scale(1.1);
+    }
+    100% {
         transform: scale(1);
+    }
+}
+
+@keyframes scaleClose {
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(0);
     }
 }
