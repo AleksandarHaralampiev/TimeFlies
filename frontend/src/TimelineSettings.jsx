@@ -30,13 +30,21 @@ const TimelineSettings = ({ id, setSettings }) => {
             <div className={closed ? "timeline-settings-container timeline-settings-closed" : "timeline-settings-container"}>
                 <div className="timeline-settings-text-box">
                     <h2 className="timeline-settings-name">{timeline.name}</h2>
-                    <p className="timeline-settings-owner">By {timeline.owner_username}</p>
+                    <p className="timeline-settings-owner">
+                        <img src={timeline.owner_photo} alt="Owner Profile Pic" className="timeline-settings-owner-pfp" />
+                        <span>{timeline.owner_username}</span>
+                    </p>
 
                     <p className="timeline-settings-description">{timeline.description}</p>
 
                     <p className="timeline-settings-date">
-                        {currentDate.getDate()} - {currentDate.getMonth()} - {currentDate.getFullYear()}
+                        {/* {currentDate.getDate()} - {currentDate.getMonth()} - {currentDate.getFullYear()} */}
+                        {timeline.date}
                     </p>
+                </div>
+
+                <div className="timeline-settings-btn-box">
+
                 </div>
 
                 <IoCloseOutline className="timeline-settings-close" onClick={handleClose}/>

@@ -90,7 +90,7 @@
 
 /* TIMELINE SETTINGS */
 .timeline-settings {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
 
@@ -98,7 +98,7 @@
     /* align-items: center; */
 
     width: 100vw;
-    min-height: 100vh;
+    height: 100vh;
 
     padding: 0 3.2rem;
 
@@ -118,6 +118,8 @@
     animation: scaleOpen 0.5s;
 
     position: relative;
+
+    overflow: auto;
 }
 
 .timeline-settings-closed {
@@ -144,16 +146,28 @@
 }
 
 .timeline-settings-owner {
-    margin-bottom: 2.4rem;
-    font-size: 1.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+
+    /* margin: 0 auto; */
+    margin-bottom: 1.2rem;
+    font-size: 1.4rem;
     text-transform: uppercase;
     letter-spacing: 3px;
+}
+
+.timeline-settings-owner-pfp {
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
 }
 
 .timeline-settings-description {
     font-size: 1.8rem;
     line-height: 1.8;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.6rem;
 }
 
 .timeline-settings-date {
