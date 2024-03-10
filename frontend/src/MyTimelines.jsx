@@ -4,6 +4,7 @@ import pfp from './img/pfp.jpg'
 import { IoAddOutline } from "react-icons/io5"
 import axios from "axios"
 import { Link } from "react-router-dom"
+import { HashLink } from "react-router-hash-link"
 
 const MyTimelines = () => {
     const { navigate, loggedIn, myTimelines, myLoading, myError } = useContext(DataContext)
@@ -39,6 +40,7 @@ const MyTimelines = () => {
                     myError ?
                     <div className="container">
                         <p className="dashboard-text">{myError}</p>
+                        <HashLink to='/#contact-us' className='dashboard-text dashboard-link'>Contact Us &rarr;</HashLink>
                     </div>
                     :
                     myTimelines.length ?

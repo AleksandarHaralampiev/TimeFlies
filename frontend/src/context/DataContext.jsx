@@ -9,9 +9,30 @@ const DataProvider = ({ children }) => {
     const navigate = useNavigate()
 
 
+    // FETCHING ACCOUNT INFO
+    const [account, setAccount] = useState({})
+
+    const fetchAccount = async () => {
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/authenticate/info/?Content-Type=application-json&id=${JSON.parse(localStorage.getItem('accData')).id}`)
+
+            if(response.status == 200) {
+                // console.log(response)
+                setAccount(response.data.data)
+            }
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    useEffect(() => {
+        if(loggedIn) fetchAccount()
+    }, [loggedIn])
+
 
 
     // SETTING UP ALERTS
+
     const [alerts, setAlerts] = useState([])
 
     const handleAlert = (type, message, autoClose, closeTime) => {
@@ -38,26 +59,27 @@ const DataProvider = ({ children }) => {
     const [dashboardLoading, setDashboardLoading] = useState(false)
     const [dashboardError, setDashboardError] = useState('')
 
-    useEffect(() => {
-        const fetchPublicTimelines = async () => {
-            setDashboardLoading(true)
+    const fetchPublicTimelines = async () => {
+        setDashboardLoading(true)
 
-            try {
-                const response = await axios.get(`http://127.0.0.1:8000/server/public/`)
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/server/public/`)
 
-                console.log(response)
-            
-                setPublicTimelines(response.data.servers)
+            console.log('public')
+            console.log(response)
+        
+            setPublicTimelines(response.data.servers)
 
-                setDashboardError('')
-            } catch(err) {
-                console.log(err)
-                setDashboardError('Something went wrong! If the issue persists, consider reporting it to the devs.')
-            } finally {
-                setDashboardLoading(false)
-            }
+            setDashboardError('')
+        } catch(err) {
+            console.log(err)
+            setDashboardError('Something went wrong! If the issue persists, consider reporting it to the devs.')
+        } finally {
+            setDashboardLoading(false)
         }
+    }
 
+    useEffect(() => {
         if(loggedIn) fetchPublicTimelines()
     }, [loggedIn])
 
@@ -80,6 +102,8 @@ const DataProvider = ({ children }) => {
         try {
             const response = await axios.get(`http://127.0.0.1:8000/server/list/?Content-Type=application-json&id=${JSON.parse(localStorage.getItem('accData')).id}`)
 
+            console.log('my timelines')
+            console.log(response)
             setMyTimelines(response.data.servers)
 
             setMyError('')
@@ -104,7 +128,8 @@ const DataProvider = ({ children }) => {
         <DataContext.Provider value={{
             loggedIn, setLoggedIn, navigate, alerts, setAlerts, handleAlert,            //GENERAL 
             publicTimelines, dashboardLoading, dashboardError,                          //DASHBOARD
-            myTimelines, myLoading, myError, fetchMyTimelines                           //MY TIMELINES
+            myTimelines, myLoading, myError, fetchMyTimelines,                          //MY TIMELINES
+            account, fetchAccount, fetchPublicTimelines, fetchMyTimelines
         }}>
             {children}
         </DataContext.Provider>

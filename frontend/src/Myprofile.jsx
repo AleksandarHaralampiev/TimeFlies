@@ -1,48 +1,34 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import pfp from './img/pfp.jpg';
 import { IoPencilOutline, IoCheckmarkDoneOutline } from "react-icons/io5";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { VscMail, VscLock } from "react-icons/vsc";
-
-
-{/* <FaRegEye />     */ }
-{/* <FaRegEyeSlash /> */ }
-
-const USERS = {
-    name: 'Username',
-    password: '567860',
-    email: 'example@email.com',
-}
-
+import { DataContext } from "./context/DataContext";
+import axios from "axios";
 
 const MyProfile = () => {
-    const [users, setUsers] = useState(USERS);
+    const { account, handleAlert, fetchAccount, fetchPublicTimelines, fetchMyTimelines } = useContext(DataContext);
+
+    useEffect(() => {
+        setName(account.username);
+    }, [account]);
+
     const [editField, setEditField] = useState(null);
-    const [value, setValue] = useState('');
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
     const [visible, setVisible] = useState(true);
     const [profilePicture, setProfilePicture] = useState(null);
     const fileInputRef = useRef(null);
 
     function handleEdit(field) {
         setEditField(field);
-        setValue(users[field]);
-    }
-
-    function handleChange(event) {
-        setValue(event.target.value);
     }
 
     function handleSave() {
         if (editField === 'name') {
-            setUsers(prevUsers => ({
-                ...prevUsers,
-                name: value
-            }));
+            // handle name change
         } else if (editField === 'password') {
-            setUsers(prevUsers => ({
-                ...prevUsers,
-                password: value
-            }));
+            // handle password change
         }
         setEditField(null);
     }
@@ -50,7 +36,31 @@ const MyProfile = () => {
     function handleFileSelect(event) {
         const file = event.target.files[0];
         if (file) {
-            setProfilePicture(URL.createObjectURL(file));
+            setProfilePicture(file);
+        }
+    }
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('userId', JSON.parse(localStorage.getItem('accData')).id);
+        formData.append('newUsername', name);
+        formData.append('newProfilePicture', profilePicture);
+
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/authenticate/save_changes/', formData);
+
+            console.log(response);
+
+            if(response.status == 201) {
+                handleAlert('success', 'Changes saved successfully.')
+                fetchAccount()
+                fetchMyTimelines()
+                fetchPublicTimelines()
+            }
+        } catch (err) {
+            console.log(err);
         }
     }
 
@@ -70,18 +80,18 @@ const MyProfile = () => {
                     />
                     <div className="pfp-container">
                         {profilePicture ? (
-                            <img src={profilePicture} className="avatar" alt="Avatar" />
+                            <img src={URL.createObjectURL(profilePicture)} className="avatar" alt="Avatar" />
                         ) : (
-                            <img src={pfp} className="avatar" alt="Avatar" />
+                            <img src={account.profile_picture} className="avatar" alt="Avatar" />
                         )}
                         <IoPencilOutline className="icon-hover" onClick={handleProfilePictureClick} />
                     </div>
                 </div>
-                <div className="username-container" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+                <div className="username-container">
                     {editField === 'name' ? (
-                        <input className='username-input' type="text" required value={value} onChange={handleChange} />
+                        <input className='username-input' type="text" required value={name} onChange={(e) => setName(e.target.value)} />
                     ) : (
-                        <span className="username">{users.name}</span>
+                        <span className="username">{name}</span>
                     )}
                     {editField !== 'name' && (
                         <IoPencilOutline className="icon-hover" onClick={() => handleEdit('name')} />
@@ -92,15 +102,15 @@ const MyProfile = () => {
                 </div>
                 <div className="email-container">
                     <VscMail className="email-icon" />
-                    <span className="email">{users.email}</span>
+                    <span className="email">{account.email}</span>
                 </div>
                 <div className="password-container">
                     <div className={editField === 'password' ? "pas-container-1" : 'pas-container'}>
                         <VscLock className="pass-icon" />
                         {editField === 'password' ? (
-                            <input className='password-input' type={visible ? 'text' : 'password'} placeholder="password" required value={value} onChange={handleChange} />
+                            <input className='password-input' type={visible ? 'text' : 'password'} placeholder="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
                         ) : (
-                            <span className="password">{visible ? users.password : '*********'}</span>
+                            <span className="password">{visible && password.length ? password : '*********'}</span>
                         )}
                         <div onClick={() => setVisible(!visible)}>
                             {visible ? <FaRegEye className="eye-icon" /> : <FaRegEyeSlash className="eye-icon" />}
@@ -113,17 +123,13 @@ const MyProfile = () => {
                             )}
                         </button>
                     </div>
-
-
                 </div>
                 <div className="btn-container">
-                    <button className="btn">Save changes</button>
+                    <button className="btn" onClick={(e) => handleSubmit(e)}>Save changes</button>
                 </div>
-
             </div>
         </main>
     );
 }
-
 
 export default MyProfile;

@@ -5,7 +5,7 @@ import { HashLink } from 'react-router-hash-link';
 import pfp from './img/pfp.jpg'
 
 const Nav = () => {
-    const { loggedIn, setLoggedIn, navigate } = useContext(DataContext)
+    const { loggedIn, setLoggedIn, navigate, account } = useContext(DataContext)
 
     const [dropdown, setDropdown] = useState(false)
     const [sticky, setSticky] = useState(false)
@@ -64,7 +64,7 @@ const Nav = () => {
             {
                 loggedIn ?
                     <div className='nav-pfp-container'>
-                        <img src={pfp} className="pfp" onClick={() => setDropdown(!dropdown)} />
+                        <img src={account.profile_picture} className="pfp" onClick={() => setDropdown(!dropdown)} />
 
                         <ul className={dropdown ? "dropdown active" : "dropdown"}>
                             <li>

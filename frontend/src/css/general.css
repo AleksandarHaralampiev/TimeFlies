@@ -30,6 +30,7 @@
     --bg-tint1-transparent: rgba(242, 228, 203, 0.95);
     --bg: #e9d2a8;
     --bg-shade1: #ebd7b1;
+    --bg-shade2: #baa886;
 }
 
 * {
@@ -46,6 +47,7 @@
 html {
     font-size: 62.5%;
     /* 10px */
+    overflow-x: hidden;
 }
 
 body {
@@ -79,6 +81,8 @@ body {
 .btn:link,
 .btn:visited,
 .btn:active {
+    text-align: center;
+
     padding: 1.6rem 3.2rem;
 
     border: none;

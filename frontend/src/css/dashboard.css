@@ -13,6 +13,10 @@
 }
 
 .timeline-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
     background-color: var(--bg-shade1);
 
     padding: 3.2rem;
@@ -63,6 +67,7 @@
     border-radius: 50%;
 
     width: 3.2rem;
+    height: 3.2rem;
 
     margin-right: -0.5rem;
 
@@ -115,4 +120,17 @@
 
     font-size: 1.8rem;
     color: #555;
+}
+
+
+
+.dashboard-link:link, .dashboard-link:visited {
+    text-decoration: none;
+    color: var(--main);
+
+    transition: .2s;
+}
+
+.dashboard-link:hover, .dashboard-link:active {
+    color: var(--main-shade1);
 }

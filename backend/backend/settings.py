@@ -3,7 +3,6 @@ import os
 from dotenv import load_dotenv
 from datetime import timedelta
 
-
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -134,7 +133,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+
+from google.oauth2 import service_account
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(os.path.join(BASE_DIR, "credentials.json"))
+
+DEFAULT_FILE_STORAGE = "server.storage_backends.GoogleCloudMediaFileStorage"
+GS_PROJECT_ID = os.getenv("GS_PROJECT_ID")
+GS_BUCKET_NAME = os.getenv("GS_BUCKET_NAME")
+GS_CREDENTIALS = GS_CREDENTIALS
+MEDIA_ROOT = "media/"
+UPLOAD_ROOT = "media/uploads/"
+MEDIA_URL = "https://storage.googleapis.com/{}/".format(GS_BUCKET_NAME)
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -181,6 +192,3 @@ DJOSER = {
 }
 
 AUTH_USER_MODEL = 'authenticate.UserAccount'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
