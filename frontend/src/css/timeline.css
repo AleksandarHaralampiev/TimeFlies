@@ -164,7 +164,8 @@
     display: inline;
 }
 
-.timeline-settings-name-icon {
+.timeline-settings-name-edit,
+.timeline-settings-name-done {
     position: absolute;
 
     width: 3.2rem;

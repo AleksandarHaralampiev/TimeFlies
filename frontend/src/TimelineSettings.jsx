@@ -55,14 +55,14 @@ const TimelineSettings = ({ id, setSettings }) => {
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                             />
-                            <IoCheckmarkDoneOutline className="timeline-settings-name-icon" onClick={() => setEditName(false)}/>
+                            <IoCheckmarkDoneOutline className="timeline-settings-name-done" onClick={() => setEditName(false)}/>
                         </div>
                         :
                         <div className="timeline-settings-name" onMouseEnter={() => setNamePencil(true)} onMouseLeave={() => setNamePencil(false)}>
                             {name}
                             {
                                 namePencil && timeline.owner_id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
-                                <IoPencilOutline className="timeline-settings-name-icon" onClick={() => setEditName(true)}/>
+                                <IoPencilOutline className="timeline-settings-name-edit" onClick={() => setEditName(true)}/>
                                 :
                                 null
                             }

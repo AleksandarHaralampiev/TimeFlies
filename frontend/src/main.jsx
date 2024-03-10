@@ -14,6 +14,7 @@ import './css/about.css';
 import './css/contact.css';
 import './css/components.css';
 import './css/TimelineMark.css'
+import './css/queries.css'
 
 import { BrowserRouter } from 'react-router-dom'
 
