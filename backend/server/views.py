@@ -54,4 +54,18 @@ def getAllPublicTimeLine(request, *args, **kwargs):
             return Response(data = {"servers": servers_data}, status=200)
         except:
             return Response(data={"error": "Invalid request"}, status=400)
-    
+        
+        
+        
+# @api_view(['GET'])
+# def getEditorId(request, *args, **kwargs):
+#     if request.method == "GET":
+#         try:
+#             id = int(request.GET.get('id'))
+#             server = Server.objects.filter(id = id).first()       
+#             editors = server.editors.all()
+#             editors_data = [{"id": editor.id, "username": editor.username, "email": editor.email} for editor in editors]
+#             return Response(data = {"editors": editors_data}, status=200)
+#         except:
+#             return Response(data={"error": "Invalid request"}, status=400)
+        
