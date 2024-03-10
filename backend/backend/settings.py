@@ -191,4 +191,8 @@ DJOSER = {
 
 }
 
+<<<<<<< HEAD
 AUTH_USER_MODEL = 'authenticate.UserAccount'
+=======
+AUTH_USER_MODEL = 'authenticate.UserAccount'
+>>>>>>> ad55c723f0b0a5673748eda80359563fee023fc3
