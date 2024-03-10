@@ -48,7 +48,7 @@ def getAllPublicTimeLine(request, *args, **kwargs):
     if request.method == "GET":
         try:
             publicServers = Server.objects.filter(public = 1).all()
-            servers_data = [{"id": server.id, "name": server.name, "description": server.description, "public": server.public} for server in publicServers]
+            servers_data = [{"id": server.id, "name": server.name, "description": server.description, "public": server.public, "owner_id": server.owner_id, "owner": server.owner} for server in publicServers]
             return Response(data = {"servers": servers_data}, status=200)
         except:
             return Response(data={"error": "Invalid request"}, status=400)
