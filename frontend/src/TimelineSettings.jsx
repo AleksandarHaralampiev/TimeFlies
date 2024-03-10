@@ -3,66 +3,92 @@ import { IoCheckmarkDoneOutline, IoCloseOutline, IoPencilOutline } from "react-i
 import { DataContext } from "./context/DataContext"
 import { Link } from "react-router-dom"
 
-import pfp from './img/pfp.jpg'
-
 const TimelineSettings = ({ id, setSettings }) => {
-    const [closed, setClosed] = useState(false)
-
+    // TIMELINE VARIABLES
     const { publicTimelines } = useContext(DataContext)
+    const [timeline, setTimeline] = useState()
+    
+    
 
-    const [timeline, setTimeline] = useState({ contributors: [] })
-
+    // MENU VARIABLES
+    const [closed, setClosed] = useState(false)
     const [openMembers, setOpenMembers] = useState(false)
 
+
+
+    // LOADING
     const [loading, setLoading] = useState(true)
+
+
 
     // EDIT NAME
     const [namePencil, setNamePencil] = useState(false)
     const [name, setName] = useState('')
     const [editName, setEditName] = useState(false)
 
+
+
     // EDIT DESCRIPTION
     const [descriptionPencil, setDescriptionPencil] = useState(false)
     const [description, setDescription] = useState('')
     const [editDescription, setEditDescription] = useState(false)
 
+
+
     // OWNER
     const [owner, setOwner] = useState(null)
 
-    const profiles = Array.from({ length: 12 }, () => pfp)
 
-    // useEffect(() => {
-    //     setTimeline(publicTimelines.find(currentTimeline => currentTimeline.id === id)).then(() => {
-    //         setName(timeline.name)
-    //         setDescription(timeline.description)
-    //         console.log(timeline)
 
-    //         setOwner(timeline.contributors.find(user => user.role == 3)).then(() => {
-    //             console.log(owner)
-    //             setLoading(false)
-    //         })
-    //     })
-    // }, [publicTimelines])
+    // SEARCH BAR
+    const [search, setSearch] = useState('')
+    const [shownContributors, setShownContributors] = useState([])
 
     useEffect(() => {
-        const fetchData = async () => {
-            const foundTimeline = publicTimelines.find(currentTimeline => currentTimeline.id === id);
-            setTimeline(foundTimeline);
-        
-            if (foundTimeline) {
-            setName(foundTimeline.name);
-            setDescription(foundTimeline.description);
-        
-            const foundOwner = foundTimeline.contributors.find(user => user.role === 3);
-            setOwner(foundOwner);
-        
-            setLoading(false);
-            }
-        };
-        
-        fetchData();
-    }, [publicTimelines, id]);
+        if(timeline) setShownContributors(timeline.contributors.filter(user => user.username.toLowerCase().includes(search.toLowerCase())))
+    }, [search, timeline])
 
+
+
+
+    // SETTING THE VARIABLES
+    useEffect(() => {
+        const fetchData = async () => {
+            const foundTimeline = publicTimelines.find(currentTimeline => currentTimeline.id === id)
+            
+            const sortedContributors = foundTimeline.contributors.sort((user1, user2) => {
+                if(user1.role > user2.role) return -1
+                else if(user1.role < user2.role) return 1
+                else return 0
+            })
+
+            // console.log('Sorted Contributors')
+            // console.log(sortedContributors)
+
+            const sortedTimeline = {...foundTimeline, contributors: sortedContributors }
+            
+            // console.log('Sorted Timeline')
+            // console.log(sortedTimeline)
+
+            setTimeline(sortedTimeline)
+        
+            if (sortedTimeline) {
+                setName(sortedTimeline.name)
+                setDescription(sortedTimeline.description)
+            
+                setOwner(sortedTimeline.contributors.find(user => user.role === 3))
+            
+                setLoading(false)
+            }
+        }
+        
+        fetchData()
+    }, [publicTimelines, id])
+
+
+
+    
+    // CLOSING THE SETTINGS
     const handleClose = () => {
         setClosed(true)
 
@@ -167,12 +193,15 @@ const TimelineSettings = ({ id, setSettings }) => {
                                 <input 
                                     type="text" 
                                     className="timeline-settings-search" 
-                                    placeholder="Search members" 
+                                    placeholder="Search members"
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
                                 />
 
                                 <div className="members-list">
                                     {
-                                        timeline.contributors.map(user => (
+                                        shownContributors.length ?
+                                        shownContributors.map(user => (
                                             <>
                                                 <img src={user.profile_picture} alt="Profile Pic" />
                                                 <p>{user.username}</p>
@@ -186,7 +215,10 @@ const TimelineSettings = ({ id, setSettings }) => {
                                                     null
                                                 }</p>
                                             </>
+                                            
                                         ))
+                                        :
+                                        null
                                     }
 
 

@@ -318,6 +318,7 @@
     margin: 0 auto;
     padding: 1.2rem 2.4rem;
     margin-bottom: 3.2rem;
+    color: inherit;
 }
 
 .members-list {
