@@ -1,0 +1,22 @@
+.timeline-about-container {
+    width: 100%;
+    background-color: rgb(223, 193, 193);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+}
+
+.stroke {
+    width: 7px;
+    height: 500px;
+    background-color: black;
+}
+
+.dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: red;
+}
