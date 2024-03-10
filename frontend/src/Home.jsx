@@ -1,9 +1,6 @@
 import { useContext } from 'react'
 import compass from './img/hourglass1.png'
 import { Link } from 'react-router-dom';
-import { Fragment } from 'react';
-import { useState } from 'react';
-import TimeLineMark from './components/TimeLineMark';
 
 
 const information = [
@@ -19,8 +16,18 @@ const information = [
         "heading": "What We Offer",
         "text": "Customizable Timelines: Our intuitive timeline creator allows users to customize every aspect of their timeline, from choosing the layout and design to adding text, images, videos, and more. Privacy and Sharing: Users have full control over the privacy settings of their timelines. Whether you want to keep your timeline private, share it with select individuals, or make it public, the choice is yours. Collaboration: Collaborate with friends, family, or colleagues to create collective timelines that capture shared experiences and memories. Memory Preservation: TimeFlies serves as a digital archive for your memories, ensuring that your stories are preserved for future generations to cherish and enjoy."
     }
+    ,
+    {
+        "heading": "What We Offer",
+        "text": "Customizable Timelines: Our intuitive timeline creator allows users to customize every aspect of their timeline, from choosing the layout and design to adding text, images, videos, and more. Privacy and Sharing: Users have full control over the privacy settings of their timelines. Whether you want to keep your timeline private, share it with select individuals, or make it public, the choice is yours. Collaboration: Collaborate with friends, family, or colleagues to create collective timelines that capture shared experiences and memories. Memory Preservation: TimeFlies serves as a digital archive for your memories, ensuring that your stories are preserved for future generations to cherish and enjoy."
+    },
+    {
+        "heading": "What We Offer",
+        "text": "Customizable Timelines: Our intuitive timeline creator allows users to customize every aspect of their timeline, from choosing the layout and design to adding text, images, videos, and more. Privacy and Sharing: Users have full control over the privacy settings of their timelines. Whether you want to keep your timeline private, share it with select individuals, or make it public, the choice is yours. Collaboration: Collaborate with friends, family, or colleagues to create collective timelines that capture shared experiences and memories. Memory Preservation: TimeFlies serves as a digital archive for your memories, ensuring that your stories are preserved for future generations to cherish and enjoy."
+    }
 ];
 import { DataContext } from './context/DataContext'
+
 
 const Home = () => {
     const { handleAlert } = useContext(DataContext)
@@ -48,6 +55,7 @@ const Home = () => {
                 </div>
             </section>
             <section id='about-us' className='secondary-section'>
+
                 {/* <div className='about-us-container'>
                     {information.map((info, i) => (
                         <Fragment key={i}>
@@ -79,6 +87,7 @@ const Home = () => {
                     ))}
 
                 </div> */}
+
 
 
 

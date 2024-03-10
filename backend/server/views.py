@@ -12,6 +12,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .serializers import ServerSerializer
+
+#get_response_or404
 from django.shortcuts import get_object_or_404
 import json
 from base64 import b64encode
@@ -24,6 +26,52 @@ def getPhoto(id):
         encoded_string = b64encode(image_file.read()).decode('utf-8')
         data_uri = f"data:{content_type};base64,{encoded_string}"
         return data_uri
+    
+def getEditorPhotos(server_id):
+    server = get_object_or_404(Server, id = server_id)
+    editors = server.editors.all()
+    editor_list = []
+    for editor in editors:
+        user = get_object_or_404(UserAccount, email = editor)
+        editor_list.append(getPhoto(user.id))
+
+    return editor_list
+
+def getContributors(server_id):
+    contributors = []
+
+    # Fetch server and related users in a single query
+    server = Server.objects.select_related('owner').prefetch_related('editors', 'members').get(id=server_id)
+    owner = server.owner
+
+    # Owner
+    owner_dict = {
+        'username': owner.username,
+        'profile_picture': getPhoto(owner.id),
+        'role': 3
+    }
+    contributors.append(owner_dict)
+
+    # Editors
+    for editor in server.editors.all():
+        editor_dict = {
+            'username': editor.username,
+            'profile_picture': getPhoto(editor.id),
+            'role': 2
+        }
+        contributors.append(editor_dict)
+
+    # Members
+    for member in server.members.all():
+        member_dict = {
+            'username': member.username,
+            'profile_picture': getPhoto(member.id),
+            'role': 1
+        }
+        contributors.append(member_dict)
+
+    return contributors
+
 
 @api_view(['POST', 'GET'])
 def createTimeLine(request, *args, **kwargs):
@@ -46,30 +94,30 @@ def createTimeLine(request, *args, **kwargs):
 @api_view(['GET'])
 def getTimeLine(request, *args, **kwargs):
     if request.method == "GET":
-        try:
-            id = int(request.GET.get('id'))
-            servers = Server.objects.filter(owner = id).all()
-            
-            servers_data = [{
-                "id": server.id,
-                "name": server.name, 
-                "description": server.description,
-                "public": server.public,
-                "owner_id": server.owner_id,
-                "owner_username": UserAccount.objects.filter(id = server.owner_id).first().username,
-                "date": str(server.created_at).split(' ')[0],
-                "owner_photo": getPhoto(server.owner_id)
-                } 
-                for server in servers]
-            return Response(data = {"servers": servers_data}, status=200)
-        except:
-            return Response(data={"error": "Invalid request"}, status=400)
+        
+        id = int(request.GET.get('id'))
+        servers = Server.objects.filter(owner = id).all()
+        
+        servers_data = [{
+            "id": server.id,
+            "name": server.name, 
+            "description": server.description,
+            "public": server.public,
+            "owner_id": server.owner_id,
+            "owner_username": UserAccount.objects.filter(id = server.owner_id).first().username,
+            "date": str(server.created_at).split(' ')[0],
+            "owner_photo": getPhoto(server.owner_id)
+            } 
+            for server in servers]
+        return Response(data = {"servers": servers_data}, status=200)
+    
+          
 
 
 @api_view(['GET'])
 def getAllPublicTimeLine(request, *args, **kwargs):
     if request.method == "GET":
-        try:
+       
             publicServers = Server.objects.filter(public = 1).all()
             
             servers_data = [{
@@ -77,15 +125,13 @@ def getAllPublicTimeLine(request, *args, **kwargs):
                 "name": server.name, 
                 "description": server.description,
                 "public": server.public,
-                "owner_id": server.owner_id,
+                "contributors": getContributors(server.id),
                 "owner_username": UserAccount.objects.filter(id = server.owner_id).first().username,
                 "date": str(server.created_at).split(' ')[0],
-                "owner_photo": getPhoto(server.owner_id)
                 } 
                   for server in publicServers]
             return Response(data = {"servers": servers_data}, status=200)
-        except:
-            return Response(data={"error": "Invalid request"}, status=400)
+       
         
         
 @api_view(['POST', ])
