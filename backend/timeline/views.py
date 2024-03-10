@@ -11,14 +11,15 @@ def getEvents(request, *args, **kwargs):
         id = int(request.GET.get('id'))
         server = Server.objects.filter(id = id).first()
         if server:
-            try:
-                timelines = Server.objects.filter(server_id = id).all()
-                data = [{
-                    'title': timeline.title,
-                    'description': timeline.description,
-                    'date_modified': timeline.date_modifired
-                } for timeline in timelines]
-                return Response(data = data, status=200)
-            except:
-                return Response(status=404)
+   
+            timelines = models.Timeline.objects.filter(server_id = id).all()
+            data = [{
+                'title': timeline.title,
+                'description': timeline.description,
+                'date_modified': timeline.date_modifired
+            } for timeline in timelines]
+            print(data)
+            return Response(data = data, status=200)
+        
+               
 
