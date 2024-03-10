@@ -3,12 +3,14 @@ import { Link, useLocation } from 'react-router-dom';
 import { DataContext } from './context/DataContext';
 import { HashLink } from 'react-router-hash-link';
 import pfp from './img/pfp.jpg'
+import { IoCloseOutline, IoMenuOutline } from 'react-icons/io5'
 
 const Nav = () => {
     const { loggedIn, setLoggedIn, navigate, account } = useContext(DataContext)
 
     const [dropdown, setDropdown] = useState(false)
     const [sticky, setSticky] = useState(false)
+    const [open, setOpen] = useState(false)
 
     // STICKY
     const handleSticky = () => {
@@ -43,7 +45,14 @@ const Nav = () => {
     return (
         <nav className={sticky ? "navbar sticky" : "navbar"}>
 
-            <ul className="nav-links">
+            {
+                open ?
+                <IoCloseOutline className='mobile-nav-btn' onClick={() => setOpen(false)}/>
+                :
+                <IoMenuOutline className='mobile-nav-btn' onClick={() => setOpen(true)}/>
+            }
+            
+            <ul className={open ? "nav-links nav-links-mobile" : "nav-links"}>
                 <li>
                     <Link to='/' className='nav-link'>Home</Link>
                 </li>

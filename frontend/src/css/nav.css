@@ -119,3 +119,13 @@
     background-color: var(--bg-tint1-transparent);
     box-shadow: 0 1.2rem 2.4rem rgba(0, 0, 0, 0.05);
 }
+
+
+
+/* MOBILE */
+.mobile-nav-btn {
+    display: none;
+    width: 3.2rem;
+    height: 3.2rem;
+    cursor: pointer;
+}

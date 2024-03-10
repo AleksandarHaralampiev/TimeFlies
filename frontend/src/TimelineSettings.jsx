@@ -33,6 +33,8 @@ const TimelineSettings = ({ id, setSettings }) => {
     useEffect(() => {
         setName(timeline.name)
         setDescription(timeline.description)
+        console.log('current timeline')
+        console.log(timeline)
     }, [timeline])
 
     const handleClose = () => {

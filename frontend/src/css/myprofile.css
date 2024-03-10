@@ -13,7 +13,7 @@
 .profile-container {
     display: flex;
     flex-direction: column;
-    margin-top: 0.2rem;
+    margin-top: 3.2rem;
     background-color: var(--secondary-tint2);
     width: 60rem;
     height: 60.5rem;
