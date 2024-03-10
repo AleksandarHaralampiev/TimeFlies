@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import pfp from './img/pfp.jpg'
 import axios from "axios"
 import TimelineSettings from "./TimelineSettings"
+import { HashLink } from "react-router-hash-link"
 
 const Dashboard = () => {
     const { loggedIn, navigate, publicTimelines, dashboardLoading, dashboardError } = useContext(DataContext)
@@ -47,6 +48,7 @@ const Dashboard = () => {
             {
                 settings ?
                 <TimelineSettings
+                    id={settings}
                     setSettings={setSettings}
                 />
                 :
@@ -73,6 +75,7 @@ const Dashboard = () => {
                     dashboardError.length ?
                     <div className="container">
                         <p className="dashboard-text">{dashboardError}</p>
+                        <HashLink to='/#contact-us' className='dashboard-text dashboard-link'>Contact Us &rarr;</HashLink>
                     </div>
                     :
                     publicTimelines.length ?
@@ -96,8 +99,9 @@ const Dashboard = () => {
                                         </div>
 
                                         <div className="timeline-img-box">
+                                            <img src={timeline.owner_photo} className="timeline-pfp"/>
                                             {
-                                                profiles.slice(0, 5).map(pic => (
+                                                profiles.slice(0, 4).map(pic => (
                                                     <img src={pic} className="timeline-pfp"/>
                                                 ))
                                             }

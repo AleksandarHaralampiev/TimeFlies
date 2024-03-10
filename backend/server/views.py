@@ -13,6 +13,16 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .serializers import ServerSerializer
 import json
+from base64 import b64encode
+import mimetypes
+
+def getPhoto(id):
+    user = UserAccount.objects.filter(id = id).first()
+    content_type, _ = mimetypes.guess_type(user.profile_picture.name)
+    with user.profile_picture.open('rb') as image_file:
+        encoded_string = b64encode(image_file.read()).decode('utf-8')
+        data_uri = f"data:{content_type};base64,{encoded_string}"
+        return data_uri
 
 @api_view(['POST', 'GET'])
 def createTimeLine(request, *args, **kwargs):
@@ -38,7 +48,18 @@ def getTimeLine(request, *args, **kwargs):
         try:
             id = int(request.GET.get('id'))
             servers = Server.objects.filter(owner = id).all()
-            servers_data = [{"id": server.id, "name": server.name, "description": server.description, "public": server.public, "owner_id": server.owner_id} for server in servers]
+            
+            servers_data = [{
+                "id": server.id,
+                "name": server.name, 
+                "description": server.description,
+                "public": server.public,
+                "owner_id": server.owner_id,
+                "owner_username": UserAccount.objects.filter(id = server.owner_id).first().username,
+                "date": str(server.created_at).split(' ')[0],
+                "owner_photo": getPhoto(server.owner_id)
+                } 
+                for server in servers]
             return Response(data = {"servers": servers_data}, status=200)
         except:
             return Response(data={"error": "Invalid request"}, status=400)
@@ -50,7 +71,17 @@ def getAllPublicTimeLine(request, *args, **kwargs):
         try:
             publicServers = Server.objects.filter(public = 1).all()
             
-            servers_data = [{"id": server.id, "name": server.name, "description": server.description, "public": server.public, "owner_id": server.owner_id} for server in publicServers]
+            servers_data = [{
+                "id": server.id,
+                "name": server.name, 
+                "description": server.description,
+                "public": server.public,
+                "owner_id": server.owner_id,
+                "owner_username": UserAccount.objects.filter(id = server.owner_id).first().username,
+                "date": str(server.created_at).split(' ')[0],
+                "owner_photo": getPhoto(server.owner_id)
+                } 
+                  for server in publicServers]
             return Response(data = {"servers": servers_data}, status=200)
         except:
             return Response(data={"error": "Invalid request"}, status=400)
