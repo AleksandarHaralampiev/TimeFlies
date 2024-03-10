@@ -10,9 +10,6 @@ from django.core.files.base import ContentFile
 import matplotlib.pyplot as plt
 from base64 import b64encode
 import mimetypes
-from mega import Mega
-from django.core.files.storage import default_storage
-from django.conf import settings
 
 @api_view(['POST', 'GET'])
 def isUser(request, *args, **kwargs):
@@ -29,7 +26,26 @@ def isUser(request, *args, **kwargs):
     else:
         return Response(data = {"message": "Wrong password."}, status=404)
     
-
+@api_view(['GET'])
+def getUserCredentials(request, *args, **kwargs):
+    if request.method == "GET":
+        id = int(request.GET.get('id'))
+        try:
+            user = UserAccount.objects.filter(id = id).first()
+            user_data = {
+                "email": user.email,
+                "username": user.username,
+                "profile_picture": None  
+            }
+            if user.profile_picture:
+                content_type, _ = mimetypes.guess_type(user.profile_picture.name)
+                with user.profile_picture.open('rb') as image_file:
+                    encoded_string = b64encode(image_file.read()).decode('utf-8')
+                    data_uri = f"data:{content_type};base64,{encoded_string}"
+                    user_data["profile_picture"] = data_uri
+            return Response(data = {"data": user_data}, status=200)
+        except:
+            return Response(data = {"Message": "There is no such account"}, status=404)
 
 @api_view(['POST', 'GET'])
 def isUser(request, *args, **kwargs):
@@ -81,12 +97,6 @@ def saveChanges(request, *args, **kwargs):
             if new_profile_picture_blob:
                 user.profile_picture = new_profile_picture_blob
                 user.save()
-
-                mega = Mega()
-                mega.login('themastarayt@gmail.com', 'KG3vf12!')
-                image_path = default_storage.open(user.profile_picture.name)
-                mega.upload(user.profile_picture.name, image_path)
-
                 message['image'] = "Image saved successfully" 
             if username:
                 user.username = username
