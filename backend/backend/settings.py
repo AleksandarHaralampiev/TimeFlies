@@ -192,8 +192,3 @@ DJOSER = {
 }
 
 AUTH_USER_MODEL = 'authenticate.UserAccount'
-
-
-
-
-

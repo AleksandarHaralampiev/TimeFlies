@@ -113,7 +113,7 @@
     max-width: 100rem;
     margin: 16rem auto;
     padding: 3.2rem;
-    background-color: var(--bg-shade1);
+    background-color: var(--bg);
 
     animation: scaleOpen 0.5s;
 
@@ -148,6 +148,32 @@
 .timeline-settings-name {
     font-size: 5.2rem;
     letter-spacing: 1.75px;
+    
+    position: relative;
+}
+
+.timeline-settings-name input {
+    font-size: 5.2rem;
+    letter-spacing: 1.75px;
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    background-color: var(--bg-tint1);
+    text-align: center;
+    display: inline;
+}
+
+.timeline-settings-name-icon {
+    position: absolute;
+
+    width: 3.2rem;
+    height: 3.2rem;
+
+    transform: translate(50%, -50%);
+
+    top: 50%;
+
+    cursor: pointer;
 }
 
 .timeline-settings-owner {
@@ -173,6 +199,38 @@
     font-size: 1.8rem;
     line-height: 1.8;
     margin-bottom: 1.6rem;
+
+    position: relative;
+}
+
+.timeline-settings-description textarea {
+    border: none;
+    background-color: var(--bg-tint1);
+    min-height: 50rem;
+    resize: vertical;
+    width: 100%;
+    font-size: 1.8rem;
+    color: inherit;
+    text-align: center;
+}
+
+.timeline-settings-description-done {
+    width: 4.8rem;
+    height: 4.8rem;
+    cursor: pointer;
+}
+
+.timeline-settings-description-icon {
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-left: 1.2rem;
+    /* transform: translateY(50%); */
+
+    /* position: absolute;
+    bottom: 0;
+    right: 0; */
+
+    cursor: pointer;
 }
 
 .timeline-settings-date {
@@ -187,7 +245,8 @@
 .timeline-settings-btn-box {
     display: grid;
     gap: 3.2rem;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
 }
 
 
@@ -195,20 +254,90 @@
     /* display: flex;
     align-items: center; */
     /* background-color: white; */
+    
+    background-color: var(--main-shade1);
+    /* background-color: white; */
+
+    box-shadow: 0 0 2.4rem rgba(0, 0, 0, 0.1);
+
+    cursor: pointer;
+
+    max-width: 24rem;
+    display: inline-block;
+
+    padding: 1.6rem 1.6rem;
+
+    transition: 0.2s;
 }
 
-.timeline-settings-img-box {
-    margin-bottom: 1.2rem;
+.timeline-settings-members:hover {
+    transform: scale(1.05);
 }
 
 .btn-contributors {
+    font-size: 1.4rem;
+    letter-spacing: 1.8px;
 
+    color: white;
+}
+
+.timeline-settings-img-box {
+    margin-bottom: 0.8rem;
+}
+
+.timeline-settings-img-box img {
+    width: 3rem;
+    height: 3rem;
+    border: solid 2px var(--main-shade1);
 }
 
 
 
 .timeline-settings-view-btn {
     grid-column: 3;
+}
+
+
+
+
+
+.timeline-settings-contributors {
+    margin-top: 4.2rem;
+}
+
+.timeline-settings-heading {
+    text-align: center;
+    font-size: 3.2rem;
+    margin-bottom: 1.8rem;
+}
+
+.timeline-settings-search {
+    display: block;
+    margin: 0 auto;
+    padding: 1.2rem 2.4rem;
+    margin-bottom: 3.2rem;
+}
+
+.members-list {
+    display: grid;
+    grid-template-columns: auto 70fr 30fr;
+    align-items: center;
+    gap: 1.8rem;
+    /* justify-items: center; */
+    width: 50%;
+    margin: 0 auto;
+
+    font-size: 1.8rem;
+}
+
+.members-list img {
+    width: 4.8rem;
+    height: 4.8rem;
+    border-radius: 50%;
+}
+
+.members-role {
+    justify-self: end;
 }
 
 
@@ -235,5 +364,14 @@
     }
     100% {
         transform: scale(0);
+    }
+}
+
+@keyframes dropdown {
+    from {
+        transform: scaleY(0);
+    }
+    to {
+        transform: scaleY(1);
     }
 }
