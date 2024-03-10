@@ -25,13 +25,13 @@ const MyProfile = () => {
         console.log(profilePicture)
 
         const obj = {
-            id: JSON.parse(localStorage.getItem('accData')).id,
-            username: name,
-            profile_picture: profilePicture
+            userId: JSON.parse(localStorage.getItem('accData')).id,
+            newUsername: name,
+            newProfilePicture: profilePicture
         }
 
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/save_changes/', obj)
+            const response = await axios.put('http://127.0.0.1:8000/api/save_changes/', obj)
 
             console.log(response)
         } catch(err) {
