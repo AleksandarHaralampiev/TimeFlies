@@ -140,12 +140,11 @@ def addUser(request, *args, **kwargs):
         body = request.body
         data = json.loads(body)
         email = data['email']
-        server_id = data['server_id']
-        role = data['role']
+        server_id = int(data['server_id'])
+        role = int(data['role'])
 
         user  = get_object_or_404(UserAccount, email = email)
         if user:
-           
            server = get_object_or_404(Server, id = server_id)
            if role == 1:
                server.members.add(user)
