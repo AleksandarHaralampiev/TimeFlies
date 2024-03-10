@@ -48,7 +48,15 @@ const TimelineSettings = ({ id, setSettings }) => {
 
                 <div className="timeline-settings-btn-box">
                     <div className="timeline-settings-members">
-                        <div className="timeline-img-box"></div>
+                        <div className="timeline-img-box timeline-settings-img-box">
+                            <img src={timeline.owner_photo} className="timeline-pfp"/>
+                            {
+                                profiles.slice(0, 4).map(pic => (
+                                    <img src={pic} className="timeline-pfp"/>
+                                ))
+                            }
+                        </div>
+                        <div className="btn-contributors">View All Contributors</div>
                     </div>
 
                     {

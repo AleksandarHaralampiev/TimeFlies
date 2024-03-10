@@ -190,6 +190,23 @@
     grid-template-columns: repeat(3, 1fr);
 }
 
+
+.timeline-settings-members {
+    /* display: flex;
+    align-items: center; */
+    /* background-color: white; */
+}
+
+.timeline-settings-img-box {
+    margin-bottom: 1.2rem;
+}
+
+.btn-contributors {
+
+}
+
+
+
 .timeline-settings-view-btn {
     grid-column: 3;
 }
