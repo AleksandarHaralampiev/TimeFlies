@@ -35,15 +35,13 @@ const Home = () => {
 
                         <Link to='/register' className="btn">Start now</Link>
                     </div>
-                    <Link to='/register' className="btn">Start now</Link>
                     {/* <br/>
                     <br/>
                     <br/>
                     <br/>
                     <br/>
                     <button className="btn" onClick={() => handleAlert('success', 'testing the alerts')}>Alert</button> */}
-                </div>
-                <div>
+
                     <div className="main-imgbox">
                         <img src={compass} className='main-img' />
                     </div>

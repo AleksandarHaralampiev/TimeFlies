@@ -110,10 +110,21 @@
     margin: 0 auto;
     padding: 3.2rem;
     background-color: var(--bg-shade1);
+
+    animation: scale 0.5s;
 }
 
 .timeline-settings-close {
     width: 2.4rem;
     height: 2.4rem;
     cursor: pointer;
+}
+
+@keyframes scale {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
 }

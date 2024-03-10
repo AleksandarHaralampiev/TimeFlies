@@ -8,12 +8,6 @@ import axios from "axios";
 
 
 
-const USERS = {
-    name: 'Username',
-    password: '567860',
-    email: 'example@email.com',
-}
-
 
 const MyProfile = () => {
     const { account } = useContext(DataContext)
@@ -31,6 +25,7 @@ const MyProfile = () => {
         console.log(profilePicture)
 
         const obj = {
+            id: JSON.parse(localStorage.getItem('accData')).id,
             username: name,
             profile_picture: profilePicture
         }
