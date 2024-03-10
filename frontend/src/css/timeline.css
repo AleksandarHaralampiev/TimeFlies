@@ -245,7 +245,8 @@
 
 /* BUTTON BOX */
 .timeline-settings-btn-box {
-    display: grid;
+    display: flex;
+    justify-content: space-between;
     gap: 3.2rem;
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
@@ -313,11 +314,20 @@
     margin-bottom: 1.8rem;
 }
 
+.timeline-settings-search-box {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+
+    gap: 1.2rem;
+
+    /* background-color: aqua; */
+    margin-bottom: 3.2rem;
+}
+
 .timeline-settings-search {
     display: block;
-    margin: 0 auto;
     padding: 1.2rem 2.4rem;
-    margin-bottom: 3.2rem;
     color: inherit;
 }
 
@@ -329,6 +339,7 @@
     /* justify-items: center; */
     width: 50%;
     margin: 0 auto;
+    margin-bottom: 6.4rem;
 
     font-size: 1.8rem;
 }
@@ -343,6 +354,28 @@
     justify-self: end;
 }
 
+
+
+.timeline-settings-add-form {
+    /* background-color: aqua; */
+    display: flex;
+    flex-direction: column;
+    gap: 3.2rem;
+
+    width: 75%;
+    margin: 0 auto;
+    /* align-items: center; */
+
+    text-align: center;
+}
+
+.timeline-settings-add-form input,
+.timeline-settings-add-form select,
+.timeline-settings-add-form button {
+    padding: 1.6rem 2.4rem;
+    border: none;
+    font-size: 1.6rem;
+}
 
 
 

@@ -41,32 +41,52 @@ const Nav = () => {
     document.addEventListener('click', (e) => dropdown ? handleCollapse(e) : null)
 
 
+    // MOBILE
+    const handleClose = () => {
+        // setTimeout(() => {
+            setOpen(false)
+        // }, 500)
+    }
+
 
     return (
         <nav className={sticky ? "navbar sticky" : "navbar"}>
 
             {
                 open ?
-                <IoCloseOutline className='mobile-nav-btn' onClick={() => setOpen(false)}/>
+                <IoCloseOutline className='mobile-nav-btn' onClick={handleClose}/>
                 :
                 <IoMenuOutline className='mobile-nav-btn' onClick={() => setOpen(true)}/>
             }
             
-            <ul className={open ? "nav-links nav-links-mobile" : "nav-links"}>
+            <ul className={open ? "nav-links-mobile nav-links" : "nav-links"}>
                 <li>
-                    <Link to='/' className='nav-link'>Home</Link>
+                    <Link to='/' className='nav-link' onClick={() => setOpen(false)}>Home</Link>
                 </li>
                 <li>
-                    <HashLink to='/#about-us' className='nav-link'>About</HashLink>
+                    <HashLink to='/#about-us' className='nav-link' onClick={() => setOpen(false)}>About</HashLink>
                 </li>
                 <li>
-                    <HashLink to='/#contact-us' className='nav-link'>Contact Us</HashLink>
+                    <HashLink to='/#contact-us' className='nav-link' onClick={() => setOpen(false)}>Contact Us</HashLink>
                 </li>
                 {loggedIn && (
                     <li>
-                        <Link to='/dashboard' className='nav-link'>Dashboard</Link>
+                        <Link to='/dashboard' className='nav-link' onClick={() => setOpen(false)}>Dashboard</Link>
                     </li>
                 )}
+                {
+                    !loggedIn && open ?
+                    <div className='nav-account-links'>
+                        <li>
+                            <Link to='/login' className='nav-link' onClick={() => setOpen(false)}>Log In</Link>
+                        </li>
+                        <li>
+                            <Link to='/register' className='nav-link' onClick={() => setOpen(false)}>Sign Up</Link>
+                        </li>
+                    </div>
+                    :
+                    null
+                }
             </ul>
 
 
