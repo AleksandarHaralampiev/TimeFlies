@@ -192,13 +192,8 @@ DJOSER = {
 }
 
 AUTH_USER_MODEL = 'authenticate.UserAccount'
-<<<<<<< HEAD
-=======
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
 
 
 
 
->>>>>>> c1d60dad97fc3dfc93721013300461fa28baba7c
+
