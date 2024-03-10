@@ -6,73 +6,29 @@ import { VscMail, VscLock } from "react-icons/vsc";
 import { DataContext } from "./context/DataContext";
 import axios from "axios";
 
-
-
-
 const MyProfile = () => {
-    const { account } = useContext(DataContext)
+    const { account } = useContext(DataContext);
 
     useEffect(() => {
-        setName(account.username)
-    }, [account])
-
-
-
-    // SENDING DATA
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-
-        console.log(profilePicture)
-
-        const obj = {
-            userId: JSON.parse(localStorage.getItem('accData')).id,
-            newUsername: name,
-            newProfilePicture: profilePicture
-        }
-
-        try {
-            const response = await axios.post('http://127.0.0.1:8000/authenticate/save_changes/', obj)
-
-            console.log(response)
-        } catch(err) {
-            console.log(err)
-        }
-    }
-
-
-
-
-    // const [users, setUsers] = useState(USERS);
+        setName(account.username);
+    }, [account]);
 
     const [editField, setEditField] = useState(null);
-    // const [value, setValue] = useState('');
-    const [name, setName] = useState('')
-    const [password, setPassword] = useState('')
-
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
     const [visible, setVisible] = useState(true);
     const [profilePicture, setProfilePicture] = useState(null);
     const fileInputRef = useRef(null);
 
     function handleEdit(field) {
         setEditField(field);
-        // setValue(users[field]);
     }
-
-    // function handleChange(event) {
-    //     setValue(event.target.value);
-    // }
 
     function handleSave() {
         if (editField === 'name') {
-            // setUsers(prevUsers => ({
-            //     ...prevUsers,
-            //     name: value
-            // }));
+            // handle name change
         } else if (editField === 'password') {
-            // setUsers(prevUsers => ({
-            //     ...prevUsers,
-            //     password: value
-            // }));
+            // handle password change
         }
         setEditField(null);
     }
@@ -80,7 +36,24 @@ const MyProfile = () => {
     function handleFileSelect(event) {
         const file = event.target.files[0];
         if (file) {
-            setProfilePicture(URL.createObjectURL(file));
+            setProfilePicture(file);
+        }
+    }
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('userId', JSON.parse(localStorage.getItem('accData')).id);
+        formData.append('newUsername', name);
+        formData.append('newProfilePicture', profilePicture);
+
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/authenticate/save_changes/', formData);
+
+            console.log(response);
+        } catch (err) {
+            console.log(err);
         }
     }
 
@@ -91,7 +64,6 @@ const MyProfile = () => {
     return (
         <main className="section-main">
             <div className="profile-container">
-
                 <div className="avatar-container">
                     <input
                         type="file"
@@ -101,15 +73,14 @@ const MyProfile = () => {
                     />
                     <div className="pfp-container">
                         {profilePicture ? (
-                            <img src={profilePicture} className="avatar" alt="Avatar" />
+                            <img src={URL.createObjectURL(profilePicture)} className="avatar" alt="Avatar" />
                         ) : (
                             <img src={account.profile_picture} className="avatar" alt="Avatar" />
                         )}
                         <IoPencilOutline className="icon-hover" onClick={handleProfilePictureClick} />
                     </div>
                 </div>
-
-                <div className="username-container" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+                <div className="username-container">
                     {editField === 'name' ? (
                         <input className='username-input' type="text" required value={name} onChange={(e) => setName(e.target.value)} />
                     ) : (
@@ -122,12 +93,10 @@ const MyProfile = () => {
                         <IoCheckmarkDoneOutline className="tick-hover" onClick={handleSave} />
                     )}
                 </div>
-
                 <div className="email-container">
                     <VscMail className="email-icon" />
                     <span className="email">{account.email}</span>
                 </div>
-
                 <div className="password-container">
                     <div className={editField === 'password' ? "pas-container-1" : 'pas-container'}>
                         <VscLock className="pass-icon" />
@@ -135,7 +104,6 @@ const MyProfile = () => {
                             <input className='password-input' type={visible ? 'text' : 'password'} placeholder="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
                         ) : (
                             <span className="password">{visible && password.length ? password : '*********'}</span>
-                            // <span className="password">*********</span>
                         )}
                         <div onClick={() => setVisible(!visible)}>
                             {visible ? <FaRegEye className="eye-icon" /> : <FaRegEyeSlash className="eye-icon" />}
@@ -148,29 +116,13 @@ const MyProfile = () => {
                             )}
                         </button>
                     </div>
-
-
                 </div>
-
                 <div className="btn-container">
                     <button className="btn" onClick={(e) => handleSubmit(e)}>Save changes</button>
                 </div>
-
             </div>
-
-
-
-            {/* PICTURE */}
-            {
-                profilePicture ?
-                <img src={profilePicture} className="test" />
-                :
-                null
-                // <img src={account.profile_picture} />
-            }
         </main>
     );
 }
-
 
 export default MyProfile;
