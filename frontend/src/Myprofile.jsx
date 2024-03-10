@@ -7,7 +7,7 @@ import { DataContext } from "./context/DataContext";
 import axios from "axios";
 
 const MyProfile = () => {
-    const { account } = useContext(DataContext);
+    const { account, handleAlert, fetchAccount, fetchPublicTimelines, fetchMyTimelines } = useContext(DataContext);
 
     useEffect(() => {
         setName(account.username);
@@ -52,6 +52,13 @@ const MyProfile = () => {
             const response = await axios.post('http://127.0.0.1:8000/authenticate/save_changes/', formData);
 
             console.log(response);
+
+            if(response.status == 201) {
+                handleAlert('success', 'Changes saved successfully.')
+                fetchAccount()
+                fetchMyTimelines()
+                fetchPublicTimelines()
+            }
         } catch (err) {
             console.log(err);
         }
