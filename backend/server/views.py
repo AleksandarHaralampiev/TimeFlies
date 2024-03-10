@@ -39,7 +39,15 @@ def getTimeLine(request, *args, **kwargs):
             id = int(request.GET.get('id'))
             servers = Server.objects.filter(owner = id).all()
             
-            servers_data = [{"id": server.id, "name": server.name, "description": server.description, "public": server.public, "owner_id": server.owner_id, "owner_username": UserAccount.objects.filter(id = server.owner_id).first().username, "date": server.created_at.split('T')} for server in servers]
+            servers_data = [{
+                "id": server.id,
+                "name": server.name, 
+                "description": server.description,
+                "public": server.public,
+                "owner_id": server.owner_id,
+                "owner_username": UserAccount.objects.filter(id = server.owner_id).first().username,
+                "date": str(server.created_at).split('T')[0]} 
+                for server in servers]
             return Response(data = {"servers": servers_data}, status=200)
         except:
             return Response(data={"error": "Invalid request"}, status=400)
@@ -51,7 +59,15 @@ def getAllPublicTimeLine(request, *args, **kwargs):
         try:
             publicServers = Server.objects.filter(public = 1).all()
             
-            servers_data = [{"id": server.id, "name": server.name, "description": server.description, "public": server.public, "owner_id": server.owner_id, "owner_username": UserAccount.objects.filter(id = server.owner_id).first().username, "date": server.created_at.split('T')} for server in publicServers]
+            servers_data = [{
+                "id": server.id, 
+                "name": server.name, 
+                "description": server.description, 
+                "public": server.public, 
+                "owner_id": server.owner_id, 
+                "owner_username": UserAccount.objects.filter(id = server.owner_id).first().username, 
+                "date": str(server.created_at).split('T')[0]}
+                  for server in publicServers]
             return Response(data = {"servers": servers_data}, status=200)
         except:
             return Response(data={"error": "Invalid request"}, status=400)
