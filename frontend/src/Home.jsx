@@ -1,9 +1,11 @@
 import { useContext } from 'react'
 import compass from './img/hourglass1.png'
 import { Link } from 'react-router-dom';
+import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
+import 'react-vertical-timeline-component/style.min.css';
 
 
-const information = [
+const data = [
     {
         'heading': 'About Us: TimeFlies',
         'text': "At TimeFlies, we believe in the power of storytelling and preserving memories. Our platform offers users the opportunity to create personalized timelines, weaving together their life's moments into a beautiful narrative. Whether it's documenting personal milestones, historical events, or cherished memories, TimeFlies provides the canvas for your stories to unfold."
@@ -11,15 +13,6 @@ const information = [
     {
         "heading": "Our Mission",
         "text": "Our mission is to empower individuals to curate and share their life's journey in a visually compelling and interactive way. We understand the significance of preserving memories and aim to provide a user-friendly platform where users can effortlessly create timelines that reflect their unique experiences."
-    },
-    {
-        "heading": "What We Offer",
-        "text": "Customizable Timelines: Our intuitive timeline creator allows users to customize every aspect of their timeline, from choosing the layout and design to adding text, images, videos, and more. Privacy and Sharing: Users have full control over the privacy settings of their timelines. Whether you want to keep your timeline private, share it with select individuals, or make it public, the choice is yours. Collaboration: Collaborate with friends, family, or colleagues to create collective timelines that capture shared experiences and memories. Memory Preservation: TimeFlies serves as a digital archive for your memories, ensuring that your stories are preserved for future generations to cherish and enjoy."
-    }
-    ,
-    {
-        "heading": "What We Offer",
-        "text": "Customizable Timelines: Our intuitive timeline creator allows users to customize every aspect of their timeline, from choosing the layout and design to adding text, images, videos, and more. Privacy and Sharing: Users have full control over the privacy settings of their timelines. Whether you want to keep your timeline private, share it with select individuals, or make it public, the choice is yours. Collaboration: Collaborate with friends, family, or colleagues to create collective timelines that capture shared experiences and memories. Memory Preservation: TimeFlies serves as a digital archive for your memories, ensuring that your stories are preserved for future generations to cherish and enjoy."
     },
     {
         "heading": "What We Offer",
@@ -56,43 +49,27 @@ const Home = () => {
             </section>
             <section id='about-us' className='secondary-section'>
 
-                {/* <div className='about-us-container'>
-                    {information.map((info, i) => (
-                        <Fragment key={i}>
-                            <div className='textbox'>
-                                {i % 2 === 0 ? (
-                                    <div className='textbox left'>
-                                        <h1 className='heading-secondary'>{info.heading}</h1>
-                                        <p className='secondary-text'>{info.text}</p>
-                                    </div>
-                                ) : (
-                                    <div className='circle-container'>
-                                        <TimeLineMark name='empty-circle' />
-                                    </div>
-                                )}
-                                {i % 2 !== 0 ? (
-                                    <div className='textbox right'>
-                                        <h1 className='heading-secondary'>{info.heading}</h1>
-                                        <p className='secondary-text'>{info.text}</p>
-                                    </div>
-                                ) : (
-                                    <div className='circle-container'>
-                                        <TimeLineMark name='empty-circle' />
-                                    </div>
-                                )}
+                <VerticalTimeline>
+                    {data.map((e, i) => {
+                        return (
+                            <VerticalTimelineElement
 
-                            </div>
-                            {i < (information.length - 1) && <TimeLineMark name="small-pillar" />}
-                        </Fragment>
-                    ))}
+                                contentStyle={{ background: '#f0f0f0', color: '#625149', height: '100%', padding: '1rem', fontSize: '4rem' }}
+                                contentArrowStyle={{ borderRight: '7px solid  #f0f0f0' }}
+                                iconStyle={{ background: '#f2e4cb', color: '#625149', height: '3rem', width: '3rem', margin: '0 0 0 -15px' }}
 
-                </div> */}
+                            >
+                                <h3 className="vertical-timeline-element-title">{e.heading}</h3>
+                                <p style={{ fontSize: '2rem' }}>
+                                    {e.text}
+                                </p>
+                            </VerticalTimelineElement>
+                        )
+                    })}
 
+                </VerticalTimeline>
 
-
-
-
-            </section>
+            </section >
             <section id='contact-us' className='tertiary-section'>
                 <div className="contact-us-container">
                     <h1 className='heading-secondary'>Contact Us</h1>

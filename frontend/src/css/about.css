@@ -5,7 +5,7 @@
 .secondary-section {
     background-color: var(--bg-tint1);
     min-height: 100vh;
-    padding: 6rem 0 9.6rem 0;
+    padding: 1rem 0 9.6rem 0;
 }
 
 .textbox {
