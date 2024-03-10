@@ -9,6 +9,8 @@ urlpatterns = [
     path('create/', views.createTimeLine),
     path('list/', views.getTimeLine),
     path('public/', views.getAllPublicTimeLine),
-    path('addUserToServer/', views.addUser)
+    path('addUserToServer/', views.addUser),
+    path('changeRole/', views.changeRole),
+    path('checkUser/', views.checkUser)
 ]
 
