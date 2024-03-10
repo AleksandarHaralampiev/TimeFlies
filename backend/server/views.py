@@ -24,7 +24,7 @@ def createTimeLine(request, *args, **kwargs):
     owner_id = int(data['owner_id'])
     owner = UserAccount.objects.filter(id=owner_id).first()
   
-    server = Server(name = name, description = description, owner = owner, public = public)
+    server = Server(name = name, description = description, owner = owner, owner_id = owner_id, public = public)
     server.save()
 
     return Response(data = {"message": "Successfully created"}, status=200)
@@ -37,19 +37,20 @@ def getTimeLine(request, *args, **kwargs):
     if request.method == "GET":
         try:
             id = int(request.GET.get('id'))
-            servers = Server.objects.filter(owner = id).all()
+            servers = Server.objects.filter(owner=id).all()
             servers_data = [{"id": server.id, "name": server.name, "description": server.description, "public": server.public, "owner_id": server.owner_id, "owner": server.owner} for server in servers]
-            return Response(data = {"servers": servers_data}, status=200)
+            return Response(data={"servers": servers_data}, status=200)
         except:
             return Response(data={"error": "Invalid request"}, status=400)
+
 
 @api_view(['GET'])
 def getAllPublicTimeLine(request, *args, **kwargs):
     if request.method == "GET":
         try:
-            publicServers = Server.objects.filter(public = 1).all()
+            publicServers = Server.objects.filter(public=1).all()
             servers_data = [{"id": server.id, "name": server.name, "description": server.description, "public": server.public, "owner_id": server.owner_id, "owner": server.owner} for server in publicServers]
-            return Response(data = {"servers": servers_data}, status=200)
+            return Response(data={"servers": servers_data}, status=200)
         except:
             return Response(data={"error": "Invalid request"}, status=400)
     
