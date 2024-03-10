@@ -137,25 +137,24 @@ def getAllPublicTimeLine(request, *args, **kwargs):
 @api_view(['POST', ])
 def addUser(request, *args, **kwargs):
     if request.method == "POST":
-        email = request.POST.get("email")
-        role = int(request.POST.get("role"))
-        server_id = int(request.POST.get("server_id"))
-        #class = []
-        # default = 0
-        # member = 1
-        # editor = 2
+        body = request.body
+        data = json.loads(body)
+        email = data['email']
+        server_id = data['server_id']
+        role = data['role']
+
         user  = get_object_or_404(UserAccount, email = email)
         if user:
-            
-            server = get_object_or_404(Server, id = server_id)
-            if role == 1:
-                server.members.add(user)
-                server.save()
-            elif role == 2:
-                server.editors.add(user)
-                server.save()
-            return Response(data = {"message": "Successfully added"}, status=200)
-        
+           
+           server = get_object_or_404(Server, id = server_id)
+           if role == 1:
+               server.members.add(user)
+               server.save()
+           elif role == 2:
+               server.editors.add(user)
+               server.save()
+        return Response(data = {"message": "Successfully added"}, status=200)
+       # 
         
 @api_view(['POST'])
 def changeRole(request, *args, **kwargs):
