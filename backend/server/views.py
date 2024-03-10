@@ -88,18 +88,19 @@ def getAllPublicTimeLine(request, *args, **kwargs):
             return Response(data={"error": "Invalid request"}, status=400)
         
         
-@api_view(['POST'])
+@api_view(['POST', ])
 def addUser(request, *args, **kwargs):
     if request.method == "POST":
         email = request.POST.get("email")
         role = int(request.POST.get("role"))
+        server_id = int(request.POST.get("server_id"))
         #class = []
         # default = 0
         # member = 1
         # editor = 2
         user  = get_object_or_404(UserAccount, email = email)
         if user:
-            server_id = int(request.POST.get("server_id"))
+            
             server = get_object_or_404(Server, id = server_id)
             if role == 1:
                 server.members.add(user)
@@ -113,7 +114,47 @@ def addUser(request, *args, **kwargs):
 @api_view(['POST'])
 def changeRole(request, *args, **kwargs):
     if request.method == "POST":
-        pass
+        email = request.POST.get('email') 
+        server_id = int(request.POST.get("server_id"))
+        new_role = int(request.POST.get("role"))
+        user  = get_object_or_404(UserAccount, email = email)
+        if user:
+            server = get_object_or_404(Server, id = server_id)
+            if new_role == 0:
+                server.members.remove(user)
+                server.editors.remove(user)
+                return Response(data = {"message": "The user is now not neither member or editor"}, status=200)
+            if new_role == 1:
+                server.members.add(user)
+                server.editors.remove(user)
+                return Response(data = {"message": "The user is now member"}, status=200)
+            if new_role == 2:
+                server.members.remove(user)
+                server.editors.add(user)
+                return Response(data = {"message": "The user is now editor"}, status=200)
+        else:
+            return Response(status=404)
+    
+@api_view(['GET'])
+def checkUser(request, *args, **kwargs):
+    if request.method == "GET":
+        user_id = int(request.GET.get('id'))
+        server_id = int(request.GET.get("server_id"))
+        user = get_object_or_404(UserAccount, id = user_id)
+        server = get_object_or_404(Server, id = server_id)
+        is_member = server.members.filter(id=user_id).exists()
+        is_editor = server.editors.filter(id=user_id).exists()
+        
+        if is_member:
+            return Response(data={"message": "The user is member"}, status=200)
+        elif is_editor:
+            return Response(data={"message": "The user is editor"}, status=200)
+        else:
+            return Response(data={"message": "The user is default"}, status=200)
+
+
+
+
         
         
         

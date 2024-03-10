@@ -44,7 +44,7 @@ const Dashboard = () => {
 
 
     return (
-        <section className="section-dashboard">
+        <section className="section-dashboard" >
             {
                 settings ?
                 <TimelineSettings
