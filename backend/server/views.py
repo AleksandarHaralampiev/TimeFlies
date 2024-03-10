@@ -89,18 +89,19 @@ def getAllPublicTimeLine(request, *args, **kwargs):
             return Response(data={"error": "Invalid request"}, status=400)
         
         
-@api_view(['POST'])
+@api_view(['POST', ])
 def addUser(request, *args, **kwargs):
     if request.method == "POST":
         email = request.POST.get("email")
         role = int(request.POST.get("role"))
+        server_id = int(request.POST.get("server_id"))
         #class = []
         # default = 0
         # member = 1
         # editor = 2
         user  = get_object_or_404(UserAccount, email = email)
         if user:
-            server_id = int(request.POST.get("server_id"))
+            
             server = get_object_or_404(Server, id = server_id)
             if role == 1:
                 server.members.add(user)
