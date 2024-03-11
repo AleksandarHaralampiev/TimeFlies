@@ -128,6 +128,7 @@ def getAllPublicTimeLine(request, *args, **kwargs):
                 "contributors": getContributors(server.id),
                 "owner_username": UserAccount.objects.filter(id = server.owner_id).first().username,
                 "date": str(server.created_at).split(' ')[0],
+                "owner_id": server.owner_id
                 } 
                   for server in publicServers]
             return Response(data = {"servers": servers_data}, status=200)
