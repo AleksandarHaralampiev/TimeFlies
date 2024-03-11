@@ -35,6 +35,18 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
     const [editDescription, setEditDescription] = useState(false)
 
 
+    // EDIT MEMBERS
+    const [editMembers, setEditMembers] = useState(null)
+    const [roleEdit, setRoleEdit] = useState(1)
+
+    const handleEditMember = (e) => {
+        e.preventDefault()
+
+        setEditMembers(null)
+
+
+    }
+
 
     // OWNER
     const [owner, setOwner] = useState(null)
@@ -245,7 +257,7 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                             />
 
                             {
-                                // owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
+                                owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
                                 <button className="btn" onClick={() => setAddMember(!addMember)}>
                                     {
                                         addMember ?
@@ -255,8 +267,8 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
 
                                     }
                                 </button>
-                                // :
-                                // null
+                                :
+                                null
                             }
                         </div>
 
@@ -267,31 +279,41 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                                     <>
                                         <img src={user.profile_picture} alt="Profile Pic" />
                                         <p>{user.username}</p>
-                                        <p className="members-role">{
-                                            user.role === 1 ?
-                                            'Member' :
-                                            user.role === 2 ?
-                                            'Editor' :
-                                            user.role === 3 ?
-                                            'Owner' :
-                                            null
-                                        }</p>
+                                        {
+                                            editMembers === user.id ?
+                                            <form className="members-role" onSubmit={(e) => handleEditMember(e)}>
+                                                <select className="members-role" value={roleEdit} onChange={(e) => setRoleEdit(e.target.value)}>
+                                                    <option value={2}>Editor</option>
+                                                    <option value={1}>Member</option>
+                                                </select>
+                                                <button className="members-role-edit" type="submit">
+                                                    <IoCheckmarkDoneOutline/>
+                                                </button>
+                                            </form>
+                                            :
+                                            <span className="members-role">
+                                            <p>{
+                                                user.role === 1 ?
+                                                'Member' :
+                                                user.role === 2 ?
+                                                'Editor' :
+                                                user.role === 3 ?
+                                                'Owner' :
+                                                null
+                                                }</p>
+                                                {
+                                                    owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) && owner.id !== user.id ?
+                                                    <IoPencilOutline className="members-role-edit" onClick={() => setRoleEdit(user.id)}/>
+                                                    :
+                                                    null
+                                                }
+                                            </span>
+                                        }
                                     </>
                                     
                                 ))
                                 :
                                 null
-                            }
-
-
-                            {
-                                // profiles.slice(0, 7).map((pic, index) => (
-                                //     <>
-                                //         <img src={pic} alt="Profile Pic" />
-                                //         <p>Member {index + 1}</p>
-                                //         <p className="members-role">Member</p>
-                                //     </>
-                                // ))
                             }
                         </div>
                     </div>
