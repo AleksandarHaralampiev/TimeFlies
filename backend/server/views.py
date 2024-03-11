@@ -57,6 +57,7 @@ def getContributors(server_id):
         editor_dict = {
             'username': editor.username,
             'profile_picture': getPhoto(editor.id),
+            'id': editor.id,
             'role': 2
         }
         contributors.append(editor_dict)
@@ -66,6 +67,7 @@ def getContributors(server_id):
         member_dict = {
             'username': member.username,
             'profile_picture': getPhoto(member.id),
+            'id': member.id,
             'role': 1
         }
         contributors.append(member_dict)
@@ -188,7 +190,7 @@ def checkUser(request, *args, **kwargs):
     if request.method == "GET":
         body = request.body
         data = json.loads(body)
-        user_id = data['id']
+        user_id = int(data['id']) 
         server_id = int(data['server_id'])
         user = get_object_or_404(UserAccount, id = user_id)
         server = get_object_or_404(Server, id = server_id)
