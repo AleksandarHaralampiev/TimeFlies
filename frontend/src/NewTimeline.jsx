@@ -50,7 +50,7 @@ const NewTimeline = () => {
             <div className="container header-new">
                 <IoHourglassOutline className="icon-new"/>
 
-                <h1 className="heading-secondary">Create a timeline</h1>
+                <h1 className="heading-secondary-reusable">Create a timeline</h1>
             </div>
 
             <div className="container">

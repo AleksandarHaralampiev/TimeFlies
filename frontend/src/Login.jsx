@@ -63,7 +63,7 @@ const Login = () => {
                 <div className="account-text-box">
                     <IoPersonOutline className="account-icon"/>
 
-                    <h2 className="heading-secondary">Log In To Your Account</h2>
+                    <h2 className="heading-secondary-reusable">Log In To Your Account</h2>
 
                     {
                         error.length ?

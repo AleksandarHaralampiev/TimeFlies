@@ -34,6 +34,7 @@ const MyTimelines = () => {
                     <h1 className="dashboard-heading">Your Timelines</h1>
 
                     <p className="dashboard-text">These are all the timelines you contribute in.</p>
+                    {!myError && <p className="dashboard-text">{myTimelines.length} timelines</p>}
                 </div>
 
                 <div className="btn-box">

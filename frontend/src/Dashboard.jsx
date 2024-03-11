@@ -7,6 +7,10 @@ import axios from "axios"
 import TimelineSettings from "./TimelineSettings"
 import { HashLink } from "react-router-hash-link"
 
+import { BarLoader, ClipLoader } from "react-spinners"
+import DashboardCard from "./DashboardCard"
+import DashboardSkeleton from "./DashboardSkeleton"
+
 const Dashboard = () => {
     const { loggedIn, navigate, publicTimelines, dashboardLoading, dashboardError } = useContext(DataContext)
 
@@ -69,8 +73,12 @@ const Dashboard = () => {
 
                 {
                     dashboardLoading ?
-                    <div className="container">
-                        <p className="dashboard-text">Loading</p>
+                    <div className="container timeline-grid">
+                        {
+                            Array.from({length: 6}, _ => null).map(_ => (
+                                <DashboardSkeleton />
+                            ))
+                        }
                     </div>
                     :
                     dashboardError.length ?
@@ -81,41 +89,20 @@ const Dashboard = () => {
                     :
                     publicTimelines.length ?
                     shownTimelines.length ?
-                        <div className="container timeline-grid">
-                            {
-                                shownTimelines.map(timeline => (
-                                    <div className="timeline-container" onClick={() => setSettings(timeline.id)}>
-                                        
-                                        <div className="timeline-text-box">
-                                            <h3 to='/timeline' className="timeline-name">{timeline.name}</h3>
-
-                                            <p className="timeline-description">
-                                                {
-                                                    timeline.description.length < 100 ?
-                                                    timeline.description
-                                                    :
-                                                    `${timeline.description.slice(0, 100)}...`
-                                                }
-                                            </p>
-                                        </div>
-
-                                        <div className="timeline-img-box">
-                                            {
-                                                timeline.contributors.slice(0, 5).map(user => (
-                                                    <img src={user.profile_picture} className="timeline-pfp"/>
-                                                ))
-                                            }
-
-                                        </div>
-
-                                    </div>
-                                ))
-                            }
-                        </div>
-                        :
-                        <div className="container">
-                            <p className="dashboard-text">No result.</p>
-                        </div>
+                    <div className="container timeline-grid">
+                        {
+                            shownTimelines.map(timeline => (
+                                <DashboardCard 
+                                    timeline={timeline}
+                                    setSettings={setSettings}
+                                />
+                            ))
+                        }
+                    </div>
+                    :
+                    <div className="container">
+                        <p className="dashboard-text">No result.</p>
+                    </div>
                     :
                     <div className="container">
                         <p className="dashboard-empty">No timelines yet. Perhaps you can <Link to='/newtimeline'>create your own</Link></p>

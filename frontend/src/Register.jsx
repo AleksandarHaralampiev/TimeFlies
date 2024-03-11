@@ -60,7 +60,7 @@ const Register = () => {
                 <div className="account-text-box">
                     <IoPersonOutline className="account-icon"/>
 
-                    <h2 className="heading-secondary">Register An Account</h2>
+                    <h2 className="heading-secondary-reusable">Register An Account</h2>
 
                     {
                         error.length ?

@@ -32,6 +32,10 @@
     .members-list {
         width: 75%;
     }
+
+    .new-timeline-form {
+        width: 75%;
+    }
 }
 
 
@@ -209,6 +213,10 @@
     }
 
     .search-box input {
+        width: 100%;
+    }
+
+    .new-timeline-form {
         width: 100%;
     }
 
