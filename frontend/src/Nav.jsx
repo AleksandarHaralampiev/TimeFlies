@@ -8,7 +8,7 @@ import { IoCloseOutline, IoMenuOutline } from 'react-icons/io5'
 const Nav = () => {
     const { loggedIn, setLoggedIn, navigate, account } = useContext(DataContext)
 
-    const [dropdown, setDropdown] = useState(false)
+    
     const [sticky, setSticky] = useState(false)
     const [open, setOpen] = useState(false)
 
@@ -32,6 +32,8 @@ const Nav = () => {
 
 
     // DROPDOWN
+    const [dropdown, setDropdown] = useState(false)
+
     const handleCollapse = (e) => {
         const dropdownContainer = document.querySelector('.nav-pfp-container')
 
@@ -39,6 +41,10 @@ const Nav = () => {
     }
 
     document.addEventListener('click', (e) => dropdown ? handleCollapse(e) : null)
+
+    useEffect(() => {
+        if(loggedIn) setDropdown(false)
+    }, [loggedIn])
 
 
     // MOBILE
@@ -93,7 +99,7 @@ const Nav = () => {
             {
                 loggedIn ?
                     <div className='nav-pfp-container'>
-                        <img src={account.profile_picture} className="pfp" onClick={() => setDropdown(!dropdown)} />
+                        <img src={account.profile_picture} className="nav-pfp" onClick={() => setDropdown(!dropdown)} />
 
                         <ul className={dropdown ? "dropdown active" : "dropdown"}>
                             <li>

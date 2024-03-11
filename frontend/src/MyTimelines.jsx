@@ -5,6 +5,7 @@ import { IoAddOutline } from "react-icons/io5"
 import axios from "axios"
 import { Link } from "react-router-dom"
 import { HashLink } from "react-router-hash-link"
+import TimelineSettings from "./TimelineSettings"
 
 const MyTimelines = () => {
     const { navigate, loggedIn, myTimelines, myLoading, myError } = useContext(DataContext)
@@ -14,9 +15,20 @@ const MyTimelines = () => {
         if(!loggedIn) navigate('/login')
     }, [loggedIn])
 
+    const [settings, setSettings] = useState(null)
 
     return (
         <section className="section-dashboard">
+            {
+                settings ?
+                <TimelineSettings
+                    id={settings}
+                    setSettings={setSettings}
+                    list="my-timelines"
+                />
+                :
+                null
+            }
             <div className="container my-timelines-header">
                 <div className="text-box">
                     <h1 className="dashboard-heading">Your Timelines</h1>
@@ -47,7 +59,7 @@ const MyTimelines = () => {
                     <div className="container timeline-grid">
                         {
                             myTimelines.map(timeline => (
-                                <div className="timeline-container" onClick={() => navigate(`/timeline/${timeline.id}`)}>
+                                <div className="timeline-container" onClick={() => setSettings(timeline.id)}>
                                     
                                     <h3 className="timeline-name">{timeline.name}</h3>
 

@@ -4,9 +4,9 @@ import { DataContext } from "./context/DataContext"
 import { Link } from "react-router-dom"
 import axios from "axios"
 
-const TimelineSettings = ({ id, setSettings }) => {
+const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
     // TIMELINE VARIABLES
-    const { publicTimelines } = useContext(DataContext)
+    const { publicTimelines, myTimelines, navigate } = useContext(DataContext)
     const [timeline, setTimeline] = useState()
     
     
@@ -44,6 +44,16 @@ const TimelineSettings = ({ id, setSettings }) => {
         console.log(owner)
         console.log(`Account id: ${parseInt(JSON.parse(localStorage.getItem('accData')).id)}`)
     }, [owner])
+
+
+
+    useEffect(() => {
+        const currentScroll = window.scrollY
+
+        window.scrollTo(0, 0);
+
+        return () => window.scrollTo(0, currentScroll)
+    }, [])
 
 
 
@@ -91,7 +101,7 @@ const TimelineSettings = ({ id, setSettings }) => {
     // SETTING THE VARIABLES
     useEffect(() => {
         const fetchData = async () => {
-            const foundTimeline = publicTimelines.find(currentTimeline => currentTimeline.id === id)
+            const foundTimeline = list === 'my-timelines' ? myTimelines.find(currentTimeline => currentTimeline.id === id) : publicTimelines.find(currentTimeline => currentTimeline.id === id)
             
             const sortedContributors = foundTimeline.contributors.sort((user1, user2) => {
                 if(user1.role > user2.role) return -1

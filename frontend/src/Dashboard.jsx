@@ -50,6 +50,7 @@ const Dashboard = () => {
                 <TimelineSettings
                     id={settings}
                     setSettings={setSettings}
+                    list="public-timelines"
                 />
                 :
                 null
