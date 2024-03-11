@@ -48,6 +48,7 @@ def getContributors(server_id):
     owner_dict = {
         'username': owner.username,
         'profile_picture': getPhoto(owner.id),
+        'id': owner.id,
         'role': 3
     }
     contributors.append(owner_dict)
@@ -105,7 +106,6 @@ def getTimeLine(request, *args, **kwargs):
             "name": server.name, 
             "description": server.description,
             "public": server.public,
-            "owner_id": server.owner_id,
             "owner_username": UserAccount.objects.filter(id = server.owner_id).first().username,
             "date": str(server.created_at).split(' ')[0],
             "owner_photo": getPhoto(server.owner_id)
