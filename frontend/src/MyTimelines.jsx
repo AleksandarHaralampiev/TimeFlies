@@ -6,6 +6,7 @@ import axios from "axios"
 import { Link } from "react-router-dom"
 import { HashLink } from "react-router-hash-link"
 import TimelineSettings from "./TimelineSettings"
+import DashboardSkeleton from "./DashboardSkeleton"
 
 const MyTimelines = () => {
     const { navigate, loggedIn, myTimelines, myLoading, myError } = useContext(DataContext)
@@ -46,8 +47,12 @@ const MyTimelines = () => {
 
                 {
                     myLoading ?
-                    <div className="container">
-                        <p className="dashboard-text">Loading</p>
+                    <div className="container timeline-grid">
+                        {
+                            Array.from({length: 6}, _ => null).map(_ => (
+                                <DashboardSkeleton />
+                            ))
+                        }
                     </div>
                     :
                     myError ?
