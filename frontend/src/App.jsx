@@ -16,7 +16,7 @@ function App() {
 
   return (
     <>
-      <SkeletonTheme baseColor="#baa886" highlightColor="#ebd7b1">
+      <SkeletonTheme baseColor="#d2bd97" highlightColor="#ebd7b1">
         <DataProvider>
           <Nav />
 

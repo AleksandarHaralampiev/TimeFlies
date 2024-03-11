@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react"
 import axios from "axios"
 import { DataContext } from "./context/DataContext";
 import { IoPersonOutline } from "react-icons/io5";
+import { BarLoader } from "react-spinners";
 
 const Register = () => {
     const [email, setEmail] = useState('')
@@ -9,6 +10,7 @@ const Register = () => {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
 
+    const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
 
     const { loggedIn, navigate, handleAlert } = useContext(DataContext)
@@ -19,6 +21,8 @@ const Register = () => {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        setLoading(true)
 
         console.log(email)
         console.log(username)
@@ -51,6 +55,7 @@ const Register = () => {
             setUsername('')
             setPassword('')
             setConfirmPassword('')
+            setLoading(false)
         }
     }
 
@@ -61,6 +66,13 @@ const Register = () => {
                     <IoPersonOutline className="account-icon"/>
 
                     <h2 className="heading-secondary-reusable">Register An Account</h2>
+
+                    {
+                        loading ?
+                        <BarLoader color="#625149" width={200} className="account-loading"/>
+                        :
+                        null
+                    }
 
                     {
                         error.length ?

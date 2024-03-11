@@ -4,9 +4,10 @@ import { DataContext } from './context/DataContext';
 import { HashLink } from 'react-router-hash-link';
 import pfp from './img/pfp.jpg'
 import { IoCloseOutline, IoMenuOutline } from 'react-icons/io5'
+import Skeleton from 'react-loading-skeleton';
 
 const Nav = () => {
-    const { loggedIn, setLoggedIn, navigate, account } = useContext(DataContext)
+    const { loggedIn, setLoggedIn, navigate, account, accountLoading } = useContext(DataContext)
 
     
     const [sticky, setSticky] = useState(false)
@@ -99,7 +100,14 @@ const Nav = () => {
             {
                 loggedIn ?
                     <div className='nav-pfp-container'>
-                        <img src={account.profile_picture} className="nav-pfp" onClick={() => setDropdown(!dropdown)} />
+                        {
+                            accountLoading ?
+                            <div onClick={() => setDropdown(!dropdown)}>
+                                <Skeleton className='nav-pfp' />
+                            </div>
+                            :
+                            <img src={account.profile_picture} className="nav-pfp" onClick={() => setDropdown(!dropdown)} />
+                        }
 
                         <ul className={dropdown ? "dropdown active" : "dropdown"}>
                             <li>
