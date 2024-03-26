@@ -12,6 +12,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .serializers import ServerSerializer
+from django.db.models import Q
 
 #get_response_or404
 from django.shortcuts import get_object_or_404
@@ -94,24 +95,24 @@ def createTimeLine(request, *args, **kwargs):
 
 
 
-@api_view(['GET'])
-def getTimeLine(request, *args, **kwargs):
-    if request.method == "GET":
-        
-        id = int(request.GET.get('id'))
-        servers = Server.objects.filter(owner = id).all()
-        
-        servers_data = [{
-            "id": server.id,
-            "name": server.name, 
-            "description": server.description,
-            "public": server.public,
-            "owner_username": UserAccount.objects.filter(id = server.owner_id).first().username,
-            "date": str(server.created_at).split(' ')[0],
-            "owner_photo": getPhoto(server.owner_id)
-            } 
-            for server in servers]
-        return Response(data = {"servers": servers_data}, status=200)
+#@api_view(['GET'])
+#def getTimeLine(request, *args, **kwargs):
+#    if request.method == "GET":
+#        
+#        id = int(request.GET.get('id'))
+#        servers = Server.objects.filter(owner = id).all()
+#        
+#        servers_data = [{
+#            "id": server.id,
+#            "name": server.name, 
+#            "description": server.description,
+#            "public": server.public,
+#            "owner_username": UserAccount.objects.filter(id = server.owner_id).first().username,
+#            "date": str(server.created_at).split(' ')[0],
+#            "owner_photo": getPhoto(server.owner_id)
+#            } 
+#            for server in servers]
+#        return Response(data = {"servers": servers_data}, status=200)
     
           
 
@@ -204,9 +205,28 @@ def checkUser(request, *args, **kwargs):
         else:
             return Response(data={"message": "The user is default"}, status=200)
 
+@api_view(['GET'])
+def GetMyTimelines(request):
+    id_value = request.GET.get('id')
+    user = get_object_or_404(UserAccount, id=id_value)
+    
+    servers = Server.objects.filter(Q(owner=user) | Q(editors=user) | Q(members=user)).distinct()
 
+    servers_data = []
+    for server in servers:
+        server_data = {
+            "id": server.id,
+            "name": server.name, 
+            "description": server.description,
+            "public": server.public,
+            "contributors": getContributors(server.id), 
+            "owner_username": UserAccount.objects.filter(id=server.owner_id).first().username,
+            "date": str(server.created_at).split(' ')[0],
+            "owner_id": server.owner_id
+        }
+        servers_data.append(server_data)
 
-
+    return JsonResponse({'servers_data': servers_data})
         
         
         
