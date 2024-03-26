@@ -109,7 +109,7 @@ const DataProvider = ({ children }) => {
 
             console.log('my timelines')
             console.log(response)
-            setMyTimelines(response.data.servers)
+            setMyTimelines(response.data.servers_data)
 
             setMyError('')
         } catch(err) {

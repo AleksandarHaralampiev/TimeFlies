@@ -7,6 +7,7 @@ import { Link } from "react-router-dom"
 import { HashLink } from "react-router-hash-link"
 import TimelineSettings from "./TimelineSettings"
 import DashboardSkeleton from "./DashboardSkeleton"
+import DashboardCard from "./DashboardCard"
 
 const MyTimelines = () => {
     const { navigate, loggedIn, myTimelines, myLoading, myError } = useContext(DataContext)
@@ -65,29 +66,10 @@ const MyTimelines = () => {
                     <div className="container timeline-grid">
                         {
                             myTimelines.map(timeline => (
-                                <div className="timeline-container" onClick={() => setSettings(timeline.id)}>
-                                    
-                                    <h3 className="timeline-name">{timeline.name}</h3>
-
-                                    <p className="timeline-description">
-                                        {
-                                            timeline.description.length < 100 ?
-                                            timeline.description
-                                            :
-                                            `${timeline.description.slice(0, 100)}...`
-                                        }
-                                    </p>
-
-                                    <div className="timeline-img-box">
-                                        {
-                                            profiles.slice(0, 5).map(pic => (
-                                                <img src={pic} className="timeline-pfp"/>
-                                            ))
-                                        }
-
-                                    </div>
-
-                                </div>
+                                <DashboardCard 
+                                    timeline={timeline}
+                                    setSettings={setSettings}
+                                />
                             ))
                         }
                     </div>
