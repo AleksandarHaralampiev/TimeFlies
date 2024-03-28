@@ -8,7 +8,6 @@ class Timeline(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     date_modifired = models.DateTimeField(auto_now=True)
-
     
     class Meta:
         db_table = "timelines"

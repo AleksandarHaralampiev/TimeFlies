@@ -32,6 +32,7 @@ def addEvent(request):
 
     try:
         timeline = Server.objects.get(id = timeline_id)
+        print(timeline_id)
     except:
         return Response("There was an error with getting the object!")
     try:
