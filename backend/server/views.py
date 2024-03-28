@@ -261,6 +261,23 @@ def deleteTimeline(request):
     except:
         return Response("The delete is incorrect!")
 
+@api_view(['POST'])
+def addEvent(request):
+    #title, description, creater_id, timeline_id
+    title = request.data.get('title')
+    description = request.data.get('description')
+    timeline_id = request.data.get('timeline_id')
+
+    try:
+        timeline = Server.objects.get(id = timeline_id)
+    except:
+        return Response("There was an error with getting the object!")
+    try:
+        Timeline.objects.create(server = timeline, title = title, description = description)
+        return Response("The creation is a succses!")
+    except:
+        return Response("There was an error with the creation!")
+
 # @api_view(['GET'])
 # def getEditorId(request, *args, **kwargs):
 #     if request.method == "GET":
