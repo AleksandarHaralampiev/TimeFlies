@@ -28,7 +28,6 @@ def addEvent(request):
     title = request.data.get('title')
     description = request.data.get('description')
     timeline_id = request.data.get('timeline_id')
-    user_id = request.data.get('user_id')
 
     try:
         timeline = Server.objects.get(id = timeline_id)
