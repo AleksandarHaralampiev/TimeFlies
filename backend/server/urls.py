@@ -12,6 +12,7 @@ urlpatterns = [
     path('addUserToServer/', views.addUser),
     path('changeRole/', views.changeRole),
     path('checkUser/', views.checkUser),
-    path('list/', views.GetMyTimelines,)
+    path('list/', views.GetMyTimelines),
+    path('changes/', views.timelineChanges)
 ]
 

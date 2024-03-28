@@ -13,6 +13,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .serializers import ServerSerializer
 from django.db.models import Q
+from timeline.models import Timeline
 
 #get_response_or404
 from django.shortcuts import get_object_or_404
@@ -228,8 +229,23 @@ def GetMyTimelines(request):
 
     return JsonResponse({'servers_data': servers_data})
         
-        
-        
+@api_view(['POST'])
+def timelineChanges(request):
+    name = request.data.get('name')
+    description = request.data.get('description')
+    server_id = request.data.get('server_id')
+    
+    try:
+        server = Server.objects.get(id = server_id)
+    except:
+        return Response("The is wasn't found!")
+    
+    if server.name != name or server.description != description:
+        server.name = name 
+        server.description = description
+        server.save()
+        return Response("The changes are applyed!")
+
         
 # @api_view(['GET'])
 # def getEditorId(request, *args, **kwargs):
