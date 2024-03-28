@@ -15,6 +15,5 @@ urlpatterns = [
     path('list/', views.GetMyTimelines),
     path('changes/', views.timelineChanges),
     path('deleteTimeline/', views.deleteTimeline),
-    path('addEvent/', views.addEvent)
 ]
 
