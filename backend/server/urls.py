@@ -13,6 +13,7 @@ urlpatterns = [
     path('changeRole/', views.changeRole),
     path('checkUser/', views.checkUser),
     path('list/', views.GetMyTimelines),
-    path('changes/', views.timelineChanges)
+    path('changes/', views.timelineChanges),
+    path('deleteTimeline/', views.deleteTimeline)
 ]
 

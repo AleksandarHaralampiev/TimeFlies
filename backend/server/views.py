@@ -245,8 +245,22 @@ def timelineChanges(request):
         server.description = description
         server.save()
         return Response("The changes are applyed!")
+    
+@api_view(['POST'])
+def deleteTimeline(request):
+    timeline_id = request.data.get('timeline_id')
+    
+    try:
+        timeline = Server.objects.get(id = timeline_id)
+    except:
+        return Response("There is an erro with the object!")
 
-        
+    try:
+        timeline.delete()
+        return Response("Delete succses!")
+    except:
+        return Response("The delete is incorrect!")
+
 # @api_view(['GET'])
 # def getEditorId(request, *args, **kwargs):
 #     if request.method == "GET":
