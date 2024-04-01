@@ -7,7 +7,7 @@ class Timeline(models.Model):
     server = models.ForeignKey(Server, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     description = models.TextField()
-    date_modifired = models.DateTimeField(auto_now=True)
+    date_modifired = models.DateTimeField(auto_now=False)
     
     class Meta:
         db_table = "timelines"
