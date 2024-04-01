@@ -59,7 +59,7 @@ body {
 }
 
 .container {
-    max-width: 150rem;
+    max-width: 128rem;
     margin: auto;
     padding: 0 4.8rem;
 }

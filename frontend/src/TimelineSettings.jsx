@@ -6,7 +6,7 @@ import axios from "axios"
 
 const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
     // TIMELINE VARIABLES
-    const { publicTimelines, myTimelines, navigate } = useContext(DataContext)
+    const { publicTimelines, myTimelines, navigate, handleAlert } = useContext(DataContext)
     const [timeline, setTimeline] = useState()
     
     
@@ -27,12 +27,25 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
     const [name, setName] = useState('')
     const [editName, setEditName] = useState(false)
 
-
-
     // EDIT DESCRIPTION
     const [descriptionPencil, setDescriptionPencil] = useState(false)
     const [description, setDescription] = useState('')
     const [editDescription, setEditDescription] = useState(false)
+
+    // EDIT TIMELINE
+    const handleEditTimeline = async () => {
+        try {
+            const obj = {
+                name,
+                description
+            }
+
+            const response = await axios.post('http://127.0.0.1:8000/')
+        } catch(err) {
+            
+        }
+    }
+
 
 
     // EDIT MEMBERS
@@ -159,6 +172,29 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
     // OPEN ADD FORM
     const [addMember, setAddMember] = useState(false)
 
+
+
+    // DELETING TIMELINE
+    const handleDelete = async () => {
+        try {
+            const obj = {
+                timeline_id: id
+            }
+
+            const response = await axios.post('http://127.0.0.1:8000/server/deleteTimeline/')
+
+            console.log(response)
+            if(response.status == 200) {
+                handleAlert('success', 'Delete successful')
+                handleClose()
+            }
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+
+
     return (
         loading ?
         <p className="timeline-settings">Loading</p>
@@ -219,6 +255,16 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                     <p className="timeline-settings-date">
                         {timeline.date}
                     </p>
+
+                    {
+                        owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
+                        <>
+                            <button className="btn" onClick={handleDelete}>Delete timeline</button>
+                            <button className="btn" onClick={handleEditTimeline}>Save Changes</button>
+                        </>
+                        :
+                        null
+                    }
                 </div>
 
                 <div className="timeline-settings-btn-box">

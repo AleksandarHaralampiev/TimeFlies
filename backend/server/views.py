@@ -238,7 +238,7 @@ def timelineChanges(request):
     try:
         server = Server.objects.get(id = server_id)
     except:
-        return Response("The is wasn't found!")
+        return Response("The is wasn't found!", status=500)
     
     if server.name != name or server.description != description:
         server.name = name 
@@ -253,13 +253,13 @@ def deleteTimeline(request):
     try:
         timeline = Server.objects.get(id = timeline_id)
     except:
-        return Response("There is an erro with the object!")
+        return Response("There is an error with the object!", status=500)
 
     try:
         timeline.delete()
         return Response("Delete succses!")
     except:
-        return Response("The delete is incorrect!")
+        return Response("The delete is incorrect!", status=500)
 
 # @api_view(['GET'])
 # def getEditorId(request, *args, **kwargs):
