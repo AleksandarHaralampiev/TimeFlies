@@ -37,10 +37,17 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
         try {
             const obj = {
                 name,
-                description
+                description,
+                server_id: id
             }
 
-            const response = await axios.post('http://127.0.0.1:8000/')
+            const response = await axios.post('http://127.0.0.1:8000/server/changes/', obj)
+
+            console.log(response)
+
+            if(response.status == 200) {
+                handleAlert('success', 'Changes Saved Successfully!')
+            }
         } catch(err) {
             
         }
