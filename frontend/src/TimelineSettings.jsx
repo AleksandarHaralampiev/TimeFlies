@@ -59,10 +59,26 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
     const [editMembers, setEditMembers] = useState(null)
     const [roleEdit, setRoleEdit] = useState(1)
 
-    const handleEditMember = (e) => {
+    const handleEditMember = async (e) => {
         e.preventDefault()
 
-        setEditMembers(null)
+        try {
+            const obj = {
+                user_id_role: editMembers,
+                server_id: timeline.id,
+                new_role: parseInt(roleEdit)
+            }
+
+            // console.log(obj)
+
+            const response = await axios.post('http://127.0.0.1:8000/server/changeRole/', obj)
+
+            console.log(response)
+        } catch(err) {
+            console.log(err)
+        }
+
+        // setEditMembers(null)
 
 
     }
@@ -158,6 +174,8 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                 setOwner(sortedTimeline.contributors.find(user => user.role === 3))
             
                 setLoading(false)
+
+                console.log(timeline)
             }
         }
         
@@ -338,6 +356,7 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                                                 <select className="members-role" value={roleEdit} onChange={(e) => setRoleEdit(e.target.value)}>
                                                     <option value={2}>Editor</option>
                                                     <option value={1}>Member</option>
+                                                    <option value={0}>Remove</option>
                                                 </select>
                                                 <button className="members-role-edit" type="submit">
                                                     <IoCheckmarkDoneOutline/>
@@ -345,18 +364,20 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                                             </form>
                                             :
                                             <span className="members-role">
-                                            <p>{
-                                                user.role === 1 ?
-                                                'Member' :
-                                                user.role === 2 ?
-                                                'Editor' :
-                                                user.role === 3 ?
-                                                'Owner' :
-                                                null
-                                                }</p>
+                                                <p>
+                                                    {
+                                                    user.role === 1 ?
+                                                    'Member' :
+                                                    user.role === 2 ?
+                                                    'Editor' :
+                                                    user.role === 3 ?
+                                                    'Owner' :
+                                                    null
+                                                    }
+                                                </p>
                                                 {
                                                     owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) && owner.id !== user.id ?
-                                                    <IoPencilOutline className="members-role-edit" onClick={() => setRoleEdit(user.id)}/>
+                                                    <IoPencilOutline className="members-role-edit" onClick={() => setEditMembers(user.id)}/>
                                                     :
                                                     null
                                                 }
