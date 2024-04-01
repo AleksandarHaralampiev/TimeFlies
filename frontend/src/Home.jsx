@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import compass from './img/hourglass1.png'
 import { Link } from 'react-router-dom';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
@@ -20,10 +20,36 @@ const data = [
     }
 ];
 import { DataContext } from './context/DataContext'
+import axios from 'axios';
 
 
 const Home = () => {
     const { handleAlert } = useContext(DataContext)
+
+
+
+    // CONTACT US
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [message, setMessage] = useState('')
+
+    const handleContact = async (e) => {
+        e.preventDefault()
+
+        try {
+            const obj = {
+                name,
+                email,
+                message
+            }
+
+            const response = await axios.post('http://127.0.0.1:8000/contact/sendEmail/', obj)
+
+            console.log(response)
+        } catch(err) {
+            console.log(err)
+        }
+    }
 
     return (
         <>
@@ -73,15 +99,32 @@ const Home = () => {
             <section id='contact-us' className='tertiary-section'>
                 <div className="contact-us-container">
                     <h1 className='heading-secondary'>Contact Us</h1>
-                    <form className="contact-form">
+                    <form className="contact-form" onSubmit={(e) => handleContact(e)}>
                         <label htmlFor="name">Name:</label>
-                        <input type="text" id="name" name="name" />
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
 
                         <label htmlFor="email">Email:</label>
-                        <input type="email" id="email" name="email" />
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
 
                         <label htmlFor="message">Message:</label>
-                        <textarea id="message" name="message"></textarea>
+                        <textarea
+                            id="message"
+                            name="message"
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                        ></textarea>
 
                         <button type="submit" className='btn'>Submit</button>
                     </form>
