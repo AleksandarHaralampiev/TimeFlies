@@ -165,11 +165,11 @@ def changeRole(request, *args, **kwargs):
     if request.method == "POST":
         body = request.body
         data = json.loads(body)
-        email = data['email']
+        user_id_role = data['user_id_role']
         server_id = int(data['server_id'])
         new_role = int(data['new_role'])
 
-        user  = get_object_or_404(UserAccount, email = email)
+        user  = get_object_or_404(UserAccount, id = user_id_role)
         if user:
             server = get_object_or_404(Server, id = server_id)
             if new_role == 0:
