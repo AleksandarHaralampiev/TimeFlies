@@ -8,9 +8,10 @@ def sendEmail(request):
     email = request.data.get('email') 
     message = request.data.get('message')
     recipient_email = 'themastarayt@gmail.com'
-
-    if name == None or email == None or message == None:
+    
+    if name == "" or email == "" or message == "":
         return Response("There is a None field in the email sending!", status = 500)
+
 
     subject = "Message from {}".format(name)
     message_content = "Sender: {}\nEmail: {}\n\n{}".format(name, email, message)
