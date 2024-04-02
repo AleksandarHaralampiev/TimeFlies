@@ -228,7 +228,9 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
 
     return (
         <TimelineContext.Provider value={{
-
+            editName, name, setName, setEditName, setNamePencil, namePencil, owner, editDescription, description, setDescription, setDescriptionPencil, descriptionPencil, timeline, handleDelete, handleEditTimeline,
+            setOpenMembers, openMembers, timeline, id,
+            search, setSearch, setAddMember, addMember
         }}>
 
             loading ?

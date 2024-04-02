@@ -1,8 +1,9 @@
 import { useContext } from "react"
 import { TimelineContext } from "./TimelineSettings"
+import { IoCheckmarkDoneOutline, IoPencilOutline } from "react-icons/io5"
 
 const TextBox = () => {
-    const { editName } = useContext(TimelineContext)
+    const { editName, name, setName, setEditName, setNamePencil, namePencil, owner, editDescription, description, setDescription, setDescriptionPencil, descriptionPencil, timeline, handleDelete, handleEditTimeline } = useContext(TimelineContext)
 
     return (
         <div className="timeline-settings-text-box">
