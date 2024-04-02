@@ -349,7 +349,10 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                         }
                     </div>
 
-                    <Link className="btn timeline-settings-view-btn" /*to={`/timeline/${id}`}*/>View</Link>
+                    <div className="timeline-settings-trash-btn-box">
+                        <Link className="btn timeline-settings-view-btn" /*to={`/timeline/${id}`}*/>View</Link>
+                        <FaTrash className="trash-icon" /*onClick={handleDelete}*//>
+                    </div>
                 </div>
                 
                 {
@@ -457,9 +460,6 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                 }
 
                 <IoCloseOutline className="timeline-settings-close" onClick={handleClose}/>
-                <div className="trash">
-                    <FaTrash className="trash-icon" /*onClick={handleDelete}*//> 
-                </div>
                                
             </div>
         </div>
