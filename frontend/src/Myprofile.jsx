@@ -21,7 +21,7 @@ const MyProfile = () => {
     const fileInputRef = useRef(null);
 
     useEffect(() => {
-        if(!loggedIn) navigate('/login')
+        if (!loggedIn) navigate('/login')
     }, [loggedIn])
 
     function handleEdit(field) {
@@ -73,7 +73,7 @@ const MyProfile = () => {
     }
 
     return (
-        <main className="section-main">
+        <main className="tertiary-section">
             <div className="profile-container">
                 <div className="avatar-container">
                     <input
