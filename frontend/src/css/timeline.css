@@ -149,7 +149,7 @@
 .timeline-settings-name {
     font-size: 5.2rem;
     letter-spacing: 1.75px;
-    
+
     position: relative;
 }
 
@@ -257,7 +257,7 @@
     /* display: flex;
     align-items: center; */
     /* background-color: white; */
-    
+
     background-color: var(--main-shade1);
     /* background-color: white; */
 
@@ -373,7 +373,7 @@ select.members-role {
     cursor: pointer;
     background-color: transparent;
     border: none;
-    font-size: ;
+    font-size: inherit;
 }
 
 
@@ -405,9 +405,11 @@ select.members-role {
     0% {
         transform: scale(0);
     }
+
     70% {
         transform: scale(1.1);
     }
+
     100% {
         transform: scale(1);
     }
@@ -417,9 +419,11 @@ select.members-role {
     0% {
         transform: scale(1);
     }
+
     30% {
         transform: scale(1.1);
     }
+
     100% {
         transform: scale(0);
     }
@@ -429,6 +433,7 @@ select.members-role {
     from {
         transform: scaleY(0);
     }
+
     to {
         transform: scaleY(1);
     }
