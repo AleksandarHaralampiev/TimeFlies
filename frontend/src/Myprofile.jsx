@@ -130,17 +130,18 @@ const MyProfile = () => {
 
                     {newPass ?
                         (
-                            <div className="new-pass">
+                            <div className={newPass ? "new-pass" : "new-pass hidden"}>
                                 <input type="password" className="password-input" placeholder="old password" />
                                 <input type="password" className="password-input" placeholder="new password" />
+                                <input type="password" className="password-input" placeholder="confirm password" />
                             </div>
 
                         ) :
                         (
                             null
                         )
-
                     }
+
                     {/* {editField === 'password' ? (
                             <input className='password-input' type={visible ? 'text' : 'password'} placeholder="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
                         ) : (

@@ -16,7 +16,7 @@
     margin-top: 3.2rem;
     background-color: var(--bg-tint1);
     max-width: 60rem;
-    height: 100rem;
+    min-height: 30rem;
     justify-content: flex-start;
     align-items: center;
 
@@ -150,8 +150,8 @@
 
 
 
-.pas-container,
-.pas-container-1,
+/* .pas-container,
+.pas-container-1, */
 .password-container,
 .email-container {
     display: flex;
@@ -166,9 +166,11 @@
 .password-container {
     flex-direction: column;
     justify-content: start;
-    /* background-color: aqua; */
-    /* gap: 3rem; */
-    /* align-items: center; */
+    background-color: aqua;
+    /* gap: 1rem; */
+    align-items: start;
+    /* height: 20rem; */
+    margin-bottom: 20rem;
 }
 
 /* .pas-container-1 {
@@ -182,27 +184,52 @@
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
-    grid-column: -1;
+    padding-left: 1.3rem;
+    width: 100%;
+    padding-left: 3.8rem;
+    /* visibility: hidden; */
 }
 
-.name,
+.hidden {
+    visibility: hidden;
+}
+
+
+.name {
+    display: flex;
+    font-size: 2.5rem;
+    /* background-color: firebrick; */
+    width: 100%;
+    height: 6rem;
+    /* Set a fixed height */
+    align-items: center;
+    padding-left: 1.3rem;
+}
+
+
+
+
 .password-input,
 .password,
 .email {
     display: flex;
-    font-size: 2rem;
+    /* font-size: 2rem; */
     /* background-color: greenyellow; */
     height: 100%;
     width: 85%;
     align-items: center;
     font-size: 2.5rem;
     padding-left: 1.3rem;
-
 }
+
+.password {
+    height: 6rem;
+}
+
 
 .password-input {
     border: none;
-    /* background-color: var(--secondary-tint3); */
+    background-color: var(--secondary-tint3);
     color: var(--main-shade1);
     opacity: 60%;
 }
