@@ -42,7 +42,7 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
     
 
     // TIMELINE VARIABLES
-    const { publicTimelines, myTimelines, navigate, handleAlert } = useContext(DataContext)
+    const { publicTimelines, setPublicTimelines, myTimelines, setMyTimelines, navigate, handleAlert } = useContext(DataContext)
     const [timeline, setTimeline] = useState()
     
     
@@ -257,6 +257,8 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
 
     // DELETING TIMELINE
     const handleDelete = async () => {
+        setLoadingTimeline(true)
+
         try {
             const obj = {
                 timeline_id: id
@@ -268,11 +270,16 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
 
             console.log(response)
             if(response.status == 200) {
-                handleAlert('success', 'Delete successful')
+                handleAlert('success', 'Delete successful.')
+                setMyTimelines(myTimelines.filter(currentTimeline => currentTimeline.id !== id))
+                setPublicTimelines(publicTimelines.filter(currentTimeline => currentTimeline.id !== id))
                 handleClose()
             }
         } catch(err) {
             console.log(err)
+            handleAlert('error', "Couldn't delete timeline!")
+        } finally {
+            setLoadingTimeline(false)
         }
     }
 
@@ -353,7 +360,10 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                         </>
                     }
 
-                    <FaTrash className="trash-icon" onClick={handleDelete}/>
+                    {
+                        owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) &&
+                        <FaTrash className="trash-icon" onClick={handleDelete}/>
+                    }
                     
                 </div>
 
