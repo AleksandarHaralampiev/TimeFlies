@@ -3,109 +3,143 @@ import { IoCheckmarkDoneOutline, IoCloseOutline, IoPencilOutline } from "react-i
 import { DataContext } from "./context/DataContext"
 import { Link } from "react-router-dom"
 import axios from "axios"
+import pfp from './img/pfp.jpg'
+import { FaTrash } from "react-icons/fa";
 
 const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
-    // TIMELINE VARIABLES
-    const { publicTimelines, myTimelines, navigate, handleAlert } = useContext(DataContext)
-    const [timeline, setTimeline] = useState()
+    const owner = {
+        id: 6,
+        profile_picture: pfp,
+        username: 'MARTIN'
+    }
+
+    const timeline = {
+        date: '02-04-2024',
+        contributors: [
+            {
+                profile_picture: pfp,
+                username: 'ANASTASOV',
+                id: 1,
+                role: 3
+            },
+            {
+                profile_picture: pfp,
+                username: 'ANASTASOV',
+                id: 2,
+                role: 2
+            },
+            {
+                profile_picture: pfp,
+                username: 'ANASTASOV',
+                id: 3,
+                role: 1
+            }
+        ]
+    }
+
+
+
+    // // TIMELINE VARIABLES
+    // const { publicTimelines, myTimelines, navigate, handleAlert } = useContext(DataContext)
+    // const [timeline, setTimeline] = useState()
     
     
 
-    // MENU VARIABLES
+    // // MENU VARIABLES
     const [closed, setClosed] = useState(false)
     const [openMembers, setOpenMembers] = useState(false)
 
 
 
-    // LOADING
-    const [loading, setLoading] = useState(true)
+    // // LOADING
+    // const [loading, setLoading] = useState(true)
 
 
 
-    // EDIT NAME
+    // // EDIT NAME
     const [namePencil, setNamePencil] = useState(false)
-    const [name, setName] = useState('')
+    const [name, setName] = useState('Timeline')
     const [editName, setEditName] = useState(false)
 
-    // EDIT DESCRIPTION
+    // // EDIT DESCRIPTION
     const [descriptionPencil, setDescriptionPencil] = useState(false)
-    const [description, setDescription] = useState('')
+    const [description, setDescription] = useState('Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?')
     const [editDescription, setEditDescription] = useState(false)
 
-    // EDIT TIMELINE
-    const handleEditTimeline = async () => {
-        try {
-            const obj = {
-                name,
-                description,
-                server_id: id
-            }
+    // // EDIT TIMELINE
+    // const handleEditTimeline = async () => {
+    //     try {
+    //         const obj = {
+    //             name,
+    //             description,
+    //             server_id: id
+    //         }
 
-            const response = await axios.post('http://127.0.0.1:8000/server/changes/', obj)
+    //         const response = await axios.post('http://127.0.0.1:8000/server/changes/', obj)
 
-            console.log(response)
+    //         console.log(response)
 
-            if(response.status == 200) {
-                handleAlert('success', 'Changes Saved Successfully!')
-            }
-        } catch(err) {
+    //         if(response.status == 200) {
+    //             handleAlert('success', 'Changes Saved Successfully!')
+    //         }
+    //     } catch(err) {
             
-        }
-    }
+    //     }
+    // }
 
 
 
-    // EDIT MEMBERS
+    // // EDIT MEMBERS
     const [editMembers, setEditMembers] = useState(null)
     const [roleEdit, setRoleEdit] = useState(1)
 
     const handleEditMember = async (e) => {
         e.preventDefault()
 
-        try {
-            const obj = {
-                user_id_role: editMembers,
-                server_id: timeline.id,
-                new_role: parseInt(roleEdit)
-            }
+    //     try {
+    //         const obj = {
+    //             user_id_role: editMembers,
+    //             server_id: timeline.id,
+    //             new_role: parseInt(roleEdit)
+    //         }
 
-            // console.log(obj)
+    //         // console.log(obj)
 
-            const response = await axios.post('http://127.0.0.1:8000/server/changeRole/', obj)
+    //         const response = await axios.post('http://127.0.0.1:8000/server/changeRole/', obj)
 
-            console.log(response)
-        } catch(err) {
-            console.log(err)
-        }
+    //         console.log(response)
+    //     } catch(err) {
+    //         console.log(err)
+    //     }
 
-        // setEditMembers(null)
+        setEditMembers(null)
 
 
     }
 
 
-    // OWNER
-    const [owner, setOwner] = useState(null)
+    // // OWNER
+    // const [owner, setOwner] = useState(null)
 
-    useEffect(() => {
-        // console.log(`Owner id: ${owner.id}`)
-        console.log(owner)
-        console.log(`Account id: ${parseInt(JSON.parse(localStorage.getItem('accData')).id)}`)
-    }, [owner])
-
-
-
-    useEffect(() => {
-        const currentScroll = window.scrollY
-
-        window.scrollTo(0, 0);
-
-        return () => window.scrollTo(0, currentScroll)
-    }, [])
+    // useEffect(() => {
+    //     // console.log(`Owner id: ${owner.id}`)
+    //     console.log(owner)
+    //     console.log(`Account id: ${parseInt(JSON.parse(localStorage.getItem('accData')).id)}`)
+    // }, [owner])
 
 
 
-    // SEARCH BAR
+    // useEffect(() => {
+    //     const currentScroll = window.scrollY
+
+    //     window.scrollTo(0, 0);
+
+    //     return () => window.scrollTo(0, currentScroll)
+    // }, [])
+
+
+
+    // // SEARCH BAR
     const [search, setSearch] = useState('')
     const [shownContributors, setShownContributors] = useState([])
 
@@ -116,71 +150,71 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
 
 
 
-    // ADDING NEW MEMBERS
+    // // ADDING NEW MEMBERS
     const [email, setEmail] = useState('')
     const [role, setRole] = useState('1')
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const obj = {
-            email,
-            server_id: id,
-            role
-        }
+    //     const obj = {
+    //         email,
+    //         server_id: id,
+    //         role
+    //     }
 
-        console.log(obj)
+    //     console.log(obj)
 
-        try {
-            const response = await axios.post('http://127.0.0.1:8000/server/addUserToServer/', obj)
+    //     try {
+    //         const response = await axios.post('http://127.0.0.1:8000/server/addUserToServer/', obj)
 
-            console.log(response)
-        } catch(err) {
-            console.log(err)
-        } finally {
+    //         console.log(response)
+    //     } catch(err) {
+    //         console.log(err)
+    //     } finally {
             setEmail('')
             setRole('1')
-        }
+    //     }
     }
 
 
 
 
-    // SETTING THE VARIABLES
-    useEffect(() => {
-        const fetchData = async () => {
-            const foundTimeline = list === 'my-timelines' ? myTimelines.find(currentTimeline => currentTimeline.id === id) : publicTimelines.find(currentTimeline => currentTimeline.id === id)
+    // // SETTING THE VARIABLES
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         const foundTimeline = list === 'my-timelines' ? myTimelines.find(currentTimeline => currentTimeline.id === id) : publicTimelines.find(currentTimeline => currentTimeline.id === id)
             
-            const sortedContributors = foundTimeline.contributors.sort((user1, user2) => {
-                if(user1.role > user2.role) return -1
-                else if(user1.role < user2.role) return 1
-                else return 0
-            })
+    //         const sortedContributors = foundTimeline.contributors.sort((user1, user2) => {
+    //             if(user1.role > user2.role) return -1
+    //             else if(user1.role < user2.role) return 1
+    //             else return 0
+    //         })
 
-            // console.log('Sorted Contributors')
-            // console.log(sortedContributors)
+    //         // console.log('Sorted Contributors')
+    //         // console.log(sortedContributors)
 
-            const sortedTimeline = {...foundTimeline, contributors: sortedContributors }
+    //         const sortedTimeline = {...foundTimeline, contributors: sortedContributors }
             
-            // console.log('Sorted Timeline')
-            // console.log(sortedTimeline)
+    //         // console.log('Sorted Timeline')
+    //         // console.log(sortedTimeline)
 
-            setTimeline(sortedTimeline)
+    //         setTimeline(sortedTimeline)
         
-            if (sortedTimeline) {
-                setName(sortedTimeline.name)
-                setDescription(sortedTimeline.description)
+    //         if (sortedTimeline) {
+    //             setName(sortedTimeline.name)
+    //             setDescription(sortedTimeline.description)
             
-                setOwner(sortedTimeline.contributors.find(user => user.role === 3))
+    //             setOwner(sortedTimeline.contributors.find(user => user.role === 3))
             
-                setLoading(false)
+    //             setLoading(false)
 
-                console.log(timeline)
-            }
-        }
+    //             console.log(timeline)
+    //         }
+    //     }
         
-        fetchData()
-    }, [publicTimelines, id])
+    //     fetchData()
+    // }, [publicTimelines, id])
 
 
 
@@ -194,36 +228,36 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
         }, 400)
     }
 
-    // OPEN ADD FORM
+    // // OPEN ADD FORM
     const [addMember, setAddMember] = useState(false)
 
 
 
-    // DELETING TIMELINE
-    const handleDelete = async () => {
-        try {
-            const obj = {
-                timeline_id: id
-            }
+    // // DELETING TIMELINE
+    // const handleDelete = async () => {
+    //     try {
+    //         const obj = {
+    //             timeline_id: id
+    //         }
 
-            const response = await axios.post('http://127.0.0.1:8000/server/deleteTimeline/')
+    //         const response = await axios.post('http://127.0.0.1:8000/server/deleteTimeline/')
 
-            console.log(response)
-            if(response.status == 200) {
-                handleAlert('success', 'Delete successful')
-                handleClose()
-            }
-        } catch(err) {
-            console.log(err)
-        }
-    }
+    //         console.log(response)
+    //         if(response.status == 200) {
+    //             handleAlert('success', 'Delete successful')
+    //             handleClose()
+    //         }
+    //     } catch(err) {
+    //         console.log(err)
+    //     }
+    // }
 
 
 
     return (
-        loading ?
-        <p className="timeline-settings">Loading</p>
-        :
+        // loading ?
+        // <p className="timeline-settings">Loading</p>
+        // :
         <div className="timeline-settings">
             <div className={closed ? "timeline-settings-container timeline-settings-closed" : "timeline-settings-container"}>
                 <div className="timeline-settings-text-box">
@@ -241,7 +275,8 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                         <div className="timeline-settings-name" onMouseEnter={() => setNamePencil(true)} onMouseLeave={() => setNamePencil(false)}>
                             {name}
                             {
-                                namePencil && owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
+                                // namePencil && owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
+                                namePencil ?
                                 <IoPencilOutline className="timeline-settings-name-edit" onClick={() => setEditName(true)}/>
                                 :
                                 null
@@ -269,7 +304,8 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                         <div className="timeline-settings-description" onMouseEnter={() => setDescriptionPencil(true)} onMouseLeave={() => setDescriptionPencil(false)}>
                             {description}
                             {
-                                descriptionPencil && owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
+                                // descriptionPencil && owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
+                                descriptionPencil ?
                                 <IoPencilOutline className="timeline-settings-description-icon" onClick={() => setEditDescription(true)}/>
                                 :
                                 null
@@ -282,13 +318,13 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                     </p>
 
                     {
-                        owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
-                        <>
-                            <button className="btn" onClick={handleDelete}>Delete timeline</button>
-                            <button className="btn" onClick={handleEditTimeline}>Save Changes</button>
-                        </>
-                        :
-                        null
+                        // owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
+                        <div className="buttons">
+                            
+                            <button className="btn" /*onClick={handleEditTimeline}*/>Save Changes</button>
+                        </div>
+                        // :
+                        // null
                     }
                 </div>
 
@@ -310,7 +346,7 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                         }
                     </div>
 
-                    <Link className="btn timeline-settings-view-btn" to={`/timeline/${id}`}>View</Link>
+                    <Link className="btn timeline-settings-view-btn" /*to={`/timeline/${id}`}*/>View</Link>
                 </div>
                 
                 {
@@ -328,7 +364,7 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                             />
 
                             {
-                                owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
+                                // owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
                                 <button className="btn" onClick={() => setAddMember(!addMember)}>
                                     {
                                         addMember ?
@@ -338,8 +374,8 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
 
                                     }
                                 </button>
-                                :
-                                null
+                                // :
+                                // null
                             }
                         </div>
 
@@ -376,10 +412,10 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                                                     }
                                                 </p>
                                                 {
-                                                    owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) && owner.id !== user.id ?
+                                                    // owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) && owner.id !== user.id ?
                                                     <IoPencilOutline className="members-role-edit" onClick={() => setEditMembers(user.id)}/>
-                                                    :
-                                                    null
+                                                    // :
+                                                    // null
                                                 }
                                             </span>
                                         }
@@ -417,7 +453,11 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
 
                 }
 
-                <IoCloseOutline className="timeline-settings-close" onClick={handleClose}/>                
+                <IoCloseOutline className="timeline-settings-close" onClick={handleClose}/>
+                <div className="trash">
+                    <FaTrash className="trash-icon" /*onClick={handleDelete}*//> 
+                </div>
+                               
             </div>
         </div>
     )
