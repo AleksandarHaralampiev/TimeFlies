@@ -5,7 +5,7 @@ import { IoAddOutline } from "react-icons/io5"
 import axios from "axios"
 import { Link } from "react-router-dom"
 import { HashLink } from "react-router-hash-link"
-import TimelineSettings from "./TimelineSettings"
+import TimelineSettings from "./TimelineSettings/TimelineSettings"
 import DashboardSkeleton from "./DashboardSkeleton"
 import DashboardCard from "./DashboardCard"
 
