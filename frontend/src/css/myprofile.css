@@ -14,7 +14,7 @@
     display: flex;
     flex-direction: column;
     margin-top: 3.2rem;
-    background-color: var(--secondary-tint2);
+    background-color: var(--bg-tint1);
     max-width: 60rem;
     height: 60.5rem;
     justify-content: flex-start;
@@ -83,6 +83,7 @@
 .username {
     font-size: 4rem;
     margin-bottom: 1.1rem;
+    background-color: aquamarine;
 }
 
 .username-input {
@@ -95,33 +96,36 @@
     text-align: center;
 }
 
-
 .username-container {
-    display: flex;
     position: relative;
+    display: inline-block;
     width: 95%;
     height: 6rem;
     justify-content: center;
     align-items: center;
     border-bottom: solid 0.2rem var(--secondary-tint3);
     margin-bottom: 0.5rem;
+    background-color: blueviolet;
 }
 
 .icon-hover {
     display: none;
+    /* Initially hidden */
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 70%;
-    width: 100%;
+    right: 10px;
+    /* Adjusted for better positioning */
+    transform: translateY(-50%);
+    height: 6rem;
+    width: 6rem;
+    background-color: aqua;
 }
 
-.username-container:hover .icon-hover {
-    background-color: var(--secondary-tint2);
+.username:hover+.icon-hover {
     display: block;
-    opacity: 80%;
+    /* Show on hover */
 }
+
 
 .tick-hover {
     justify-content: end;
