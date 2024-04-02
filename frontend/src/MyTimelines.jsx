@@ -5,6 +5,9 @@ import { IoAddOutline } from "react-icons/io5"
 import axios from "axios"
 import { Link } from "react-router-dom"
 import { HashLink } from "react-router-hash-link"
+import TimelineSettings from "./TimelineSettings"
+import DashboardSkeleton from "./DashboardSkeleton"
+import DashboardCard from "./DashboardCard"
 
 const MyTimelines = () => {
     const { navigate, loggedIn, myTimelines, myLoading, myError } = useContext(DataContext)
@@ -14,14 +17,26 @@ const MyTimelines = () => {
         if(!loggedIn) navigate('/login')
     }, [loggedIn])
 
+    const [settings, setSettings] = useState(null)
 
     return (
         <section className="section-dashboard">
+            {
+                settings ?
+                <TimelineSettings
+                    id={settings}
+                    setSettings={setSettings}
+                    list="my-timelines"
+                />
+                :
+                null
+            }
             <div className="container my-timelines-header">
                 <div className="text-box">
                     <h1 className="dashboard-heading">Your Timelines</h1>
 
                     <p className="dashboard-text">These are all the timelines you contribute in.</p>
+                    {!myError && <p className="dashboard-text">{myTimelines.length} timelines</p>}
                 </div>
 
                 <div className="btn-box">
@@ -33,8 +48,12 @@ const MyTimelines = () => {
 
                 {
                     myLoading ?
-                    <div className="container">
-                        <p className="dashboard-text">Loading</p>
+                    <div className="container timeline-grid">
+                        {
+                            Array.from({length: 6}, _ => null).map(_ => (
+                                <DashboardSkeleton />
+                            ))
+                        }
                     </div>
                     :
                     myError ?
@@ -47,29 +66,10 @@ const MyTimelines = () => {
                     <div className="container timeline-grid">
                         {
                             myTimelines.map(timeline => (
-                                <div className="timeline-container" onClick={() => navigate(`/timeline/${timeline.id}`)}>
-                                    
-                                    <h3 className="timeline-name">{timeline.name}</h3>
-
-                                    <p className="timeline-description">
-                                        {
-                                            timeline.description.length < 100 ?
-                                            timeline.description
-                                            :
-                                            `${timeline.description.slice(0, 100)}...`
-                                        }
-                                    </p>
-
-                                    <div className="timeline-img-box">
-                                        {
-                                            profiles.slice(0, 5).map(pic => (
-                                                <img src={pic} className="timeline-pfp"/>
-                                            ))
-                                        }
-
-                                    </div>
-
-                                </div>
+                                <DashboardCard 
+                                    timeline={timeline}
+                                    setSettings={setSettings}
+                                />
                             ))
                         }
                     </div>

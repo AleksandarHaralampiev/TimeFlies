@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'authenticate',
     'server',
     'timeline',
+    'contactUs',
 ]
 
 MIDDLEWARE = [

@@ -55,3 +55,9 @@
     font-style: italic;
     letter-spacing: 1px;
 }
+
+.account-loading {
+    margin-top: 2.4rem;
+    margin-left: auto;
+    margin-right: auto;
+}

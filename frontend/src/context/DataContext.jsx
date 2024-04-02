@@ -11,8 +11,11 @@ const DataProvider = ({ children }) => {
 
     // FETCHING ACCOUNT INFO
     const [account, setAccount] = useState({})
+    const [accountLoading, setAccountLoading] = useState(false)
 
     const fetchAccount = async () => {
+        setAccountLoading(true)
+
         try {
             const response = await axios.get(`http://127.0.0.1:8000/authenticate/info/?Content-Type=application-json&id=${JSON.parse(localStorage.getItem('accData')).id}`)
 
@@ -22,6 +25,8 @@ const DataProvider = ({ children }) => {
             }
         } catch(err) {
             console.log(err)
+        } finally {
+            setAccountLoading(false)
         }
     }
 
@@ -104,7 +109,7 @@ const DataProvider = ({ children }) => {
 
             console.log('my timelines')
             console.log(response)
-            setMyTimelines(response.data.servers)
+            setMyTimelines(response.data.servers_data)
 
             setMyError('')
         } catch(err) {
@@ -129,7 +134,7 @@ const DataProvider = ({ children }) => {
             loggedIn, setLoggedIn, navigate, alerts, setAlerts, handleAlert,            //GENERAL 
             publicTimelines, dashboardLoading, dashboardError,                          //DASHBOARD
             myTimelines, myLoading, myError, fetchMyTimelines,                          //MY TIMELINES
-            account, fetchAccount, fetchPublicTimelines, fetchMyTimelines
+            account, fetchAccount, fetchPublicTimelines, accountLoading
         }}>
             {children}
         </DataContext.Provider>

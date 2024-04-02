@@ -7,6 +7,7 @@ from . import views
 
 
 urlpatterns = [
-    path('event/', views.getEvents)
+    path('event/', views.getEvents),
+    path('addEvent/', views.addEvent)
 ]
 

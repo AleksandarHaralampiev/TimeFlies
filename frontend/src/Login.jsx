@@ -2,11 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import axios from 'axios'
 import { DataContext } from "./context/DataContext";
 import { IoPersonOutline } from "react-icons/io5";
+import { BarLoader } from "react-spinners";
 
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
 
     const { loggedIn, setLoggedIn, navigate, handleAlert } = useContext(DataContext)
@@ -17,6 +19,8 @@ const Login = () => {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        setLoading(true)
 
         const obj = {
             email,
@@ -54,6 +58,7 @@ const Login = () => {
         } finally {
             setEmail('')
             setPassword('')
+            setLoading(false)
         }
     }
 
@@ -63,7 +68,14 @@ const Login = () => {
                 <div className="account-text-box">
                     <IoPersonOutline className="account-icon"/>
 
-                    <h2 className="heading-secondary">Log In To Your Account</h2>
+                    <h2 className="heading-secondary-reusable">Log In To Your Account</h2>
+
+                    {
+                        loading ?
+                            <BarLoader color="#625149" width={200} className="account-loading"/>
+                        :
+                        null
+                    }
 
                     {
                         error.length ?

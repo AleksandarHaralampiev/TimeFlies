@@ -4,11 +4,12 @@ import { DataContext } from './context/DataContext';
 import { HashLink } from 'react-router-hash-link';
 import pfp from './img/pfp.jpg'
 import { IoCloseOutline, IoMenuOutline } from 'react-icons/io5'
+import Skeleton from 'react-loading-skeleton';
 
 const Nav = () => {
-    const { loggedIn, setLoggedIn, navigate, account } = useContext(DataContext)
+    const { loggedIn, setLoggedIn, navigate, account, accountLoading } = useContext(DataContext)
 
-    const [dropdown, setDropdown] = useState(false)
+    
     const [sticky, setSticky] = useState(false)
     const [open, setOpen] = useState(false)
 
@@ -32,6 +33,8 @@ const Nav = () => {
 
 
     // DROPDOWN
+    const [dropdown, setDropdown] = useState(false)
+
     const handleCollapse = (e) => {
         const dropdownContainer = document.querySelector('.nav-pfp-container')
 
@@ -40,6 +43,17 @@ const Nav = () => {
 
     document.addEventListener('click', (e) => dropdown ? handleCollapse(e) : null)
 
+    useEffect(() => {
+        if(loggedIn) setDropdown(false)
+    }, [loggedIn])
+
+
+    // MOBILE
+    const handleClose = () => {
+        // setTimeout(() => {
+            setOpen(false)
+        // }, 500)
+    }
 
 
     return (
@@ -47,33 +61,53 @@ const Nav = () => {
 
             {
                 open ?
-                <IoCloseOutline className='mobile-nav-btn' onClick={() => setOpen(false)}/>
+                <IoCloseOutline className='mobile-nav-btn' onClick={handleClose}/>
                 :
                 <IoMenuOutline className='mobile-nav-btn' onClick={() => setOpen(true)}/>
             }
             
-            <ul className={open ? "nav-links nav-links-mobile" : "nav-links"}>
+            <ul className={open ? "nav-links-mobile nav-links" : "nav-links"}>
                 <li>
-                    <Link to='/' className='nav-link'>Home</Link>
+                    <Link to='/' className='nav-link' onClick={() => setOpen(false)}>Home</Link>
                 </li>
                 <li>
-                    <HashLink to='/#about-us' className='nav-link'>About</HashLink>
+                    <HashLink to='/#about-us' className='nav-link' onClick={() => setOpen(false)}>About</HashLink>
                 </li>
                 <li>
-                    <HashLink to='/#contact-us' className='nav-link'>Contact Us</HashLink>
+                    <HashLink to='/#contact-us' className='nav-link' onClick={() => setOpen(false)}>Contact Us</HashLink>
                 </li>
                 {loggedIn && (
                     <li>
-                        <Link to='/dashboard' className='nav-link'>Dashboard</Link>
+                        <Link to='/dashboard' className='nav-link' onClick={() => setOpen(false)}>Dashboard</Link>
                     </li>
                 )}
+                {
+                    !loggedIn && open ?
+                    <div className='nav-account-links'>
+                        <li>
+                            <Link to='/login' className='nav-link' onClick={() => setOpen(false)}>Log In</Link>
+                        </li>
+                        <li>
+                            <Link to='/register' className='nav-link' onClick={() => setOpen(false)}>Sign Up</Link>
+                        </li>
+                    </div>
+                    :
+                    null
+                }
             </ul>
 
 
             {
                 loggedIn ?
                     <div className='nav-pfp-container'>
-                        <img src={account.profile_picture} className="pfp" onClick={() => setDropdown(!dropdown)} />
+                        {
+                            accountLoading ?
+                            <div onClick={() => setDropdown(!dropdown)}>
+                                <Skeleton className='nav-pfp' />
+                            </div>
+                            :
+                            <img src={account.profile_picture} className="nav-pfp" onClick={() => setDropdown(!dropdown)} />
+                        }
 
                         <ul className={dropdown ? "dropdown active" : "dropdown"}>
                             <li>

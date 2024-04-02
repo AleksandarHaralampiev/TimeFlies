@@ -12,6 +12,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .serializers import ServerSerializer
+from django.db.models import Q
+from timeline.models import Timeline
 
 #get_response_or404
 from django.shortcuts import get_object_or_404
@@ -48,6 +50,7 @@ def getContributors(server_id):
     owner_dict = {
         'username': owner.username,
         'profile_picture': getPhoto(owner.id),
+        'id': owner.id,
         'role': 3
     }
     contributors.append(owner_dict)
@@ -57,6 +60,7 @@ def getContributors(server_id):
         editor_dict = {
             'username': editor.username,
             'profile_picture': getPhoto(editor.id),
+            'id': editor.id,
             'role': 2
         }
         contributors.append(editor_dict)
@@ -66,6 +70,7 @@ def getContributors(server_id):
         member_dict = {
             'username': member.username,
             'profile_picture': getPhoto(member.id),
+            'id': member.id,
             'role': 1
         }
         contributors.append(member_dict)
@@ -91,25 +96,24 @@ def createTimeLine(request, *args, **kwargs):
 
 
 
-@api_view(['GET'])
-def getTimeLine(request, *args, **kwargs):
-    if request.method == "GET":
-        
-        id = int(request.GET.get('id'))
-        servers = Server.objects.filter(owner = id).all()
-        
-        servers_data = [{
-            "id": server.id,
-            "name": server.name, 
-            "description": server.description,
-            "public": server.public,
-            "owner_id": server.owner_id,
-            "owner_username": UserAccount.objects.filter(id = server.owner_id).first().username,
-            "date": str(server.created_at).split(' ')[0],
-            "owner_photo": getPhoto(server.owner_id)
-            } 
-            for server in servers]
-        return Response(data = {"servers": servers_data}, status=200)
+#@api_view(['GET'])
+#def getTimeLine(request, *args, **kwargs):
+#    if request.method == "GET":
+#        
+#        id = int(request.GET.get('id'))
+#        servers = Server.objects.filter(owner = id).all()
+#        
+#        servers_data = [{
+#            "id": server.id,
+#            "name": server.name, 
+#            "description": server.description,
+#            "public": server.public,
+#            "owner_username": UserAccount.objects.filter(id = server.owner_id).first().username,
+#            "date": str(server.created_at).split(' ')[0],
+#            "owner_photo": getPhoto(server.owner_id)
+#            } 
+#            for server in servers]
+#        return Response(data = {"servers": servers_data}, status=200)
     
           
 
@@ -128,6 +132,7 @@ def getAllPublicTimeLine(request, *args, **kwargs):
                 "contributors": getContributors(server.id),
                 "owner_username": UserAccount.objects.filter(id = server.owner_id).first().username,
                 "date": str(server.created_at).split(' ')[0],
+                "owner_id": server.owner_id
                 } 
                   for server in publicServers]
             return Response(data = {"servers": servers_data}, status=200)
@@ -137,33 +142,34 @@ def getAllPublicTimeLine(request, *args, **kwargs):
 @api_view(['POST', ])
 def addUser(request, *args, **kwargs):
     if request.method == "POST":
-        email = request.POST.get("email")
-        role = int(request.POST.get("role"))
-        server_id = int(request.POST.get("server_id"))
-        #class = []
-        # default = 0
-        # member = 1
-        # editor = 2
+        body = request.body
+        data = json.loads(body)
+        email = data['email']
+        server_id = int(data['server_id'])
+        role = int(data['role'])
+
         user  = get_object_or_404(UserAccount, email = email)
         if user:
-            
-            server = get_object_or_404(Server, id = server_id)
-            if role == 1:
-                server.members.add(user)
-                server.save()
-            elif role == 2:
-                server.editors.add(user)
-                server.save()
-            return Response(data = {"message": "Successfully added"}, status=200)
-        
+           server = get_object_or_404(Server, id = server_id)
+           if role == 1:
+               server.members.add(user)
+               server.save()
+           elif role == 2:
+               server.editors.add(user)
+               server.save()
+        return Response(data = {"message": "Successfully added"}, status=200)
+       # 
         
 @api_view(['POST'])
 def changeRole(request, *args, **kwargs):
     if request.method == "POST":
-        email = request.POST.get('email') 
-        server_id = int(request.POST.get("server_id"))
-        new_role = int(request.POST.get("role"))
-        user  = get_object_or_404(UserAccount, email = email)
+        body = request.body
+        data = json.loads(body)
+        user_id_role = data['user_id_role']
+        server_id = int(data['server_id'])
+        new_role = int(data['new_role'])
+
+        user  = get_object_or_404(UserAccount, id = user_id_role)
         if user:
             server = get_object_or_404(Server, id = server_id)
             if new_role == 0:
@@ -184,8 +190,10 @@ def changeRole(request, *args, **kwargs):
 @api_view(['GET'])
 def checkUser(request, *args, **kwargs):
     if request.method == "GET":
-        user_id = int(request.GET.get('id'))
-        server_id = int(request.GET.get("server_id"))
+        body = request.body
+        data = json.loads(body)
+        user_id = int(data['id']) 
+        server_id = int(data['server_id'])
         user = get_object_or_404(UserAccount, id = user_id)
         server = get_object_or_404(Server, id = server_id)
         is_member = server.members.filter(id=user_id).exists()
@@ -198,13 +206,61 @@ def checkUser(request, *args, **kwargs):
         else:
             return Response(data={"message": "The user is default"}, status=200)
 
+@api_view(['GET'])
+def GetMyTimelines(request):
+    id_value = request.GET.get('id')
+    user = get_object_or_404(UserAccount, id=id_value)
+    
+    servers = Server.objects.filter(Q(owner=user) | Q(editors=user) | Q(members=user)).distinct()
 
+    servers_data = []
+    for server in servers:
+        server_data = {
+            "id": server.id,
+            "name": server.name, 
+            "description": server.description,
+            "public": server.public,
+            "contributors": getContributors(server.id), 
+            "owner_username": UserAccount.objects.filter(id=server.owner_id).first().username,
+            "date": str(server.created_at).split(' ')[0],
+            "owner_id": server.owner_id
+        }
+        servers_data.append(server_data)
 
+    return JsonResponse({'servers_data': servers_data})
+        
+@api_view(['POST'])
+def timelineChanges(request):
+    name = request.data.get('name')
+    description = request.data.get('description')
+    server_id = request.data.get('server_id')
+    
+    try:
+        server = Server.objects.get(id = server_id)
+    except:
+        return Response("The is wasn't found!", status=500)
+    
+    if server.name != name or server.description != description:
+        server.name = name 
+        server.description = description
+        server.save()
+        return Response("The changes are applyed!")
+    
+@api_view(['POST'])
+def deleteTimeline(request):
+    timeline_id = request.data.get('timeline_id')
+    
+    try:
+        timeline = Server.objects.get(id = timeline_id)
+    except:
+        return Response("There is an error with the object!", status=500)
 
-        
-        
-        
-        
+    try:
+        timeline.delete()
+        return Response("Delete succses!")
+    except:
+        return Response("The delete is incorrect!", status=500)
+
 # @api_view(['GET'])
 # def getEditorId(request, *args, **kwargs):
 #     if request.method == "GET":
@@ -216,4 +272,3 @@ def checkUser(request, *args, **kwargs):
 #             return Response(data = {"editors": editors_data}, status=200)
 #         except:
 #             return Response(data={"error": "Invalid request"}, status=400)
-        

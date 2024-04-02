@@ -1,11 +1,14 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import TimeLineMark from "./components/TimeLineMark";
 import EventCard from "./components/EventCard";
 import { useParams, useSearchParams } from "react-router-dom";
 import axios from "axios";
+import { DataContext } from "./context/DataContext";
 
 
 const Timeline = () => {
+    const { handleAlert } = useContext(DataContext)
+
     const id = useParams().id
 
     const [events, setEvents] = useState([])
@@ -83,6 +86,43 @@ const Timeline = () => {
     //         "direction": "right"
     //     }
     // ];
+
+    // ADD EVENT
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
+    const [day, setDay] = useState('01')
+    const [month, setMonth] = useState('01')
+    const [year, setYear] = useState('2024')
+
+    const handleAdd = async (e) => {
+        e.preventDefault()
+
+        try {
+            const obj = {
+                title,
+                description,
+                timeline_id: id,
+                date: `${day}.${month}.${year}`
+            }
+
+            console.log(obj)
+            
+            const response = await axios.post('http://127.0.0.1:8000/timeline/addEvent/', obj)
+
+            console.log(response)
+
+            if(response.status == 200) {
+                handleAlert('success', 'Event added successfully.')
+            }
+        } catch(err) {
+            console.log(err)
+        } finally {
+
+        }
+    }
+
+
+
     return (
         <main className="section-main">
             <div className="timeline">
@@ -115,6 +155,37 @@ const Timeline = () => {
                 ))}
             </div>
             {/* <div><button className="rounded-btn">+</button></div> */}
+            
+            <form onSubmit={(e) => handleAdd(e)}>
+                <input
+                    type="text"
+                    placeholder="title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                />
+                <input
+                    type="text"
+                    value={day}
+                    onChange={(e) => setDay(e.target.value)}
+                />
+                <input
+                    type="text"
+                    value={month}
+                    onChange={(e) => setMonth(e.target.value)}
+                />
+                <input
+                    type="text"
+                    value={year}
+                    onChange={(e) => setYear(e.target.value)}
+                />
+                <textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="description"
+                />
+                <button type="submit" className="btn">Add Event</button>
+            </form>
+
         </main>
 
     );

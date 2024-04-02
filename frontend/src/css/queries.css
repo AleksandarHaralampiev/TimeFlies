@@ -32,6 +32,10 @@
     .members-list {
         width: 75%;
     }
+
+    .new-timeline-form {
+        width: 75%;
+    }
 }
 
 
@@ -39,6 +43,10 @@
 /* < 688px */
 
 @media(max-width: 43em) {
+    .section-main {
+        padding: 12.8rem 6.4rem 9.6rem 6.4rem;
+    }
+
     .main-container {
         grid-template-columns: 1fr;
     }
@@ -62,6 +70,12 @@
     .timeline-settings-name-done {
         position: static;
     }
+
+    .my-timelines-header {
+        flex-direction: column;
+
+        text-align: center;
+    }
 }
 
 
@@ -69,8 +83,12 @@
 /* < 560px */
 
 @media(max-width: 35em) {
+    .section-main {
+        padding: 12.8rem 1.6rem 9.6rem 1.6rem;
+    }
+
     .main-container {
-        padding: 0 3.2rem;
+        padding: 0;
     }
 
     .heading-primary {
@@ -83,17 +101,131 @@
 
     .mobile-nav-btn {
         display: block;
+        z-index: 1001;
     }
 
     .nav-links {
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
+
+        height: 100vh;
+        width: 100vw;
+        background-color: rgba(255, 255, 255, 0.95);
+
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        z-index: 1000;
+
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        font-size: 3.2rem;
+
+        padding: 0 6.4rem;
+    }
+
+    .nav-account-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.6rem;
+        width: 100%;
+        padding-top: 1.6rem;
+
+        border-top: solid 1px var(--main);
     }
 
     .nav-links-mobile {
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
+
+        animation: fly-in 0.5s;
+    }
+
+    .nav-link-mobile-closed {
+        animation: fly-out 0.5s;
+    }
+
+    .timeline-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .timeline-settings-btn-box {
+        flex-direction: column;
+        align-items: stretch;
+        width: 75%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .timeline-settings-members {
+        max-width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .btn-contributors {
+        font-size: 1.8rem;
+    }
+
+    .timeline-settings-img-box {
+        margin-left: auto;
+        margin-right: auto;
+        /* background-color: aqua; */
+        justify-content: center;
+    }
+
+    .timeline-settings-img-box img {
+        width: 3.6rem;
+        height: 3.6rem;
+    }
+
+    .btn, .btn:link, .btn:visited, .btn:active {
+        font-size: 2.4rem;
+    }
+
+    .timeline-settings-add-form {
+        width: 95%;
+    }
+
+    .timeline-settings-search-box {
+        flex-direction: column;
+    }
+
+    .timeline-settings-search {
+        padding: 1.6rem 3.2rem;
+        font-size: 2.4rem;
+    }
+
+    .members-list {
+        grid-template-columns: auto 1fr 1fr;
+        width: 100%;
+    }
+
+    .text-box {
+        text-align: center;
+    }
+
+    .search-box input {
+        width: 100%;
+    }
+
+    .new-timeline-form {
+        width: 100%;
+    }
+
+    @keyframes fly-in {
+        from {
+            transform: translateX(-100%);
+        }
+        to {
+            transform: translateX(0);
+        }
     }
 }

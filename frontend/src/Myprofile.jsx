@@ -7,7 +7,7 @@ import { DataContext } from "./context/DataContext";
 import axios from "axios";
 
 const MyProfile = () => {
-    const { account, handleAlert, fetchAccount, fetchPublicTimelines, fetchMyTimelines } = useContext(DataContext);
+    const { account, handleAlert, fetchAccount, fetchPublicTimelines, fetchMyTimelines, loggedIn, navigate } = useContext(DataContext);
 
     useEffect(() => {
         setName(account.username);
@@ -19,6 +19,10 @@ const MyProfile = () => {
     const [visible, setVisible] = useState(true);
     const [profilePicture, setProfilePicture] = useState(null);
     const fileInputRef = useRef(null);
+
+    useEffect(() => {
+        if(!loggedIn) navigate('/login')
+    }, [loggedIn])
 
     function handleEdit(field) {
         setEditField(field);

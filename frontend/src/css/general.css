@@ -71,7 +71,7 @@ body {
     letter-spacing: 1.5px;
 }
 
-.heading-secondary {
+.heading-secondary-reusable {
     font-size: 3rem;
     margin-bottom: 0.8rem;
     line-height: 1.3;
@@ -94,6 +94,12 @@ body {
     text-decoration: none;
 
     cursor: pointer;
+
+    transition: .2s;
+}
+
+.btn:hover, .btn:active {
+    background-color: var(--main);   
 }
 
 .grid-3-cols {
@@ -191,4 +197,22 @@ body {
     to {
         width: 0%;
     }
+}
+
+
+/* LOADING */
+.loading-screen {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.7);
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    z-index: 2000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
