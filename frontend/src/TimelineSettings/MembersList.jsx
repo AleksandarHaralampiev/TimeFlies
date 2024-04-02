@@ -1,10 +1,4 @@
-import { useContext } from "react"
-import { IoCheckmarkDoneOutline, IoPencilOutline } from "react-icons/io5"
-import { TimelineContext } from "./TimelineSettings"
-
 const MembersList = () => {
-    const { shownContributors, editMembers, handleEditMember, roleEdit, setRoleEdit, owner } = useContext(TimelineContext)
-
     return (
         <div className="members-list">
             {
@@ -22,7 +16,7 @@ const MembersList = () => {
                                     <option value={0}>Remove</option>
                                 </select>
                                 <button className="members-role-edit" type="submit">
-                                    <IoCheckmarkDoneOutline />
+                                    <IoCheckmarkDoneOutline/>
                                 </button>
                             </form>
                             :

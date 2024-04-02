@@ -1,9 +1,4 @@
-import { useContext } from "react"
-import { TimelineContext } from "./TimelineSettings"
-
 const Search = () => {
-    const { search, setSearch, setAddMember, addMember, owner } = useContext(TimelineContext)
-
     return (
         <div className="timeline-settings-search-box">
             <input

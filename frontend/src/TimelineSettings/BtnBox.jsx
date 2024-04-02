@@ -1,10 +1,4 @@
-import { useContext } from "react"
-import { Link } from "react-router-dom"
-import { TimelineContext } from "./TimelineSettings"
-
 const BtnBox = () => {
-    const { setOpenMembers, openMembers, timeline, id } = useContext(TimelineContext)
-
     return (
         <div className="timeline-settings-btn-box">
             <div className="timeline-settings-members" onClick={() => setOpenMembers(!openMembers)}>
