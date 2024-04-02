@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 import pfp from './img/pfp.jpg'
 import { FaTrash } from "react-icons/fa";
+import { BarLoader } from "react-spinners";
 
 const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
     // const owner = {
@@ -68,7 +69,11 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
     const [editDescription, setEditDescription] = useState(false)
 
     // // EDIT TIMELINE
+    const [loadingTimeline, setLoadingTimeline] = useState(false)
+
     const handleEditTimeline = async () => {
+        setLoadingTimeline(true)
+
         try {
             const obj = {
                 name,
@@ -81,10 +86,15 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
             console.log(response)
 
             if(response.status == 200) {
-                handleAlert('success', 'Changes Saved Successfully!')
+                setTimeline({...timeline, name: name, description: description})
+                handleAlert('success', 'Changes saved successfully!')
+                setChanges(false)
             }
         } catch(err) {
-            
+            console.log(err)
+            handleAlert('error', "Couldn't save the changes!")
+        } finally {
+            setLoadingTimeline(false)
         }
     }
 
@@ -92,8 +102,12 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
     const [changes, setChanges] = useState(false)
 
     useEffect(() => {
-        if(editName || editDescription) setChanges(true)
-    }, [editName, editDescription])
+        // if(editName || editDescription) setChanges(true)
+        if(timeline){
+            if(name !== timeline.name || description !== timeline.description) setChanges(true)
+            else setChanges(false)
+        }
+    }, [name, description])
 
 
 
@@ -248,7 +262,9 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                 timeline_id: id
             }
 
-            const response = await axios.post('http://127.0.0.1:8000/server/deleteTimeline/')
+            console.log(obj)
+
+            const response = await axios.post('http://127.0.0.1:8000/server/deleteTimeline/', obj)
 
             console.log(response)
             if(response.status == 200) {
@@ -298,6 +314,11 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                     </p>
 
                     {
+                        loadingTimeline &&
+                        <BarLoader color="#625149" width={300} className="timeline-settings-loading"/>
+                    }
+
+                    {
                         editDescription ?
                         <div className="timeline-settings-description">
                             <textarea
@@ -328,10 +349,11 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                     {
                         changes &&
                         <>
-                        <Link className="btn save-changes" onClick={handleEditTimeline}>Save Changes</Link>
-                        <FaTrash className="trash-icon" onClick={handleDelete}/>
+                            <Link className="btn save-changes" onClick={handleEditTimeline}>Save Changes</Link>
                         </>
                     }
+
+                    <FaTrash className="trash-icon" onClick={handleDelete}/>
                     
                 </div>
 

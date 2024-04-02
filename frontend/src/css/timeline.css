@@ -197,9 +197,15 @@
     border-radius: 50%;
 }
 
+.timeline-settings-loading {
+    /* background-color: aqua; */
+    margin: 0 auto;
+}
+
 .timeline-settings-description {
     font-size: 1.8rem;
     line-height: 1.8;
+    margin-top: 1.2rem;
     margin-bottom: 1.6rem;
 
     position: relative;
