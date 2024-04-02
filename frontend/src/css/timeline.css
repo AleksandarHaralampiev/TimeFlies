@@ -239,6 +239,11 @@
     font-size: 1.4rem;
     letter-spacing: 3px;
     color: var(--main-tint1);
+    margin-bottom: 3.2rem;
+}
+
+.save-changes {
+    padding: 0.8rem 1.6rem !important;
 }
 
 
@@ -251,6 +256,7 @@
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
 }
+
 
 
 .timeline-settings-members {
@@ -398,7 +404,6 @@ select.members-role {
     border: none;
     font-size: 1.6rem;
 }
-
 
 .trash-icon{
     left: auto;
