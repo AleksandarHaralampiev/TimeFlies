@@ -53,7 +53,7 @@ const MyProfile = () => {
 
             console.log(response);
 
-            if(response.status == 201) {
+            if (response.status == 201) {
                 handleAlert('success', 'Changes saved successfully.')
                 fetchAccount()
                 fetchMyTimelines()

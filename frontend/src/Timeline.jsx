@@ -14,13 +14,13 @@ const Timeline = () => {
         const fetching = async () => {
             try {
                 const response = await axios.get(`http://127.0.0.1:8000/timeline/event/?id=${id}`)
-    
+
                 console.log(response)
 
-                if(response.status == 200) {
+                if (response.status == 200) {
                     setEvents(response.data)
                 }
-            } catch(err) {
+            } catch (err) {
                 console.log(err)
             }
         }
