@@ -24,6 +24,7 @@
 
     display: flex;
     gap: 1.6rem;
+    align-items: center;
 }
 
 .nav-link:link,
@@ -128,4 +129,8 @@
     width: 3.2rem;
     height: 3.2rem;
     cursor: pointer;
+}
+
+.logo {
+    height: 6rem;
 }

@@ -5,11 +5,12 @@ import { HashLink } from 'react-router-hash-link';
 import pfp from './img/pfp.jpg'
 import { IoCloseOutline, IoMenuOutline } from 'react-icons/io5'
 import Skeleton from 'react-loading-skeleton';
+import logo from './img/Logo.png';
 
 const Nav = () => {
     const { loggedIn, setLoggedIn, navigate, account, accountLoading } = useContext(DataContext)
 
-    
+
     const [sticky, setSticky] = useState(false)
     const [open, setOpen] = useState(false)
 
@@ -44,14 +45,14 @@ const Nav = () => {
     document.addEventListener('click', (e) => dropdown ? handleCollapse(e) : null)
 
     useEffect(() => {
-        if(loggedIn) setDropdown(false)
+        if (loggedIn) setDropdown(false)
     }, [loggedIn])
 
 
     // MOBILE
     const handleClose = () => {
         // setTimeout(() => {
-            setOpen(false)
+        setOpen(false)
         // }, 500)
     }
 
@@ -61,14 +62,16 @@ const Nav = () => {
 
             {
                 open ?
-                <IoCloseOutline className='mobile-nav-btn' onClick={handleClose}/>
-                :
-                <IoMenuOutline className='mobile-nav-btn' onClick={() => setOpen(true)}/>
+                    <IoCloseOutline className='mobile-nav-btn' onClick={handleClose} />
+                    :
+                    <IoMenuOutline className='mobile-nav-btn' onClick={() => setOpen(true)} />
             }
-            
+
             <ul className={open ? "nav-links-mobile nav-links" : "nav-links"}>
                 <li>
-                    <Link to='/' className='nav-link' onClick={() => setOpen(false)}>Home</Link>
+                    <Link to='/' className='nav-link' onClick={() => setOpen(false)}>
+                        <img src={logo} className='logo' />
+                    </Link>
                 </li>
                 <li>
                     <HashLink to='/#about-us' className='nav-link' onClick={() => setOpen(false)}>About</HashLink>
@@ -83,16 +86,16 @@ const Nav = () => {
                 )}
                 {
                     !loggedIn && open ?
-                    <div className='nav-account-links'>
-                        <li>
-                            <Link to='/login' className='nav-link' onClick={() => setOpen(false)}>Log In</Link>
-                        </li>
-                        <li>
-                            <Link to='/register' className='nav-link' onClick={() => setOpen(false)}>Sign Up</Link>
-                        </li>
-                    </div>
-                    :
-                    null
+                        <div className='nav-account-links'>
+                            <li>
+                                <Link to='/login' className='nav-link' onClick={() => setOpen(false)}>Log In</Link>
+                            </li>
+                            <li>
+                                <Link to='/register' className='nav-link' onClick={() => setOpen(false)}>Sign Up</Link>
+                            </li>
+                        </div>
+                        :
+                        null
                 }
             </ul>
 
@@ -102,11 +105,11 @@ const Nav = () => {
                     <div className='nav-pfp-container'>
                         {
                             accountLoading ?
-                            <div onClick={() => setDropdown(!dropdown)}>
-                                <Skeleton className='nav-pfp' />
-                            </div>
-                            :
-                            <img src={account.profile_picture} className="nav-pfp" onClick={() => setDropdown(!dropdown)} />
+                                <div onClick={() => setDropdown(!dropdown)}>
+                                    <Skeleton className='nav-pfp' />
+                                </div>
+                                :
+                                <img src={account.profile_picture} className="nav-pfp" onClick={() => setDropdown(!dropdown)} />
                         }
 
                         <ul className={dropdown ? "dropdown active" : "dropdown"}>
