@@ -16,7 +16,7 @@
     margin-top: 3.2rem;
     background-color: var(--bg-tint1);
     max-width: 60rem;
-    height: 60.5rem;
+    height: 50rem;
     justify-content: flex-start;
     align-items: center;
 
@@ -57,14 +57,17 @@
     justify-content: center;
 }
 
-.icon-hover {
+.icon-pfp {
     position: absolute;
     top: 100%;
     left: 100%;
-    transform: translate(-50%, -50%);
+    transform: translate(-130%, -130%);
     display: none;
     cursor: pointer;
     align-items: center;
+    height: 10rem;
+    width: 10rem;
+
 
 }
 
@@ -74,16 +77,10 @@
     opacity: 80%;
 }
 
-.pfp-container:hover .icon-hover {
+.pfp-container:hover .icon-pfp {
     display: block;
 
 
-}
-
-.username {
-    font-size: 4rem;
-    margin-bottom: 1.1rem;
-    background-color: aquamarine;
 }
 
 .username-input {
@@ -96,7 +93,18 @@
     text-align: center;
 }
 
+
+.username {
+    font-size: 4rem;
+    margin-bottom: 1.1rem;
+    /* background-color: aquamarine; */
+    text-align: center;
+    /* justify-content: center; */
+    /* Center the username text */
+}
+
 .username-container {
+    margin-top: 2rem;
     position: relative;
     display: inline-block;
     width: 95%;
@@ -105,7 +113,9 @@
     align-items: center;
     border-bottom: solid 0.2rem var(--secondary-tint3);
     margin-bottom: 0.5rem;
-    background-color: blueviolet;
+    /* background-color: blueviolet; */
+    text-align: center;
+    /* Center the content horizontally */
 }
 
 .icon-hover {
@@ -115,13 +125,13 @@
     top: 50%;
     right: 10px;
     /* Adjusted for better positioning */
-    transform: translateY(-50%);
-    height: 6rem;
-    width: 6rem;
-    background-color: aqua;
+    transform: translate(-290%, -50%);
+    height: 4rem;
+    width: 4rem;
+    /* background-color: aqua; */
 }
 
-.username:hover+.icon-hover {
+.username-container:hover .icon-hover {
     display: block;
     /* Show on hover */
 }
