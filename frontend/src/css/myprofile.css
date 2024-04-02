@@ -16,7 +16,7 @@
     margin-top: 3.2rem;
     background-color: var(--bg-tint1);
     max-width: 60rem;
-    height: 50rem;
+    height: 100rem;
     justify-content: flex-start;
     align-items: center;
 
@@ -148,6 +148,8 @@
     display: block;
 }
 
+
+
 .pas-container,
 .pas-container-1,
 .password-container,
@@ -161,12 +163,29 @@
     padding-left: 1.5rem;
 }
 
-.pas-container-1 {
-    /* background-color: var(--secondary-tint3); */
-    opacity: 60%;
-    /* margin-left: 30px; */
+.password-container {
+    flex-direction: column;
+    justify-content: start;
+    /* background-color: aqua; */
+    /* gap: 3rem; */
+    /* align-items: center; */
 }
 
+/* .pas-container-1 {
+    background-color: var(--secondary-tint3);
+    opacity: 60%;
+    margin-left: 30px;
+} */
+
+.new-pass {
+    /* background-color: ghostwhite; */
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    grid-column: -1;
+}
+
+.name,
 .password-input,
 .password,
 .email {
@@ -183,7 +202,7 @@
 
 .password-input {
     border: none;
-    background-color: var(--secondary-tint3);
+    /* background-color: var(--secondary-tint3); */
     color: var(--main-shade1);
     opacity: 60%;
 }

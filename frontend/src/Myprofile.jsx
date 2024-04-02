@@ -5,6 +5,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { VscMail, VscLock } from "react-icons/vsc";
 import { DataContext } from "./context/DataContext";
 import axios from "axios";
+import ChangePass from "./components/ChangePass";
 
 const MyProfile = () => {
     const { account, handleAlert, fetchAccount, fetchPublicTimelines, fetchMyTimelines, loggedIn, navigate } = useContext(DataContext);
@@ -16,7 +17,8 @@ const MyProfile = () => {
     const [editField, setEditField] = useState(null);
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
-    const [visible, setVisible] = useState(true);
+    const [newPass, setNewPass] = useState(false);
+    // const [visible, setVisible] = useState(true);
     const [profilePicture, setProfilePicture] = useState(null);
     const fileInputRef = useRef(null);
 
@@ -121,25 +123,40 @@ const MyProfile = () => {
                     <span className="email">{account.email}</span>
                 </div>
                 <div className="password-container">
-                    <div className={editField === 'password' ? "pas-container-1" : 'pas-container'}>
+                    <div className="name">
                         <VscLock className="pass-icon" />
-                        <span className="password">Change password</span>
-                        {/* {editField === 'password' ? (
+                        <span className="password" onClick={() => setNewPass(!newPass)}>Change password</span>
+                    </div>
+
+                    {newPass ?
+                        (
+                            <div className="new-pass">
+                                <input type="password" className="password-input" placeholder="old password" />
+                                <input type="password" className="password-input" placeholder="new password" />
+                            </div>
+
+                        ) :
+                        (
+                            null
+                        )
+
+                    }
+                    {/* {editField === 'password' ? (
                             <input className='password-input' type={visible ? 'text' : 'password'} placeholder="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
                         ) : (
                             <span className="password">Change password</span>
                         )} */}
-                        {/* <div onClick={() => setVisible(!visible)}>
+                    {/* <div onClick={() => setVisible(!visible)}>
                             {visible ? <FaRegEye className="eye-icon" /> : <FaRegEyeSlash className="eye-icon" />}
                         </div> */}
-                        {/* <button className='icon' onClick={() => editField === 'password' ? handleSave() : handleEdit('password')}>
+                    {/* <button className='icon' onClick={() => editField === 'password' ? handleSave() : handleEdit('password')}>
                             {editField === 'password' ? (
                                 <IoCheckmarkDoneOutline className="pencil-icon" onClick={handleSave} />
                             ) : (
                                 <IoPencilOutline className="pencil-icon" />
                             )}
                         </button> */}
-                    </div>
+
                 </div>
                 <div className="btn-container">
                     <button className="btn" onClick={(e) => handleSubmit(e)}>Save changes</button>
