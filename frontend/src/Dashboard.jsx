@@ -16,7 +16,7 @@ const Dashboard = () => {
 
     // const profiles = Array.from({ length: 12 }, () => pfp)
     
-    const [settings, setSettings] = useState(37)
+    const [settings, setSettings] = useState(null)
     
     
     // SETTING THE SHOWN TIMELINES
