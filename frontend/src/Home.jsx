@@ -46,8 +46,17 @@ const Home = () => {
             const response = await axios.post('http://127.0.0.1:8000/contact/sendEmail/', obj)
 
             console.log(response)
+
+            if(response.status == 200) {
+                handleAlert('success', 'Email sent successfully!')
+
+                setEmail('')
+                setMessage('')
+                setName('')
+            }
         } catch(err) {
             console.log(err)
+            handleAlert('error', "Couldn't send email.")
         }
     }
 
@@ -105,6 +114,7 @@ const Home = () => {
                             type="text"
                             id="name"
                             name="name"
+                            required
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                         />
@@ -114,6 +124,7 @@ const Home = () => {
                             type="email"
                             id="email"
                             name="email"
+                            required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
@@ -123,6 +134,7 @@ const Home = () => {
                             id="message"
                             name="message"
                             value={message}
+                            required
                             onChange={(e) => setMessage(e.target.value)}
                         ></textarea>
 
