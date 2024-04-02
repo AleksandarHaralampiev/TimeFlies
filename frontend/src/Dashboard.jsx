@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 import pfp from './img/pfp.jpg'
 import axios from "axios"
-import TimelineSettings from "./TimelineSettings"
+import TimelineSettings from "./TimelineSettings/TimelineSettings"
 import { HashLink } from "react-router-hash-link"
 
 import { BarLoader, ClipLoader } from "react-spinners"
