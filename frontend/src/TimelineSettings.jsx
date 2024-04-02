@@ -38,6 +38,7 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
     }
 
 
+    
 
     // // TIMELINE VARIABLES
     // const { publicTimelines, myTimelines, navigate, handleAlert } = useContext(DataContext)
@@ -86,6 +87,13 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
             
     //     }
     // }
+
+
+    const [changes, setChanges] = useState(false)
+
+    useEffect(() => {
+        if(editName || editDescription) setChanges(true)
+    }, [editName, editDescription])
 
 
 
@@ -145,7 +153,7 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
 
     useEffect(() => {
         if(timeline) setShownContributors(timeline.contributors.filter(user => user.username.toLowerCase().includes(search.toLowerCase())))
-    }, [search, timeline])
+    }, [search])
 
 
 
@@ -318,13 +326,8 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                     </p>
 
                     {
-                        // owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
-                        <div className="buttons">
-                            
-                            <button className="btn" /*onClick={handleEditTimeline}*/>Save Changes</button>
-                        </div>
-                        // :
-                        // null
+                        changes &&
+                        <Link className="btn save-changes" /*onClick={handleEditTimeline}*/>Save Changes</Link>
                     }
                 </div>
 
