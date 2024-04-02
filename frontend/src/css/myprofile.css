@@ -16,7 +16,7 @@
     margin-top: 3.2rem;
     background-color: var(--bg-tint1);
     max-width: 60rem;
-    min-height: 30rem;
+    min-height: 55rem;
     justify-content: flex-start;
     align-items: center;
 
@@ -28,7 +28,7 @@
     border-radius: 50%;
     height: 17rem;
     width: 17rem;
-    background-color: black;
+    /* background-color: black; */
 }
 
 .avatar-container {
@@ -166,11 +166,11 @@
 .password-container {
     flex-direction: column;
     justify-content: start;
-    background-color: aqua;
+    /* background-color: aqua; */
     /* gap: 1rem; */
     align-items: start;
     /* height: 20rem; */
-    margin-bottom: 20rem;
+    margin-bottom: 5rem;
 }
 
 /* .pas-container-1 {
@@ -178,17 +178,6 @@
     opacity: 60%;
     margin-left: 30px;
 } */
-
-.new-pass {
-    /* background-color: ghostwhite; */
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-    padding-left: 1.3rem;
-    width: 100%;
-    padding-left: 3.8rem;
-    /* visibility: hidden; */
-}
 
 .hidden {
     visibility: hidden;
@@ -206,9 +195,6 @@
     padding-left: 1.3rem;
 }
 
-
-
-
 .password-input,
 .password,
 .email {
@@ -224,6 +210,17 @@
 
 .password {
     height: 6rem;
+}
+
+.new-pass {
+    /* background-color: ghostwhite; */
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding-left: 1.3rem;
+    width: 100%;
+    padding-left: 3.8rem;
+    /* visibility: hidden; */
 }
 
 

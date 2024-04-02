@@ -47,6 +47,7 @@ const MyProfile = () => {
     }
 
     async function handleSubmit(e) {
+        setNewPass(false);
         e.preventDefault();
 
         const formData = new FormData();
