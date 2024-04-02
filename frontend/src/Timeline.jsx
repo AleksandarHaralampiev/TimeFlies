@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState, useRef } from "react";
 import TimeLineMark from "./components/TimeLineMark";
 import EventCard from "./components/EventCard";
 import { useParams, useSearchParams } from "react-router-dom";
@@ -8,6 +8,10 @@ import { DataContext } from "./context/DataContext";
 
 const Timeline = () => {
     const { handleAlert } = useContext(DataContext)
+    const [cardHeight, setCardHeight] = useState(null);
+    const cardRef = useRef(null);
+
+
 
     const id = useParams().id
 
@@ -32,60 +36,13 @@ const Timeline = () => {
     }, [id])
 
 
+    useEffect(() => {
+        if (cardRef.current) {
+            const height = cardRef.current.offsetHeight;
+            setCardHeight(height);
+        }
+    }, [events]);
 
-
-    // const events = [
-    //     {
-    //         "Heading": "Battle of Hastings",
-    //         "subheading": "A pivotal event in English history that resulted in the Norman conquest of England.",
-    //         "direction": "left"
-    //     },
-    //     {
-    //         "Heading": "Signing of the Declaration of Independence",
-    //         "subheading": "The founding document of the United States, declaring independence from the Kingdom of Great Britain.",
-    //         "direction": "right"
-    //     },
-    //     {
-    //         "Heading": "French Revolution",
-    //         "subheading": "A period of radical social and political upheaval in France that had a lasting impact on the country and the world.",
-    //         "direction": "left"
-    //     },
-    //     {
-    //         "Heading": "Fall of the Berlin Wall",
-    //         "subheading": "The symbolic end of the Cold War and the reunification of East and West Germany.",
-    //         "direction": "right"
-    //     },
-    //     {
-    //         "Heading": "The Renaissance",
-    //         "subheading": "A period of great cultural and artistic change in Europe.",
-    //         "direction": "left"
-    //     },
-    //     {
-    //         "Heading": "Invention of the Printing Press",
-    //         "subheading": "A technological advancement that revolutionized the spread of information and knowledge.",
-    //         "direction": "right"
-    //     },
-    //     {
-    //         "Heading": "The Industrial Revolution",
-    //         "subheading": "A period of major industrialization and economic development that transformed society.",
-    //         "direction": "left"
-    //     },
-    //     {
-    //         "Heading": "Moon Landing",
-    //         "subheading": "The first human landing on the moon as part of the Apollo 11 mission.",
-    //         "direction": "right"
-    //     },
-    //     {
-    //         "Heading": "World War II",
-    //         "subheading": "A global conflict that lasted from 1939 to 1945, resulting in significant geopolitical changes.",
-    //         "direction": "left"
-    //     },
-    //     {
-    //         "Heading": "Civil Rights Movement",
-    //         "subheading": "A social movement in the United States that aimed to end racial segregation and discrimination.",
-    //         "direction": "right"
-    //     }
-    // ];
 
     // ADD EVENT
     const [title, setTitle] = useState('')
@@ -106,15 +63,15 @@ const Timeline = () => {
             }
 
             console.log(obj)
-            
+
             const response = await axios.post('http://127.0.0.1:8000/timeline/addEvent/', obj)
 
             console.log(response)
 
-            if(response.status == 200) {
+            if (response.status == 200) {
                 handleAlert('success', 'Event added successfully.')
             }
-        } catch(err) {
+        } catch (err) {
             console.log(err)
         } finally {
 
@@ -124,70 +81,91 @@ const Timeline = () => {
 
 
     return (
-        <main className="section-main">
-            <div className="timeline">
-                {events.map((event, key) => (
-                    <Fragment key={key}>
-                        <div className="grid">
-                            {key % 2 == 0 ? (
-                                <div className="card-container-left"><EventCard heading={event.title} subHeading={event.description} /></div>
-                            ) : (
-                                <div className="circle-container">
-                                    <TimeLineMark name='circle' />
-                                </div>
-                            )
-                            }
+        <>
+            <main className="section-main">
+                <div className="timeline">
+                    {events.map((event, key) => (
+                        <Fragment key={key}>
+                            <div className="grid">
+                                {key % 2 == 0 ? (
+                                    <div className="card-container-left"><EventCard heading={event.title} subHeading={event.description} /></div>
+                                ) : (
+                                    <div className="circle-container">
+                                        <TimeLineMark name='circle' />
+                                    </div>
+                                )
+                                }
 
 
-                            {key % 2 != 0 ? (
-                                <div className="card-container-right"><EventCard heading={event.title} subHeading={event.description} /></div>
-                            ) : (
-                                <div className="circle-container">
-                                    <TimeLineMark name='circle' />
-                                </div>
-                            )
-                            }
+                                {key % 2 != 0 ? (
+                                    <div className="card-container-right"><EventCard heading={event.title} subHeading={event.description} /></div>
+                                ) : (
+                                    <div className="circle-container">
+                                        <TimeLineMark name='circle' />
+                                    </div>
+                                )
+                                }
 
 
+                            </div>
+                            {key < (events.length - 1) && <TimeLineMark name="pillar" /*height={cardHeight ? cardHeight * 0.5 + 80 : null} */ />}
+                        </Fragment>
+                    ))}
+                </div>
+                {/* <div><button className="rounded-btn">+</button></div> */}
+            </main>
+
+            <section className="tertiary-section-timeline">
+                <h1 className="heading-secondary">New event</h1>
+                <form className="contact-form" onSubmit={(e) => handleAdd(e)}>
+                    <label htmlFor="name">Title:</label>
+                    <input
+                        type="text"
+                        placeholder="title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
+                    <div className="date">
+                        <label htmlFor="date">Date:</label>
+                        <div className="date-inputs">
+                            <select
+
+                                value={day}
+                                onChange={(e) => setDay(e.target.value)}
+                            >
+                                {Array.from({ length: 31 }, (_, index) => (
+                                    <option key={index + 1} value={index + 1}>{index + 1}</option>
+                                ))}
+
+                            </select>
+                            <select
+                                value={month}
+                                onChange={(e) => setMonth(e.target.value)}
+                            >
+                                {Array.from({ length: 12 }, (_, index) => (
+                                    <option key={index + 1} value={index + 1}>{index + 1}</option>
+                                ))}
+                            </select>
+                            <input
+                                type="text"
+                                value={year}
+                                onChange={(e) => setYear(e.target.value)}
+                            />
                         </div>
-                        {key < (events.length - 1) && <TimeLineMark name="pillar" />}
-                    </Fragment>
-                ))}
-            </div>
-            {/* <div><button className="rounded-btn">+</button></div> */}
-            
-            <form onSubmit={(e) => handleAdd(e)}>
-                <input
-                    type="text"
-                    placeholder="title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-                <input
-                    type="text"
-                    value={day}
-                    onChange={(e) => setDay(e.target.value)}
-                />
-                <input
-                    type="text"
-                    value={month}
-                    onChange={(e) => setMonth(e.target.value)}
-                />
-                <input
-                    type="text"
-                    value={year}
-                    onChange={(e) => setYear(e.target.value)}
-                />
-                <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    placeholder="description"
-                />
-                <button type="submit" className="btn">Add Event</button>
-            </form>
 
-        </main>
+                    </div>
 
+                    <textarea
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        placeholder="description"
+                    />
+                    <button type="submit" className="btn">Add Event</button>
+                </form>
+            </section>
+
+
+        </>
     );
 
 }

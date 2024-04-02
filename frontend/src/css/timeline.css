@@ -70,11 +70,21 @@
 
 .pillar {
     width: 20px;
-    height: 80px;
+    height: 100px;
     border-radius: 40px;
     background-color: var(--main);
     padding-top: 5px;
+
+
+    /* width: 20px;
+    border-radius: 10px;
+    background-color: var(--main);
+    padding-top: 5px; 
+    margin-left: 50%;
+    transform: translateX(-50%); */
 }
+
+
 
 .heading {
     font-size: 18px;
@@ -84,6 +94,12 @@
 .sub-heading {
     font-size: 14px;
     color: #555;
+}
+
+.heading,
+.sub-heading {
+    overflow: hidden;
+    word-wrap: break-word;
 }
 
 
@@ -410,7 +426,7 @@ select.members-role {
     font-size: 1.6rem;
 }
 
-.trash-icon{
+.trash-icon {
     display: block;
     margin-left: auto;
     width: 3.3rem;
@@ -418,6 +434,39 @@ select.members-role {
     /* margin-right: auto; */
     /* background-color: azure; */
 }
+
+.tertiary-section-timeline {
+    background-color: var(--bg);
+    min-height: 100vh;
+    padding: 12.8rem 10.6rem 0;
+}
+
+.date {
+    display: flex;
+    align-items: center;
+}
+
+.date label {
+    margin-right: 10px;
+}
+
+.date-inputs {
+    display: flex;
+}
+
+.date-inputs select {
+    margin-right: 10px;
+    background-color: var(--bg-tint1);
+    border: none;
+    border-radius: 5px;
+}
+
+.date-input select ::-webkit-scrollbar-thumb {
+    background-color: aqua;
+}
+
+
+
 
 
 @keyframes scaleOpen {
