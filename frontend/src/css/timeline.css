@@ -400,6 +400,20 @@ select.members-role {
 }
 
 
+.trash-icon{
+    left: auto;
+    width: 3.3rem;
+    height: 3.3rem;
+    margin-right: auto;
+    background-color: azure;
+}
+
+.trash {
+    padding-top: 2rem;
+    display: block;
+    background-color: aqua  ;
+}
+
 
 @keyframes scaleOpen {
     0% {
