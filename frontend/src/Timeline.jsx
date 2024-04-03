@@ -44,8 +44,8 @@ const Timeline = () => {
     }, [id])
 
     useEffect(() => {
-        if(publicTimelines.find(currentTimeline => currentTimeline.id == id)) console.log(publicTimelines.find(currentTimeline => currentTimeline.id == id))
-        else if(myTimelines.find(currentTimeline => currentTimeline.id == id)) console.log(myTimelines.find(currentTimeline => currentTimeline.id == id))
+        if (publicTimelines.find(currentTimeline => currentTimeline.id == id)) console.log(publicTimelines.find(currentTimeline => currentTimeline.id == id))
+        else if (myTimelines.find(currentTimeline => currentTimeline.id == id)) console.log(myTimelines.find(currentTimeline => currentTimeline.id == id))
     }, [publicTimelines, myTimelines, id])
 
 
@@ -64,6 +64,9 @@ const Timeline = () => {
         }
     }, [events]);
 
+    useEffect(() => {
+        if (timeline) console.log(timeline)
+    }, [timeline])
 
     // ADD EVENT
     const [title, setTitle] = useState('')
@@ -106,7 +109,9 @@ const Timeline = () => {
             <main className="section-main">
                 <div className="timeline">
                     <div className="grid">
-                        <div className="timeline-title">titlenfklfd</div>
+                        {timeline && <div className="timeline-title">{timeline.name}</div>
+                        }
+
                         {events.map((event, key) => (
                             <Fragment key={key}>
                                 {
