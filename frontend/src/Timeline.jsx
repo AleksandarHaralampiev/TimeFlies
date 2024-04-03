@@ -44,8 +44,8 @@ const Timeline = () => {
     }, [id])
 
     useEffect(() => {
-        if (publicTimelines.find(currentTimeline => currentTimeline.id == id)) console.log(publicTimelines.find(currentTimeline => currentTimeline.id == id))
-        else if (myTimelines.find(currentTimeline => currentTimeline.id == id)) console.log(myTimelines.find(currentTimeline => currentTimeline.id == id))
+        if (publicTimelines.find(currentTimeline => currentTimeline.id == id)) setTimeline(publicTimelines.find(currentTimeline => currentTimeline.id == id))
+        else if (myTimelines.find(currentTimeline => currentTimeline.id == id)) setTimeline(myTimelines.find(currentTimeline => currentTimeline.id == id))
     }, [publicTimelines, myTimelines, id])
 
 
@@ -65,7 +65,7 @@ const Timeline = () => {
     }, [events]);
 
     useEffect(() => {
-        if (timeline) console.log(timeline)
+        if(timeline) console.log(timeline)
     }, [timeline])
 
     // ADD EVENT
