@@ -5,7 +5,8 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 import pfp from './img/pfp.jpg'
 import { FaTrash } from "react-icons/fa";
-import { BarLoader } from "react-spinners";
+import { BarLoader, FadeLoader } from "react-spinners";
+import Spinner from 'react-bootstrap/Spinner';
 
 const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
     // const owner = {
@@ -115,15 +116,24 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
     // // EDIT MEMBERS
     const [editMembers, setEditMembers] = useState(null)
     const [roleEdit, setRoleEdit] = useState(1)
+    const [roleLoading, setRoleLoading] = useState(false)
+    const [removeUser, setRemoveUser] = useState(false)
+    const [removeLoading, setRemoveLoading] = useState(false)
 
-    const handleEditMember = async (e) => {
+    useEffect(() => {
+        if(editMembers) setRoleEdit(timeline.contributors.find(contributor => contributor.id === editMembers).role)
+    }, [editMembers])
+
+    const handleRemoveUser = async (e, userId) => {
         e.preventDefault()
+
+        setRemoveLoading(true)
 
         try {
             const obj = {
-                user_id_role: editMembers,
+                user_id_role: userId,
                 server_id: timeline.id,
-                new_role: parseInt(roleEdit)
+                new_role: 0
             }
 
             // console.log(obj)
@@ -131,13 +141,84 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
             const response = await axios.post('http://127.0.0.1:8000/server/changeRole/', obj)
 
             console.log(response)
+
+            if(response.status == 200) {
+                const user = timeline.contributors.find(contributor => contributor.id === userId).username
+
+                const updatedContributors = timeline.contributors.filter(contributor => contributor.id !== userId)
+                const updatedTimeline = {
+                    ...timeline,
+                    contributors: updatedContributors
+                }
+                setTimeline(updatedTimeline)
+                setShownContributors(updatedContributors)
+                
+                handleAlert('success', `${user} was removed from your timeline.`)
+            }
         } catch(err) {
             console.log(err)
+        } finally {
+            setRemoveLoading(false)
+            setCloseDelete(true)
         }
 
+    }
+
+    const handleEditMember = async (e, userId) => {
+        e.preventDefault()
+
+        if(roleEdit !== timeline.contributors.find(contributor => contributor.id === editMembers).role){
+            setRoleLoading(true)
+
+            try {
+                const obj = {
+                    user_id_role: userId,
+                    server_id: timeline.id,
+                    new_role: parseInt(roleEdit)
+                }
+
+                // console.log(obj)
+
+                const response = await axios.post('http://127.0.0.1:8000/server/changeRole/', obj)
+
+                if(response.status == 200) {
+                    handleAlert('success', 'Role was changed.')
+                    // const updatedContributors = [ 
+                    //     ...timeline.contributors,
+                    //     {
+                    //         ...timeline.contributors.find(contributor => contributor.id === userId),
+                    //         role: roleEdit
+                    //     }
+                    // ]
+
+                    const index = timeline.contributors.findIndex(contributor => contributor.id === userId)
+
+                    let updatedObject = timeline.contributors[index]
+
+                    updatedObject.role = parseInt(roleEdit)
+
+                    console.log(updatedObject)
+                    console.log(shownContributors)
+
+                    let updatedContributors = timeline.contributors
+                    updatedContributors[index] = updatedObject
+
+                    const updatedTimeline = {
+                        ...timeline,
+                        contributors: updatedContributors
+                    }
+                    setTimeline(updatedTimeline)
+                    setShownContributors(updatedContributors)
+                }
+
+                console.log(response)
+            } catch(err) {
+                console.log(err)
+            } finally {
+                setRoleLoading(false)
+            }
+        }
         setEditMembers(null)
-
-
     }
 
 
@@ -264,6 +345,7 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
         if(closeDelete){
             setTimeout(() => {
                 setConfirmDelete(false)
+                setRemoveUser(null)
                 setCloseDelete(false)
             }, [480])
         }
@@ -309,12 +391,35 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                 <div className="timeline-settings">
                     {
                         confirmDelete &&
-                        <div className="timeline-settings">
+                        <div className="timeline-settings confirm-delete-container">
                             <div className={closeDelete ? "timeline-settings-container timeline-settings-closed confirm-delete" : "timeline-settings-container confirm-delete"}>
                                 <p className="confirm-delete-title">Are you sure you want to delete this timeline?</p>
                                 <div className="confirm-delete-btn-box">
                                     <button className="btn save-changes cancel" onClick={() => setCloseDelete(true)}>Cancel</button>
                                     <button className="btn save-changes" onClick={handleDelete}>Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    {
+                        removeUser &&
+                        <div className="timeline-settings confirm-delete-container">
+                            <div className={closeDelete ? "timeline-settings-container timeline-settings-closed confirm-delete" : "timeline-settings-container confirm-delete"}>
+                                <p className="confirm-delete-title">Are you sure you want to remove {
+                                    ` ${
+                                        timeline.contributors.find(contributor => contributor.id === removeUser) ?
+                                        timeline.contributors.find(contributor => contributor.id === removeUser).username
+                                        :
+                                        'user'
+                                    } `
+                                } from your timeline?</p>
+                                {
+                                    removeLoading &&
+                                    <BarLoader color="#625149" width={300} className="timeline-settings-loading"/>
+                                }
+                                <div className="confirm-delete-btn-box">
+                                    <button className="btn save-changes cancel" onClick={() => setCloseDelete(true)}>Cancel</button>
+                                    <button className="btn save-changes" onClick={(e) => handleRemoveUser(e, removeUser)}>Remove</button>
                                 </div>
                             </div>
                         </div>
@@ -454,19 +559,38 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                                         shownContributors.length ?
                                         shownContributors.map(user => (
                                             <>
-                                                <img src={user.profile_picture} alt="Profile Pic" />
+                                                <div className="members-pfp">
+                                                    {
+                                                        owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) && owner.id !== user.id &&
+                                                        <IoCloseOutline className="remove-user" onClick={() => setRemoveUser(user.id)}/>
+                                                    }
+                                                    <img src={user.profile_picture} alt="Profile Pic" />
+                                                </div>
                                                 <p>{user.username}</p>
                                                 {
                                                     editMembers === user.id ?
-                                                    <form className="members-role" onSubmit={(e) => handleEditMember(e)}>
+                                                    <form className="members-role" onSubmit={(e) => handleEditMember(e, user.id)}>
                                                         <select className="members-role" value={roleEdit} onChange={(e) => setRoleEdit(e.target.value)}>
                                                             <option value={2}>Editor</option>
                                                             <option value={1}>Member</option>
                                                             <option value={0}>Remove</option>
                                                         </select>
-                                                        <button className="members-role-edit" type="submit">
-                                                            <IoCheckmarkDoneOutline/>
-                                                        </button>
+                                                        {
+                                                            roleLoading ?
+                                                            <div class="members-role-edit">
+                                                                <div className="dot-spinner">
+                                                                {
+                                                                    Array.from({length: 8}, _ => null).map(_ => (
+                                                                        <div class="dot-spinner__dot"></div>
+                                                                    ))
+                                                                }
+                                                                </div>
+                                                            </div>
+                                                            :
+                                                            <button className="members-role-edit" type="submit">
+                                                                <IoCheckmarkDoneOutline/>
+                                                            </button>
+                                                        }
                                                     </form>
                                                     :
                                                     <span className="members-role">
