@@ -17,6 +17,8 @@ const Timeline = () => {
 
     const [events, setEvents] = useState([])
 
+    const [circleBtn, setCircleBtn] = useState(false)
+
     useEffect(() => {
         const fetching = async () => {
             try {
@@ -25,7 +27,12 @@ const Timeline = () => {
                 console.log(response)
 
                 if (response.status == 200) {
-                    setEvents(response.data)
+                    const eventsArray = response.data.sort((a, b) => {
+                        if (a.date_modified < b.date_modified) return -1;
+                        if (a.date_modified > b.date_modified) return 1;
+                        return 0;
+                    })
+                    setEvents(eventsArray)
                 }
             } catch (err) {
                 console.log(err)
@@ -35,6 +42,16 @@ const Timeline = () => {
         fetching()
     }, [id])
 
+
+
+
+    const handleDateFormat = (date) => {
+        const day = date.slice(8, 10)
+        const month = date.slice(5, 7)
+        const year = date.slice(0, 4)
+
+        return `${day}-${month}-${year}`
+    }
 
     useEffect(() => {
         if (cardRef.current) {
@@ -81,88 +98,79 @@ const Timeline = () => {
 
 
     return (
-        <>
-            <main className="section-main">
-                <div className="timeline">
-                    {events.map((event, key) => (
-                        <Fragment key={key}>
-                            <div className="grid">
-                                {key % 2 == 0 ? (
-                                    <div className="card-container-left"><EventCard heading={event.title} subHeading={event.description} /></div>
-                                ) : (
-                                    <div className="circle-container">
-                                        <TimeLineMark name='circle' />
-                                    </div>
-                                )
-                                }
-
-
-                                {key % 2 != 0 ? (
-                                    <div className="card-container-right"><EventCard heading={event.title} subHeading={event.description} /></div>
-                                ) : (
-                                    <div className="circle-container">
-                                        <TimeLineMark name='circle' />
-                                    </div>
-                                )
-                                }
-
-
+        <main className="section-main">
+            <div className="timeline">
+                <div className="grid">
+                {events.map((event, key) => (
+                    <Fragment key={key}>
+                        {
+                            key % 2 == 0 &&
+                            <div className="card-container card-expanded card-container-left">
+                                <EventCard heading={event.title} subHeading={event.description} date={handleDateFormat(event.date_modified)} />
                             </div>
-                            {key < (events.length - 1) && <TimeLineMark name="pillar" /*height={cardHeight ? cardHeight * 0.5 + 80 : null} */ />}
-                        </Fragment>
-                    ))}
-                </div>
-                {/* <div><button className="rounded-btn">+</button></div> */}
-            </main>
 
-            <section className="tertiary-section-timeline">
-                <h1 className="heading-secondary">New event</h1>
-                <form className="contact-form" onSubmit={(e) => handleAdd(e)}>
-                    <label htmlFor="name">Title:</label>
-                    <input
-                        type="text"
-                        placeholder="title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
-                    <div className="date">
-                        <label htmlFor="date">Date:</label>
-                        <div className="date-inputs">
-                            <select
+                        }
 
-                                value={day}
-                                onChange={(e) => setDay(e.target.value)}
-                            >
-                                {Array.from({ length: 31 }, (_, index) => (
-                                    <option key={index + 1} value={index + 1}>{index + 1}</option>
-                                ))}
-
-                            </select>
-                            <select
-                                value={month}
-                                onChange={(e) => setMonth(e.target.value)}
-                            >
-                                {Array.from({ length: 12 }, (_, index) => (
-                                    <option key={index + 1} value={index + 1}>{index + 1}</option>
-                                ))}
-                            </select>
-                            <input
-                                type="text"
-                                value={year}
-                                onChange={(e) => setYear(e.target.value)}
-                            />
+                        <div className="circle-container">
+                            <TimeLineMark name='circle' />
                         </div>
 
-                    </div>
+                        {
+                            key % 2 != 0 &&
+                            <div className="card-container card-expanded card-container-right">
+                                <EventCard heading={event.title} subHeading={event.description} date={handleDateFormat(event.date_modified)} />
+                            </div>
+                        }
 
-                    <textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        placeholder="description"
-                    />
-                    <button type="submit" className="btn">Add Event</button>
-                </form>
-            </section>
+                        {key < (events.length - 1) && <TimeLineMark name="pillar" />}
+                    </Fragment>
+                ))}
+
+                    <TimeLineMark name="pillar" />
+
+                    {
+                        circleBtn ?
+                        <div className="circle-container " onMouseEnter={() => setCircleBtn(true)} onMouseLeave={() => setCircleBtn(false)}>
+                                <button className="circle">Add event</button>
+                        </div>
+                        :
+                        <div className="circle-container" onMouseEnter={() => setCircleBtn(true)} onMouseLeave={() => setCircleBtn(false)}>
+                                <button className="circle">Add event</button>
+                        </div>
+                    }
+                </div>
+            </div>
+            {/* <div><button className="rounded-btn">+</button></div> */}
+            
+            <form onSubmit={(e) => handleAdd(e)}>
+                <input
+                    type="text"
+                    placeholder="title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                />
+                <input
+                    type="text"
+                    value={day}
+                    onChange={(e) => setDay(e.target.value)}
+                />
+                <input
+                    type="text"
+                    value={month}
+                    onChange={(e) => setMonth(e.target.value)}
+                />
+                <input
+                    type="text"
+                    value={year}
+                    onChange={(e) => setYear(e.target.value)}
+                />
+                <textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="description"
+                />
+                <button type="submit" className="btn">Add Event</button>
+            </form>
 
 
         </>

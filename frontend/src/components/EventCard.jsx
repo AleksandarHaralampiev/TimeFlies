@@ -1,8 +1,9 @@
-const EventCard = ({ heading, subHeading }) => {
+const EventCard = ({ heading, subHeading, date }) => {
     return (
         <div className="card">
             <div className="heading">{heading}</div>
-            <div className="sub-heading">{subHeading}</div>
+            <p className="sub-heading">{subHeading}</p>
+            <div className="date">{date}</div>
         </div>
     )
 }
