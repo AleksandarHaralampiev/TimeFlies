@@ -28,6 +28,8 @@
 
     /* background-color: aqua; */
     width: 100%;
+
+    margin-bottom: 1.2rem;
 }
 
 .circle-container {
@@ -37,7 +39,7 @@
     grid-column: 2;
     width: auto;
     align-self: start;
-    background-color: aqua;
+    /* background-color: aqua; */
 }
 
 /* .circle-btn {

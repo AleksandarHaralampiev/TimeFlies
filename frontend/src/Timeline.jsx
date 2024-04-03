@@ -2,6 +2,7 @@ import React, { Fragment, useContext, useEffect, useState, useRef } from "react"
 import TimeLineMark from "./components/TimeLineMark";
 import EventCard from "./components/EventCard";
 import { useParams, useSearchParams } from "react-router-dom";
+import { HashLink } from 'react-router-hash-link'
 import axios from "axios";
 import { DataContext } from "./context/DataContext";
 
@@ -98,81 +99,104 @@ const Timeline = () => {
 
 
     return (
-        <main className="section-main">
-            <div className="timeline">
-                <div className="grid">
-                {events.map((event, key) => (
-                    <Fragment key={key}>
-                        {
-                            key % 2 == 0 &&
-                            <div className="card-container card-expanded card-container-left">
-                                <EventCard heading={event.title} subHeading={event.description} date={handleDateFormat(event.date_modified)} />
+        <>
+            <main className="section-main">
+                <div className="timeline">
+                    <div className="grid">
+                    {events.map((event, key) => (
+                        <Fragment key={key}>
+                            {
+                                key % 2 == 0 &&
+                                <div className="card-container card-expanded card-container-left">
+                                    <EventCard heading={event.title} subHeading={event.description} date={handleDateFormat(event.date_modified)} />
+                                </div>
+
+                            }
+
+                            <div className="circle-container">
+                                <TimeLineMark name='circle' />
                             </div>
 
-                        }
+                            {
+                                key % 2 != 0 &&
+                                <div className="card-container card-expanded card-container-right">
+                                    <EventCard heading={event.title} subHeading={event.description} date={handleDateFormat(event.date_modified)} />
+                                </div>
+                            }
 
-                        <div className="circle-container">
-                            <TimeLineMark name='circle' />
-                        </div>
+                            {key < (events.length - 1) && <TimeLineMark name="pillar" />}
+                        </Fragment>
+                    ))}
+
+                        <TimeLineMark name="pillar" />
 
                         {
-                            key % 2 != 0 &&
-                            <div className="card-container card-expanded card-container-right">
-                                <EventCard heading={event.title} subHeading={event.description} date={handleDateFormat(event.date_modified)} />
-                            </div>
+                            // circleBtn ?
+                            // <div className="circle-container " onMouseEnter={() => setCircleBtn(true)} onMouseLeave={() => setCircleBtn(false)}>
+                            //         <button className="circle">Add event</button>
+                            // </div>
+                            // :
+                            // <div className="circle-container" onMouseEnter={() => setCircleBtn(true)} onMouseLeave={() => setCircleBtn(false)}>
+                            //         <button className="circle">Add event</button>
+                            // </div>
                         }
-
-                        {key < (events.length - 1) && <TimeLineMark name="pillar" />}
-                    </Fragment>
-                ))}
-
-                    <TimeLineMark name="pillar" />
-
-                    {
-                        circleBtn ?
-                        <div className="circle-container " onMouseEnter={() => setCircleBtn(true)} onMouseLeave={() => setCircleBtn(false)}>
-                                <button className="circle">Add event</button>
-                        </div>
-                        :
-                        <div className="circle-container" onMouseEnter={() => setCircleBtn(true)} onMouseLeave={() => setCircleBtn(false)}>
-                                <button className="circle">Add event</button>
-                        </div>
-                    }
+                    </div>
+                    <HashLink to={`/timeline/${id}/#add-form`} className="btn save-changes">Add event</HashLink>
                 </div>
-            </div>
-            {/* <div><button className="rounded-btn">+</button></div> */}
-            
-            <form onSubmit={(e) => handleAdd(e)}>
-                <input
-                    type="text"
-                    placeholder="title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-                <input
-                    type="text"
-                    value={day}
-                    onChange={(e) => setDay(e.target.value)}
-                />
-                <input
-                    type="text"
-                    value={month}
-                    onChange={(e) => setMonth(e.target.value)}
-                />
-                <input
-                    type="text"
-                    value={year}
-                    onChange={(e) => setYear(e.target.value)}
-                />
-                <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    placeholder="description"
-                />
-                <button type="submit" className="btn">Add Event</button>
-            </form>
+                {/* <div><button className="rounded-btn">+</button></div> */}
 
 
+            </main>
+
+
+            <section className="tertiary-section-timeline" id="add-form">
+                <h1 className="heading-secondary">New event</h1>
+                <form className="contact-form" onSubmit={(e) => handleAdd(e)}>
+                    <label htmlFor="name">Title:</label>
+                    <input
+                        type="text"
+                        placeholder="title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
+                    <div className="date">
+                        <label htmlFor="date">Date:</label>
+                        <div className="date-inputs">
+                            <select
+
+                                value={day}
+                                onChange={(e) => setDay(e.target.value)}
+                            >
+                                {Array.from({ length: 31 }, (_, index) => (
+                                    <option key={index + 1} value={index + 1}>{index + 1}</option>
+                                ))}
+
+                            </select>
+                            <select
+                                value={month}
+                                onChange={(e) => setMonth(e.target.value)}
+                            >
+                                {Array.from({ length: 12 }, (_, index) => (
+                                    <option key={index + 1} value={index + 1}>{index + 1}</option>
+                                ))}
+                            </select>
+                            <input
+                                type="text"
+                                value={year}
+                                onChange={(e) => setYear(e.target.value)}
+                            />
+                        </div>
+
+                    </div>
+
+                    <textarea
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        placeholder="description"
+                    />
+                    <button type="submit" className="btn">Add Event</button>
+                </form>
+            </section>
         </>
     );
 
