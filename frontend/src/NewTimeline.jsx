@@ -2,13 +2,15 @@ import axios from "axios"
 import { useContext, useEffect, useState } from "react"
 import { IoHourglass, IoHourglassOutline } from "react-icons/io5"
 import { DataContext } from "./context/DataContext"
+import { BarLoader } from "react-spinners"
 
 const NewTimeline = () => {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [access, setAccess] = useState('0')
+    const [loading, setLoading] = useState(false)
 
-    const { loggedIn, navigate, myTimelines, fetchMyTimelines } = useContext(DataContext)
+    const { loggedIn, navigate, myTimelines, fetchMyTimelines, fetchPublicTimelines, handleAlert } = useContext(DataContext)
 
     useEffect(() => {
         if(!loggedIn) navigate('/login')
@@ -16,6 +18,8 @@ const NewTimeline = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        setLoading(true)
 
         const obj = {
             name,
@@ -34,14 +38,17 @@ const NewTimeline = () => {
             if(response.status == 200) {
                 fetchMyTimelines()
 
+                if(access) fetchPublicTimelines()
+
+                handleAlert('success', 'Timeline created successfully!')
+
                 navigate('/mytimelines')
             }
         } catch(err) {
             console.log(err)
+            handleAlert('error', "Couldn't create timeline.")
         } finally {
-            setName('')
-            setDescription('')
-            setAccess('0')
+            setLoading(false)
         }
     }
 
@@ -51,6 +58,11 @@ const NewTimeline = () => {
                 <IoHourglassOutline className="icon-new"/>
 
                 <h1 className="heading-secondary-reusable">Create a timeline</h1>
+
+                {
+                    loading &&
+                    <BarLoader color="#625149" width={300} className="account-loading"/>
+                }
             </div>
 
             <div className="container">

@@ -35,5 +35,5 @@
     height: 150px;
     background-color: var(--bg-tint1);
     border: none;
-
+    resize: vertical;
 }

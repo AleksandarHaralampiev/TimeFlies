@@ -132,8 +132,8 @@ const DataProvider = ({ children }) => {
     return (
         <DataContext.Provider value={{
             loggedIn, setLoggedIn, navigate, alerts, setAlerts, handleAlert,            //GENERAL 
-            publicTimelines, dashboardLoading, dashboardError,                          //DASHBOARD
-            myTimelines, myLoading, myError, fetchMyTimelines,                          //MY TIMELINES
+            publicTimelines, setPublicTimelines, dashboardLoading, dashboardError,                          //DASHBOARD
+            myTimelines, setMyTimelines, myLoading, myError, fetchMyTimelines, fetchPublicTimelines,                          //MY TIMELINES
             account, fetchAccount, fetchPublicTimelines, accountLoading
         }}>
             {children}
