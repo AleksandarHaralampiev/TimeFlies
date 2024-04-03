@@ -137,7 +137,7 @@ const Timeline = () => {
                             </Fragment>
                         ))}
 
-                        <TimeLineMark name="pillar" />
+                        {/* <TimeLineMark name="pillar" /> */}
 
                         {
                             // circleBtn ?
