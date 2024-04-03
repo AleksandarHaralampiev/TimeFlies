@@ -664,16 +664,18 @@ select.members-role {
     display: flex;
     align-items: center;
     gap: 1rem;
-    background-color: aqua;
+    /* background-color: aqua; */
 }
 
 .date-inputs {
     display: flex;
+    flex-grow: 1;
     /* background-color: aqua; */
 }
 
 .date-inputs select {
     margin-right: 10px;
+    width: 7.2rem;
     background-color: var(--bg-tint1);
     border: none;
     border-radius: 5px;
@@ -681,6 +683,10 @@ select.members-role {
 
 .date-input select ::-webkit-scrollbar-thumb {
     background-color: aqua;
+}
+
+.date-input .year {
+    width: 1rem !important;
 }
 
 

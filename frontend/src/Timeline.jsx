@@ -193,6 +193,7 @@ const Timeline = () => {
                                 type="text"
                                 value={year}
                                 onChange={(e) => setYear(e.target.value)}
+                                className="year"
                             />
                         </div>
 
