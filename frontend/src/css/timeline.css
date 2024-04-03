@@ -145,14 +145,21 @@
 
 .plus {
     display: flex;
+    position: fixed;
     text-decoration: none;
-    height: 2rem;
-    width: 2rem;
-    /* background-color: aqua; */
+    height: 6rem;
+    width: 6rem;
+    border-radius: 6rem;
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     align-items: center;
     justify-content: center;
     font-size: 4rem;
     color: var(--main-shade1);
+    line-height: 4.5rem;
+    bottom: 9.6rem;
+    left: 11.5rem;
+
 }
 
 
