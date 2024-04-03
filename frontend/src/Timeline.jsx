@@ -8,15 +8,14 @@ import { DataContext } from "./context/DataContext";
 
 
 const Timeline = () => {
-    const { handleAlert } = useContext(DataContext)
+    const { handleAlert, myTimelines, publicTimelines } = useContext(DataContext)
     const [cardHeight, setCardHeight] = useState(null);
     const cardRef = useRef(null);
-
-
 
     const id = useParams().id
 
     const [events, setEvents] = useState([])
+    const [timeline, setTimeline] = useState(null)
 
     const [circleBtn, setCircleBtn] = useState(false)
 
@@ -40,10 +39,14 @@ const Timeline = () => {
             }
         }
 
+
         fetching()
     }, [id])
 
-
+    useEffect(() => {
+        if(publicTimelines.find(currentTimeline => currentTimeline.id == id)) console.log(publicTimelines.find(currentTimeline => currentTimeline.id == id))
+        else if(myTimelines.find(currentTimeline => currentTimeline.id == id)) console.log(myTimelines.find(currentTimeline => currentTimeline.id == id))
+    }, [publicTimelines, myTimelines, id])
 
 
     const handleDateFormat = (date) => {
