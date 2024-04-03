@@ -122,6 +122,18 @@
     word-wrap: break-word;
 }
 
+.plus {
+    display: flex;
+    text-decoration: none;
+    height: 2rem;
+    width: 2rem;
+    /* background-color: aqua; */
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: var(--main-shade1);
+}
+
 
 
 /* TIMELINE SETTINGS */

@@ -103,30 +103,30 @@ const Timeline = () => {
             <main className="section-main">
                 <div className="timeline">
                     <div className="grid">
-                    {events.map((event, key) => (
-                        <Fragment key={key}>
-                            {
-                                key % 2 == 0 &&
-                                <div className="card-container card-expanded card-container-left">
-                                    <EventCard heading={event.title} subHeading={event.description} date={handleDateFormat(event.date_modified)} />
+                        {events.map((event, key) => (
+                            <Fragment key={key}>
+                                {
+                                    key % 2 == 0 &&
+                                    <div className="card-container card-expanded card-container-left">
+                                        <EventCard heading={event.title} subHeading={event.description} date={handleDateFormat(event.date_modified)} />
+                                    </div>
+
+                                }
+
+                                <div className="circle-container">
+                                    <TimeLineMark name='circle' />
                                 </div>
 
-                            }
+                                {
+                                    key % 2 != 0 &&
+                                    <div className="card-container card-expanded card-container-right">
+                                        <EventCard heading={event.title} subHeading={event.description} date={handleDateFormat(event.date_modified)} />
+                                    </div>
+                                }
 
-                            <div className="circle-container">
-                                <TimeLineMark name='circle' />
-                            </div>
-
-                            {
-                                key % 2 != 0 &&
-                                <div className="card-container card-expanded card-container-right">
-                                    <EventCard heading={event.title} subHeading={event.description} date={handleDateFormat(event.date_modified)} />
-                                </div>
-                            }
-
-                            {key < (events.length - 1) && <TimeLineMark name="pillar" />}
-                        </Fragment>
-                    ))}
+                                {key < (events.length - 1) && <TimeLineMark name="pillar" />}
+                            </Fragment>
+                        ))}
 
                         <TimeLineMark name="pillar" />
 
@@ -141,7 +141,7 @@ const Timeline = () => {
                             // </div>
                         }
                     </div>
-                    <HashLink to={`/timeline/${id}/#add-form`} className="btn save-changes">Add event</HashLink>
+                    <HashLink to={`/timeline/${id}/#add-form`} className="plus">+</HashLink>
                 </div>
                 {/* <div><button className="rounded-btn">+</button></div> */}
 
