@@ -656,14 +656,13 @@ select.members-role {
 .date {
     display: flex;
     align-items: center;
-}
-
-.date label {
-    margin-right: 10px;
+    gap: 1rem;
+    background-color: aqua;
 }
 
 .date-inputs {
     display: flex;
+    /* background-color: aqua; */
 }
 
 .date-inputs select {
@@ -710,10 +709,13 @@ select.members-role {
 
 }
 
-.tertiary-section-timeline.heading-secondary {
+.tertiary-section-timeline .heading-secondary {
+    display: block;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+    /* width: 100%; */
+    /* background-color: aqua; */
 }
 
 /* 

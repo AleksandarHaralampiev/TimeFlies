@@ -164,7 +164,7 @@ const Timeline = () => {
                     <label htmlFor="name">Title:</label>
                     <input
                         type="text"
-                        placeholder="title"
+                        placeholder="Title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                     />
@@ -201,7 +201,7 @@ const Timeline = () => {
                     <textarea
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        placeholder="description"
+                        placeholder="Description"
                     />
                     <button type="submit" className="btn">Add Event</button>
                 </form>
