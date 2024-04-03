@@ -122,13 +122,19 @@
 }
 
 .heading {
-    font-size: 18px;
+    font-size: 2rem;
     font-weight: bold;
 }
 
 .sub-heading {
-    font-size: 14px;
-    color: #555;
+    font-size: 1.4rem;
+    color: var(--main);
+    margin-bottom: 1.2rem;
+}
+
+.date {
+    letter-spacing: 1.75px;
+    font-size: 1rem;
 }
 
 .heading,
