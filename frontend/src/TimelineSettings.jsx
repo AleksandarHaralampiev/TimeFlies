@@ -38,6 +38,7 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
     //     ]
     // }
 
+    
 
     
 
@@ -256,8 +257,22 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
 
 
     // DELETING TIMELINE
+    const [confirmDelete, setConfirmDelete] = useState(false)
+    const [closeDelete, setCloseDelete] = useState(false)
+
+    useEffect(() => {
+        if(closeDelete){
+            setTimeout(() => {
+                setConfirmDelete(false)
+                setCloseDelete(false)
+            }, [480])
+        }
+    }, [closeDelete])
+
     const handleDelete = async () => {
         setLoadingTimeline(true)
+
+        setCloseDelete(true)
 
         try {
             const obj = {
@@ -286,218 +301,234 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
 
 
     return (
-        loading ?
-        <p className="timeline-settings">Loading</p>
-        :
-        <div className="timeline-settings">
-            <div className={closed ? "timeline-settings-container timeline-settings-closed" : "timeline-settings-container"}>
-                <div className="timeline-settings-text-box">
+        <>
+            {
+                loading ?
+                <p className="timeline-settings">Loading</p>
+                :
+                <div className="timeline-settings">
                     {
-                        editName ?
-                        <div className="timeline-settings-name">
-                            <input
-                                type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                            <IoCheckmarkDoneOutline className="timeline-settings-name-done" onClick={() => setEditName(false)}/>
+                        confirmDelete &&
+                        <div className="timeline-settings">
+                            <div className={closeDelete ? "timeline-settings-container timeline-settings-closed confirm-delete" : "timeline-settings-container confirm-delete"}>
+                                <p className="confirm-delete-title">Are you sure you want to delete this timeline?</p>
+                                <div className="confirm-delete-btn-box">
+                                    <button className="btn save-changes cancel" onClick={() => setCloseDelete(true)}>Cancel</button>
+                                    <button className="btn save-changes" onClick={handleDelete}>Delete</button>
+                                </div>
+                            </div>
                         </div>
-                        :
-                        <div className="timeline-settings-name" onMouseEnter={() => setNamePencil(true)} onMouseLeave={() => setNamePencil(false)}>
-                            {name}
+                    }
+                    <div className={closed ? "timeline-settings-container timeline-settings-closed" : "timeline-settings-container"}>
+                        <div className="timeline-settings-text-box">
                             {
-                                namePencil && owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
-                                // namePencil ?
-                                <IoPencilOutline className="timeline-settings-name-edit" onClick={() => setEditName(true)}/>
+                                editName ?
+                                <div className="timeline-settings-name">
+                                    <input
+                                        type="text"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                    />
+                                    <IoCheckmarkDoneOutline className="timeline-settings-name-done" onClick={() => setEditName(false)}/>
+                                </div>
                                 :
-                                null
+                                <div className="timeline-settings-name" onMouseEnter={() => setNamePencil(true)} onMouseLeave={() => setNamePencil(false)}>
+                                    {name}
+                                    {
+                                        namePencil && owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
+                                        // namePencil ?
+                                        <IoPencilOutline className="timeline-settings-name-edit" onClick={() => setEditName(true)}/>
+                                        :
+                                        null
+                                    }
+                                </div>
                             }
-                        </div>
-                    }
-                    
-                    <p className="timeline-settings-owner">
-                        <img src={owner.profile_picture} alt="Owner Profile Pic" className="timeline-settings-owner-pfp" />
-                        <span>{owner.username}</span>
-                    </p>
+                            
+                            <p className="timeline-settings-owner">
+                                <img src={owner.profile_picture} alt="Owner Profile Pic" className="timeline-settings-owner-pfp" />
+                                <span>{owner.username}</span>
+                            </p>
 
-                    {
-                        loadingTimeline &&
-                        <BarLoader color="#625149" width={300} className="timeline-settings-loading"/>
-                    }
-
-                    {
-                        editDescription ?
-                        <div className="timeline-settings-description">
-                            <textarea
-                                type="text"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                            />
-                            <IoCheckmarkDoneOutline className="timeline-settings-description-done" onClick={() => setEditDescription(false)}/>
-
-                        </div>
-                        :
-                        <div className="timeline-settings-description" onMouseEnter={() => setDescriptionPencil(true)} onMouseLeave={() => setDescriptionPencil(false)}>
-                            {description}
                             {
-                                descriptionPencil && owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
-                                // descriptionPencil ?
-                                <IoPencilOutline className="timeline-settings-description-icon" onClick={() => setEditDescription(true)}/>
+                                loadingTimeline &&
+                                <BarLoader color="#625149" width={300} className="timeline-settings-loading"/>
+                            }
+
+                            {
+                                editDescription ?
+                                <div className="timeline-settings-description">
+                                    <textarea
+                                        type="text"
+                                        value={description}
+                                        onChange={(e) => setDescription(e.target.value)}
+                                    />
+                                    <IoCheckmarkDoneOutline className="timeline-settings-description-done" onClick={() => setEditDescription(false)}/>
+
+                                </div>
                                 :
-                                null
+                                <div className="timeline-settings-description" onMouseEnter={() => setDescriptionPencil(true)} onMouseLeave={() => setDescriptionPencil(false)}>
+                                    {description}
+                                    {
+                                        descriptionPencil && owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
+                                        // descriptionPencil ?
+                                        <IoPencilOutline className="timeline-settings-description-icon" onClick={() => setEditDescription(true)}/>
+                                        :
+                                        null
+                                    }
+                                </div>
                             }
-                        </div>
-                    }
 
-                    <p className="timeline-settings-date">
-                        {timeline.date}
-                    </p>
+                            <p className="timeline-settings-date">
+                                {timeline.date}
+                            </p>
 
-                    {
-                        changes &&
-                        <>
-                            <Link className="btn save-changes" onClick={handleEditTimeline}>Save Changes</Link>
-                        </>
-                    }
-
-                    {
-                        owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) &&
-                        <FaTrash className="trash-icon" onClick={handleDelete}/>
-                    }
-                    
-                </div>
-
-                <div className="timeline-settings-btn-box">
-                    <div className="timeline-settings-members" onClick={() => setOpenMembers(!openMembers)}>
-                        <div className="timeline-img-box timeline-settings-img-box">
                             {
-                                timeline.contributors.map(user => (
-                                    <img src={user.profile_picture} className="timeline-pfp"/>
-                                ))
+                                changes &&
+                                <>
+                                    <Link className="btn save-changes" onClick={handleEditTimeline}>Save Changes</Link>
+                                </>
                             }
+
+                            {
+                                owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) &&
+                                <FaTrash className="trash-icon" onClick={() => setConfirmDelete(true)}/>
+                            }
+                            
                         </div>
 
+                        <div className="timeline-settings-btn-box">
+                            <div className="timeline-settings-members" onClick={() => setOpenMembers(!openMembers)}>
+                                <div className="timeline-img-box timeline-settings-img-box">
+                                    {
+                                        timeline.contributors.map(user => (
+                                            <img src={user.profile_picture} className="timeline-pfp"/>
+                                        ))
+                                    }
+                                </div>
+
+                                {
+                                    openMembers ?
+                                    <div className="btn-contributors">Hide Contributors &uarr;</div>
+                                    :
+                                    <div className="btn-contributors">View All Contributors &darr;</div>
+                                }
+                            </div>
+
+                            <div className="timeline-settings-trash-btn-box">
+                                <Link className="btn timeline-settings-view-btn" to={`/timeline/${id}`}>View</Link>
+                            </div>
+                        </div>
+                        
                         {
                             openMembers ?
-                            <div className="btn-contributors">Hide Contributors &uarr;</div>
-                            :
-                            <div className="btn-contributors">View All Contributors &darr;</div>
-                        }
-                    </div>
+                            <div className="timeline-settings-contributors">
+                                <h2 className="timeline-settings-heading">Contributors</h2>
 
-                    <div className="timeline-settings-trash-btn-box">
-                        <Link className="btn timeline-settings-view-btn" to={`/timeline/${id}`}>View</Link>
+                                <div className="timeline-settings-search-box">
+                                    <input
+                                        type="text" 
+                                        className="timeline-settings-search" 
+                                        placeholder="Search members"
+                                        value={search}
+                                        onChange={(e) => setSearch(e.target.value)}
+                                    />
+
+                                    {
+                                        owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
+                                        <button className="btn" onClick={() => setAddMember(!addMember)}>
+                                            {
+                                                addMember ?
+                                                '- Add'
+                                                :
+                                                '+ Add'
+
+                                            }
+                                        </button>
+                                        :
+                                        null
+                                    }
+                                </div>
+
+                                <div className="members-list">
+                                    {
+                                        shownContributors.length ?
+                                        shownContributors.map(user => (
+                                            <>
+                                                <img src={user.profile_picture} alt="Profile Pic" />
+                                                <p>{user.username}</p>
+                                                {
+                                                    editMembers === user.id ?
+                                                    <form className="members-role" onSubmit={(e) => handleEditMember(e)}>
+                                                        <select className="members-role" value={roleEdit} onChange={(e) => setRoleEdit(e.target.value)}>
+                                                            <option value={2}>Editor</option>
+                                                            <option value={1}>Member</option>
+                                                            <option value={0}>Remove</option>
+                                                        </select>
+                                                        <button className="members-role-edit" type="submit">
+                                                            <IoCheckmarkDoneOutline/>
+                                                        </button>
+                                                    </form>
+                                                    :
+                                                    <span className="members-role">
+                                                        <p>
+                                                            {
+                                                            user.role === 1 ?
+                                                            'Member' :
+                                                            user.role === 2 ?
+                                                            'Editor' :
+                                                            user.role === 3 ?
+                                                            'Owner' :
+                                                            null
+                                                            }
+                                                        </p>
+                                                        {
+                                                            owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) && owner.id !== user.id ?
+                                                            <IoPencilOutline className="members-role-edit" onClick={() => setEditMembers(user.id)}/>
+                                                            :
+                                                            null
+                                                        }
+                                                    </span>
+                                                }
+                                            </>
+                                            
+                                        ))
+                                        :
+                                        null
+                                    }
+                                </div>
+                            </div>
+                            :
+                            null
+                        }
+
+                        {
+                            openMembers && addMember ?
+                            <form className="timeline-settings-add-form" onSubmit={(e) => handleSubmit(e)}>
+                                <input 
+                                    type="email" 
+                                    placeholder="Email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+
+                                <select value={role} onChange={(e) => setRole(e.target.value)}>
+                                    <option value='1'>Member</option>
+                                    <option value='2'>Editor</option>
+                                </select>
+
+                                <button className="btn" type="submit">Add new member</button>
+                            </form>
+                            :
+                            null
+
+                        }
+
+                        <IoCloseOutline className="timeline-settings-close" onClick={handleClose}/>
+                                    
                     </div>
                 </div>
-                
-                {
-                    openMembers ?
-                    <div className="timeline-settings-contributors">
-                        <h2 className="timeline-settings-heading">Contributors</h2>
-
-                        <div className="timeline-settings-search-box">
-                            <input
-                                type="text" 
-                                className="timeline-settings-search" 
-                                placeholder="Search members"
-                                value={search}
-                                onChange={(e) => setSearch(e.target.value)}
-                            />
-
-                            {
-                                owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
-                                <button className="btn" onClick={() => setAddMember(!addMember)}>
-                                    {
-                                        addMember ?
-                                        '- Add'
-                                        :
-                                        '+ Add'
-
-                                    }
-                                </button>
-                                :
-                                null
-                            }
-                        </div>
-
-                        <div className="members-list">
-                            {
-                                shownContributors.length ?
-                                shownContributors.map(user => (
-                                    <>
-                                        <img src={user.profile_picture} alt="Profile Pic" />
-                                        <p>{user.username}</p>
-                                        {
-                                            editMembers === user.id ?
-                                            <form className="members-role" onSubmit={(e) => handleEditMember(e)}>
-                                                <select className="members-role" value={roleEdit} onChange={(e) => setRoleEdit(e.target.value)}>
-                                                    <option value={2}>Editor</option>
-                                                    <option value={1}>Member</option>
-                                                    <option value={0}>Remove</option>
-                                                </select>
-                                                <button className="members-role-edit" type="submit">
-                                                    <IoCheckmarkDoneOutline/>
-                                                </button>
-                                            </form>
-                                            :
-                                            <span className="members-role">
-                                                <p>
-                                                    {
-                                                    user.role === 1 ?
-                                                    'Member' :
-                                                    user.role === 2 ?
-                                                    'Editor' :
-                                                    user.role === 3 ?
-                                                    'Owner' :
-                                                    null
-                                                    }
-                                                </p>
-                                                {
-                                                    owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) && owner.id !== user.id ?
-                                                    <IoPencilOutline className="members-role-edit" onClick={() => setEditMembers(user.id)}/>
-                                                    :
-                                                    null
-                                                }
-                                            </span>
-                                        }
-                                    </>
-                                    
-                                ))
-                                :
-                                null
-                            }
-                        </div>
-                    </div>
-                    :
-                    null
-                }
-
-                {
-                    openMembers && addMember ?
-                    <form className="timeline-settings-add-form" onSubmit={(e) => handleSubmit(e)}>
-                        <input 
-                            type="email" 
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-
-                        <select value={role} onChange={(e) => setRole(e.target.value)}>
-                            <option value='1'>Member</option>
-                            <option value='2'>Editor</option>
-                        </select>
-
-                        <button className="btn" type="submit">Add new member</button>
-                    </form>
-                    :
-                    null
-
-                }
-
-                <IoCloseOutline className="timeline-settings-close" onClick={handleClose}/>
-                               
-            </div>
-        </div>
+            }
+        </>
     )
 }
 
