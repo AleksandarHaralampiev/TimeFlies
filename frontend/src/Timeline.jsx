@@ -13,6 +13,8 @@ const Timeline = () => {
 
     const [events, setEvents] = useState([])
 
+    const [circleBtn, setCircleBtn] = useState(false)
+
     useEffect(() => {
         const fetching = async () => {
             try {
@@ -21,7 +23,12 @@ const Timeline = () => {
                 console.log(response)
 
                 if (response.status == 200) {
-                    setEvents(response.data)
+                    const eventsArray = response.data.sort((a, b) => {
+                        if (a.date_modified < b.date_modified) return -1;
+                        if (a.date_modified > b.date_modified) return 1;
+                        return 0;
+                    })
+                    setEvents(eventsArray)
                 }
             } catch (err) {
                 console.log(err)
@@ -31,6 +38,16 @@ const Timeline = () => {
         fetching()
     }, [id])
 
+
+
+
+    const handleDateFormat = (date) => {
+        const day = date.slice(8, 10)
+        const month = date.slice(5, 7)
+        const year = date.slice(0, 4)
+
+        return `${day}-${month}-${year}`
+    }
 
 
 
@@ -126,33 +143,45 @@ const Timeline = () => {
     return (
         <main className="section-main">
             <div className="timeline">
+                <div className="grid">
                 {events.map((event, key) => (
                     <Fragment key={key}>
-                        <div className="grid">
-                            {key % 2 == 0 ? (
-                                <div className="card-container-left"><EventCard heading={event.title} subHeading={event.description} /></div>
-                            ) : (
-                                <div className="circle-container">
-                                    <TimeLineMark name='circle' />
-                                </div>
-                            )
-                            }
+                        {
+                            key % 2 == 0 &&
+                            <div className="card-container card-expanded card-container-left">
+                                <EventCard heading={event.title} subHeading={event.description} date={handleDateFormat(event.date_modified)} />
+                            </div>
 
+                        }
 
-                            {key % 2 != 0 ? (
-                                <div className="card-container-right"><EventCard heading={event.title} subHeading={event.description} /></div>
-                            ) : (
-                                <div className="circle-container">
-                                    <TimeLineMark name='circle' />
-                                </div>
-                            )
-                            }
-
-
+                        <div className="circle-container">
+                            <TimeLineMark name='circle' />
                         </div>
+
+                        {
+                            key % 2 != 0 &&
+                            <div className="card-container card-expanded card-container-right">
+                                <EventCard heading={event.title} subHeading={event.description} date={handleDateFormat(event.date_modified)} />
+                            </div>
+                        }
+
                         {key < (events.length - 1) && <TimeLineMark name="pillar" />}
                     </Fragment>
                 ))}
+
+                    <TimeLineMark name="pillar" />
+
+                    {
+                        circleBtn ?
+                        <div className="circle-container " onMouseEnter={() => setCircleBtn(true)} onMouseLeave={() => setCircleBtn(false)}>
+                                <button className="circle">Add event</button>
+                        </div>
+                        :
+                        <div className="circle-container" onMouseEnter={() => setCircleBtn(true)} onMouseLeave={() => setCircleBtn(false)}>
+                                <button className="circle">Add event</button>
+                        </div>
+                    }
+                </div>
             </div>
             {/* <div><button className="rounded-btn">+</button></div> */}
             

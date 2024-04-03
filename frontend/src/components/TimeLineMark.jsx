@@ -1,7 +1,7 @@
-const TimeLineMark = ({ name }) => {
+const TimeLineMark = ({ children, name }) => {
     return (
         <div className={name}>
-
+            {children}
         </div>
     );
 }
