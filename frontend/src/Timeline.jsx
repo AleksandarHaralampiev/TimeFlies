@@ -103,6 +103,7 @@ const Timeline = () => {
             <main className="section-main">
                 <div className="timeline">
                     <div className="grid">
+                        <div className="timeline-title">titlenfklfd</div>
                         {events.map((event, key) => (
                             <Fragment key={key}>
                                 {
