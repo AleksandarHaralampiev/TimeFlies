@@ -95,7 +95,7 @@
 
 .pillar {
     width: 20px;
-    min-height: 80px;
+    min-height: 100px;
     border-radius: 40px;
     background-color: var(--main);
     padding-top: 5px;
@@ -112,6 +112,12 @@
 .sub-heading {
     font-size: 14px;
     color: #555;
+}
+
+.heading,
+.sub-heading {
+    overflow: hidden;
+    word-wrap: break-word;
 }
 
 
@@ -459,9 +465,9 @@ select.members-role {
     width: var(--uib-size);
     cursor: auto;
     /* background-color: aqua; */
-  }
-  
-  .dot-spinner__dot {
+}
+
+.dot-spinner__dot {
     position: absolute;
     top: 0;
     left: 0;
@@ -470,9 +476,9 @@ select.members-role {
     justify-content: flex-start;
     height: 100%;
     width: 100%;
-  }
-  
-  .dot-spinner__dot::before {
+}
+
+.dot-spinner__dot::before {
     content: '';
     height: 10%;
     width: 30%;
@@ -482,80 +488,81 @@ select.members-role {
     opacity: 0;
     animation: pulse0112 calc(var(--uib-speed) * 1.111) ease-in-out infinite;
     box-shadow: 0 0 20px rgba(18, 31, 53, 0.3);
-  }
-  
-  .dot-spinner__dot:nth-child(2) {
+}
+
+.dot-spinner__dot:nth-child(2) {
     transform: rotate(45deg);
-  }
-  
-  .dot-spinner__dot:nth-child(2)::before {
+}
+
+.dot-spinner__dot:nth-child(2)::before {
     animation-delay: calc(var(--uib-speed) * -0.875);
-  }
-  
-  .dot-spinner__dot:nth-child(3) {
+}
+
+.dot-spinner__dot:nth-child(3) {
     transform: rotate(90deg);
-  }
-  
-  .dot-spinner__dot:nth-child(3)::before {
+}
+
+.dot-spinner__dot:nth-child(3)::before {
     animation-delay: calc(var(--uib-speed) * -0.75);
-  }
-  
-  .dot-spinner__dot:nth-child(4) {
+}
+
+.dot-spinner__dot:nth-child(4) {
     transform: rotate(135deg);
-  }
-  
-  .dot-spinner__dot:nth-child(4)::before {
+}
+
+.dot-spinner__dot:nth-child(4)::before {
     animation-delay: calc(var(--uib-speed) * -0.625);
-  }
-  
-  .dot-spinner__dot:nth-child(5) {
+}
+
+.dot-spinner__dot:nth-child(5) {
     transform: rotate(180deg);
-  }
-  
-  .dot-spinner__dot:nth-child(5)::before {
+}
+
+.dot-spinner__dot:nth-child(5)::before {
     animation-delay: calc(var(--uib-speed) * -0.5);
-  }
-  
-  .dot-spinner__dot:nth-child(6) {
+}
+
+.dot-spinner__dot:nth-child(6) {
     transform: rotate(225deg);
-  }
-  
-  .dot-spinner__dot:nth-child(6)::before {
+}
+
+.dot-spinner__dot:nth-child(6)::before {
     animation-delay: calc(var(--uib-speed) * -0.375);
-  }
-  
-  .dot-spinner__dot:nth-child(7) {
+}
+
+.dot-spinner__dot:nth-child(7) {
     transform: rotate(270deg);
-  }
-  
-  .dot-spinner__dot:nth-child(7)::before {
+}
+
+.dot-spinner__dot:nth-child(7)::before {
     animation-delay: calc(var(--uib-speed) * -0.25);
-  }
-  
-  .dot-spinner__dot:nth-child(8) {
+}
+
+.dot-spinner__dot:nth-child(8) {
     transform: rotate(315deg);
-  }
-  
-  .dot-spinner__dot:nth-child(8)::before {
+}
+
+.dot-spinner__dot:nth-child(8)::before {
     animation-delay: calc(var(--uib-speed) * -0.125);
-  }
-  
-  @keyframes pulse0112 {
+}
+
+@keyframes pulse0112 {
+
     0%,
     100% {
-      /* transform: scale(0); */
-      opacity: 0;
+        /* transform: scale(0); */
+        opacity: 0;
     }
-  
+
     75% {
         opacity: 0.5;
     }
 
     50% {
-      /* transform: scale(1); */
-      opacity: 1;
+        /* transform: scale(1); */
+        opacity: 1;
     }
-  }  
+}
 
 
 
@@ -587,7 +594,13 @@ select.members-role {
     margin-right: auto;
 }
 
-.trash-icon{
+.icon-new {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.trash-icon {
     display: block;
     margin-left: auto;
     width: 3.3rem;
@@ -597,6 +610,72 @@ select.members-role {
     /* background-color: azure; */
     transition: .2s;
 }
+
+.tertiary-section-timeline {
+    background-color: var(--bg);
+    min-height: 100vh;
+    padding: 12.8rem 10.6rem 0;
+}
+
+.date {
+    display: flex;
+    align-items: center;
+}
+
+.date label {
+    margin-right: 10px;
+}
+
+.date-inputs {
+    display: flex;
+}
+
+.date-inputs select {
+    margin-right: 10px;
+    background-color: var(--bg-tint1);
+    border: none;
+    border-radius: 5px;
+}
+
+.date-input select ::-webkit-scrollbar-thumb {
+    background-color: aqua;
+}
+
+
+
+
+.tertiary-section-timeline {
+    background-color: var(--bg);
+    min-height: 100vh;
+    padding: 12.8rem 10.6rem 0;
+}
+
+.date {
+    display: flex;
+    align-items: center;
+}
+
+.date label {
+    margin-right: 10px;
+}
+
+.date-inputs {
+    display: flex;
+}
+
+.date-inputs select {
+    margin-right: 10px;
+    background-color: var(--bg-tint1);
+    border: none;
+    border-radius: 5px;
+}
+
+.date-input select ::-webkit-scrollbar-thumb {
+    background-color: aqua;
+}
+
+
+
 
 .trash-icon:hover {
     color: var(--main);
