@@ -597,6 +597,7 @@ select.members-role {
     background-color: var(--bg);
     min-height: 100vh;
     padding: 12.8rem 10.6rem 0;
+
 }
 
 .date {
@@ -625,13 +626,6 @@ select.members-role {
 
 
 
-
-.tertiary-section-timeline {
-    background-color: var(--bg);
-    min-height: 100vh;
-    padding: 12.8rem 10.6rem 0;
-}
-
 .date {
     display: flex;
     align-items: center;
@@ -655,6 +649,26 @@ select.members-role {
 .date-input select ::-webkit-scrollbar-thumb {
     background-color: aqua;
 }
+
+.contact-form {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.tertiary-section-timeline.heading-secondary {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* 
+.contact-form button {
+    width: 15.5rem;
+    margin-left: auto;
+    margin-right: auto;
+} */
 
 
 
