@@ -100,7 +100,7 @@ def saveChanges(request, *args, **kwargs):
             user = UserAccount.objects.filter(id = user_id).first()
             if new_profile_picture_blob:
                 if user.profile_picture != new_profile_picture_blob:
-                    user.profile_picture.delete(save=False)
+                    #user.profile_picture.delete(save=False)
                     user.profile_picture = new_profile_picture_blob
                     user.save()
                

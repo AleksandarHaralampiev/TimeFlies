@@ -35,7 +35,7 @@ def getEditorPhotos(server_id):
     editor_list = []
     for editor in editors:
         user = get_object_or_404(UserAccount, email = editor)
-        editor_list.append(getPhoto(user.id))
+        editor_list.append(getPhoto(user.id))   
 
     return editor_list
 
