@@ -74,6 +74,14 @@ const Timeline = () => {
     const [day, setDay] = useState('01')
     const [month, setMonth] = useState('01')
     const [year, setYear] = useState('2024')
+    const [images, setImages] = useState([])
+
+    const fileInputRef = useRef(null)
+
+    function handleFileSelect(event) {
+        console.log(event.target.files)
+        setImages(event.target.files)
+    }
 
     const handleAdd = async (e) => {
         e.preventDefault()
@@ -83,10 +91,11 @@ const Timeline = () => {
                 title,
                 description,
                 timeline_id: id,
-                date: `${day}.${month}.${year}`
+                date: `${day}.${month}.${year}`,
+                images
             }
 
-            console.log(obj)
+            // console.log(obj)
 
             const response = await axios.post('http://127.0.0.1:8000/timeline/addEvent/', obj)
 
@@ -198,6 +207,13 @@ const Timeline = () => {
                         </div>
 
                     </div>
+
+                    <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleFileSelect}
+                        multiple
+                    />
 
                     <textarea
                         value={description}
