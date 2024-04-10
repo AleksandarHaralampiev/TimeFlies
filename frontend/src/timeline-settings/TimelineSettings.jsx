@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { IoCheckmarkDoneOutline, IoCloseOutline, IoPencilOutline } from "react-icons/io5"
 import { DataContext } from "../context/DataContext"
 import { Link } from "react-router-dom"
@@ -9,6 +9,7 @@ import { BarLoader, FadeLoader } from "react-spinners";
 import PopUp from "../components/PopUp"
 import TextBox from "./TextBox"
 
+export const TimelineContext = createContext({})
 
 const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
     // const owner = {
@@ -61,12 +62,49 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
     const [loading, setLoading] = useState(true)
 
 
-
-
-    
-
-
     const [changes, setChanges] = useState(false)
+
+
+
+    // // EDIT NAME
+    const [namePencil, setNamePencil] = useState(false)
+    const [name, setName] = useState('')
+    const [editName, setEditName] = useState(false)
+
+    // // EDIT DESCRIPTION
+    const [descriptionPencil, setDescriptionPencil] = useState(false)
+    const [description, setDescription] = useState('')
+    const [editDescription, setEditDescription] = useState(false)
+
+    // // EDIT TIMELINE
+    const [loadingTimeline, setLoadingTimeline] = useState(false)
+
+    const handleEditTimeline = async () => {
+        setLoadingTimeline(true)
+
+        try {
+            const obj = {
+                name,
+                description,
+                server_id: id
+            }
+
+            const response = await axios.post('http://127.0.0.1:8000/server/changes/', obj)
+
+            console.log(response)
+
+            if (response.status == 200) {
+                setTimeline({ ...timeline, name: name, description: description })
+                handleAlert('success', 'Changes saved successfully!')
+                setChanges(false)
+            }
+        } catch (err) {
+            console.log(err)
+            handleAlert('error', "Couldn't save the changes!")
+        } finally {
+            setLoadingTimeline(false)
+        }
+    }
 
     // useEffect(() => {
     //     // if(editName || editDescription) setChanges(true)
@@ -357,7 +395,9 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
 
 
     return (
-        <>
+        <TimelineContext.Provider value={{
+            editName, setEditName, name, setName, namePencil, setNamePencil, owner, loadingTimeline, editDescription, description, descriptionPencil, timeline, changes
+        }}>
             {
                 loading ?
                     <p className="timeline-settings">Loading</p>
@@ -568,7 +608,7 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                         </div>
                     </div>
             }
-        </>
+        </TimelineContext.Provider>
     )
 }
 

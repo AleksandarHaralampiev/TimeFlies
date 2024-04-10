@@ -1,43 +1,8 @@
+import { useContext } from "react"
+import { TimelineContext } from "./TimelineSettings"
+
 const TextBox = () => {
-    // // EDIT NAME
-    const [namePencil, setNamePencil] = useState(false)
-    const [name, setName] = useState('')
-    const [editName, setEditName] = useState(false)
-
-    // // EDIT DESCRIPTION
-    const [descriptionPencil, setDescriptionPencil] = useState(false)
-    const [description, setDescription] = useState('')
-    const [editDescription, setEditDescription] = useState(false)
-
-    // // EDIT TIMELINE
-    const [loadingTimeline, setLoadingTimeline] = useState(false)
-
-    const handleEditTimeline = async () => {
-        setLoadingTimeline(true)
-
-        try {
-            const obj = {
-                name,
-                description,
-                server_id: id
-            }
-
-            const response = await axios.post('http://127.0.0.1:8000/server/changes/', obj)
-
-            console.log(response)
-
-            if (response.status == 200) {
-                setTimeline({ ...timeline, name: name, description: description })
-                handleAlert('success', 'Changes saved successfully!')
-                setChanges(false)
-            }
-        } catch (err) {
-            console.log(err)
-            handleAlert('error', "Couldn't save the changes!")
-        } finally {
-            setLoadingTimeline(false)
-        }
-    }
+    const { editName, setEditName, name, setName, namePencil, setNamePencil, owner, loadingTimeline, editDescription, description, descriptionPencil, timeline, changes } = useContext(TimelineContext)
 
     return (
         <div className="timeline-settings-text-box">

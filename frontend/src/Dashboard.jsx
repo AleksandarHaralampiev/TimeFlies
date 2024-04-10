@@ -50,10 +50,10 @@ const Dashboard = () => {
     return (
         <section className="section-dashboard" >
             {
-                true ?
+                settings ?
                 <TimelineSettings
-                    // id={settings}
-                    id={37}
+                    id={settings}
+                    // id={37}
                     setSettings={setSettings}
                     list="public-timelines"
                 />
