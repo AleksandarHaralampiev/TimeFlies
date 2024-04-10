@@ -88,15 +88,21 @@ const Timeline = () => {
         e.preventDefault()
 
         try {
-            const obj = {
-                title,
-                description,
-                timeline_id: id,
-                date: `${day}.${month}.${year}`,
-                images
-            }
+            const obj = new FormData();
+            obj.append('title', title)
+            obj.append('description', description)
+            obj.append('timeline_id', id)
+            obj.append('date', `${day}.${month}.${year}`)
+            obj.append('images', images)
+            // const obj = {
+            //     title,
+            //     description,
+            //     timeline_id: id,
+            //     date: `${day}.${month}.${year}`,
+            //     images
+            // }
 
-            // console.log(obj)
+            console.log(obj)
 
             const response = await axios.post('http://127.0.0.1:8000/timeline/addEvent/', obj)
 
