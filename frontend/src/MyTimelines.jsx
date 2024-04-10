@@ -22,10 +22,10 @@ const MyTimelines = () => {
     return (
         <section className="section-dashboard">
             {
-                true ?
+                settings ?
                 <TimelineSettings
                     // id={settings}
-                    id={47}
+                    id={58}
                     setSettings={setSettings}
                     list="my-timelines"
                 />
