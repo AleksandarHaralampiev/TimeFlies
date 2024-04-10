@@ -79,7 +79,8 @@ const Timeline = () => {
     const fileInputRef = useRef(null)
 
     function handleFileSelect(event) {
-        console.log(event.target.files)
+        const imgs = Array.from(event.target.files);
+        console.log(imgs)
         setImages(event.target.files)
     }
 
