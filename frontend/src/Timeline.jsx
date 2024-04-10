@@ -88,19 +88,19 @@ const Timeline = () => {
         e.preventDefault()
 
         try {
-            const obj = new FormData();
-            obj.append('title', title)
-            obj.append('description', description)
-            obj.append('timeline_id', id)
-            obj.append('date', `${day}.${month}.${year}`)
-            obj.append('images', images)
-            // const obj = {
-            //     title,
-            //     description,
-            //     timeline_id: id,
-            //     date: `${day}.${month}.${year}`,
-            //     images
-            // }
+            // const obj = new FormData();
+            // obj.append('title', title)
+            // obj.append('description', description)
+            // obj.append('timeline_id', id)
+            // obj.append('date', `${day}.${month}.${year}`)
+            // obj.append('images', images)
+            const obj = {
+                title,
+                description,
+                timeline_id: id,
+                date: `${day}.${month}.${year}`,
+                images: images[0]
+            }
 
             console.log(obj)
 
