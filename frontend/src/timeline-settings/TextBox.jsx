@@ -15,18 +15,6 @@ const TextBox = () => {
 
 
 
-    // CHANGES
-    const [changes, setChanges] = useState(false)
-
-    useEffect(() => {
-        if (timeline) {
-            if (name !== timeline.name || description !== timeline.description) setChanges(true)
-            else setChanges(false)
-        }
-    }, [name, description])
-
-
-
 
     // // EDIT NAME
     const [namePencil, setNamePencil] = useState(false)
@@ -40,7 +28,7 @@ const TextBox = () => {
     const [description, setDescription] = useState('')
     const [editDescription, setEditDescription] = useState(false)
 
-    
+
 
     // DEFAULT NAME AND DESCRIPTION
     useEffect(() => {
@@ -49,6 +37,18 @@ const TextBox = () => {
             setDescription(timeline.description)
         }
     }, [timeline])
+
+
+
+    // CHANGES
+    const [changes, setChanges] = useState(false)
+
+    useEffect(() => {
+        if (timeline) {
+            if (name !== timeline.name || description !== timeline.description) setChanges(true)
+            else setChanges(false)
+        }
+    }, [name, description])
 
 
 
