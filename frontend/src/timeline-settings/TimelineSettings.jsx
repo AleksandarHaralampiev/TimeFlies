@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react"
 import { IoCheckmarkDoneOutline, IoCloseOutline, IoPencilOutline } from "react-icons/io5"
-import { DataContext } from "./context/DataContext"
+import { DataContext } from "../context/DataContext"
 import { Link } from "react-router-dom"
 import axios from "axios"
-import pfp from './img/pfp.jpg'
+import pfp from '../img/pfp.jpg'
 import { FaTrash } from "react-icons/fa";
 import { BarLoader, FadeLoader } from "react-spinners";
-import PopUp from "./components/PopUp"
+import PopUp from "../components/PopUp"
 
 
 const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
@@ -401,22 +401,22 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                     <div className="timeline-settings">
                         {
                             confirmDelete &&
-                            // <div className="timeline-settings confirm-delete-container">
-                            //     <div className={closeDelete ? "timeline-settings-container timeline-settings-closed confirm-delete" : "timeline-settings-container confirm-delete"}>
-                            //         <p className="confirm-delete-title">Are you sure you want to delete this timeline?</p>
-                            //         <div className="confirm-delete-btn-box">
-                            //             <button className="btn save-changes cancel" onClick={() => setCloseDelete(true)}>Cancel</button>
-                            //             <button className="btn save-changes" onClick={handleDelete}>Delete</button>
-                            //         </div>
-                            //     </div>
-                            // </div>
-                            <PopUp closeFunc={() => setCloseDelete(true)}>
-                                <p className="confirm-delete-title">Are you sure you want to delete this timeline?</p>
-                                <div className="confirm-delete-btn-box">
-                                    <button className="btn save-changes cancel" onClick={() => setCloseDelete(true)}>Cancel</button>
-                                    <button className="btn save-changes" onClick={handleDelete}>Delete</button>
+                            <div className="timeline-settings confirm-delete-container">
+                                <div className={closeDelete ? "timeline-settings-container timeline-settings-closed confirm-delete" : "timeline-settings-container confirm-delete"}>
+                                    <p className="confirm-delete-title">Are you sure you want to delete this timeline?</p>
+                                    <div className="confirm-delete-btn-box">
+                                        <button className="btn save-changes cancel" onClick={() => setCloseDelete(true)}>Cancel</button>
+                                        <button className="btn save-changes" onClick={handleDelete}>Delete</button>
+                                    </div>
                                 </div>
-                            </PopUp>
+                            </div>
+                            // <PopUp closeFunc={() => setCloseDelete(true)}>
+                            //     <p className="confirm-delete-title">Are you sure you want to delete this timeline?</p>
+                            //     <div className="confirm-delete-btn-box">
+                            //         <button className="btn save-changes cancel" /*onClick={() => setCloseDelete(true)}*/>Cancel</button>
+                            //         <button className="btn save-changes" onClick={handleDelete}>Delete</button>
+                            //     </div>
+                            // </PopUp>
                         }
                         {
                             removeUser &&
