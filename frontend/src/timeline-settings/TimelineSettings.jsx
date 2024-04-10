@@ -7,6 +7,7 @@ import pfp from '../img/pfp.jpg'
 import { BarLoader, FadeLoader } from "react-spinners";
 import PopUp from "../components/PopUp"
 import TextBox from "./TextBox"
+import ButtonBox from "./ButtonBox"
 
 export const TimelineContext = createContext({})
 
@@ -339,7 +340,8 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
 
     return (
         <TimelineContext.Provider value={{
-            id, owner, timeline, setTimeline, setConfirmDelete
+            id, owner, timeline, setTimeline, setConfirmDelete,
+            openMembers, setOpenMembers
         }}>
             {
                 loading ?
@@ -390,28 +392,7 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                         <div className={closed ? "timeline-settings-container timeline-settings-closed" : "timeline-settings-container"}>
                             <TextBox />
 
-                            <div className="timeline-settings-btn-box">
-                                <div className="timeline-settings-members" onClick={() => setOpenMembers(!openMembers)}>
-                                    <div className="timeline-img-box timeline-settings-img-box">
-                                        {
-                                            timeline.contributors.map(user => (
-                                                <img src={user.profile_picture} className="timeline-pfp" />
-                                            ))
-                                        }
-                                    </div>
-
-                                    {
-                                        openMembers ?
-                                            <div className="btn-contributors">Hide Contributors &uarr;</div>
-                                            :
-                                            <div className="btn-contributors">View All Contributors &darr;</div>
-                                    }
-                                </div>
-
-                                <div className="timeline-settings-trash-btn-box">
-                                    <Link className="btn timeline-settings-view-btn" to={`/timeline/${id}`}>View</Link>
-                                </div>
-                            </div>
+                            <ButtonBox />
 
                             {
                                 openMembers ?
