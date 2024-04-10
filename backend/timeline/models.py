@@ -3,7 +3,7 @@ import sys
 from server.models import Server
 
 def server_icon_upload_path(instance, filename):
-    return f"eventPhoto/{Timeline.id}/event_picture/{filename}"
+    return f"eventPhoto/{instance.event.id}/event_picture/{filename}"
 
 class Timeline(models.Model):
     server = models.ForeignKey(Server, on_delete=models.CASCADE)

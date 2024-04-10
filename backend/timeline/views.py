@@ -33,7 +33,6 @@ def addEvent(request):
     timeline_id = request.data.get('timeline_id')
     date_str = request.data.get('date')
     photoList = request.FILES.getlist('images')
-    print(photoList)
 
     try:
         timeline = Server.objects.get(id=timeline_id)
@@ -48,10 +47,9 @@ def addEvent(request):
 
         for photo in photoList:
             try:
-                Photo.objects.create(event = event, photo = photo)
-
-            except:
-                return Response("There was an error with the photo creation")
+                Photo.objects.create(event=event, photo=photo)
+            except Exception as e:
+                return Response(f"Error creating photo: {str(e)}", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         return Response("Creation successful")
     except ValueError as e:
@@ -60,6 +58,6 @@ def addEvent(request):
         return Response(f"Integrity error: {e}", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     except Exception as e:
         return Response(f"An error occurred: {e}", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
+
                
 

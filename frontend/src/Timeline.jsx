@@ -85,40 +85,30 @@ const Timeline = () => {
     }
 
     const handleAdd = async (e) => {
-        e.preventDefault()
-
+        e.preventDefault();
         try {
-            const obj = new FormData();
-            obj.append('title', title)
-            obj.append('description', description)
-            obj.append('timeline_id', id)
-            obj.append('date', `${day}.${month}.${year}`)
-            obj.append('images', images)
-
-            console.log(images)
-            // const obj = {
-            //     title,
-            //     description,
-            //     timeline_id: id,
-            //     date: `${day}.${month}.${year}`,
-            //     images: images[0]
-            // }
-
-            console.log(obj)
-
-            const response = await axios.post('http://127.0.0.1:8000/timeline/addEvent/', obj)
-
-            console.log(response)
-
-            if (response.status == 200) {
-                handleAlert('success', 'Event added successfully.')
+            const formData = new FormData();
+            formData.append('title', title);
+            formData.append('description', description);
+            formData.append('timeline_id', id);
+            formData.append('date', `${day}.${month}.${year}`);
+            
+            images.forEach((image) => {
+                formData.append('images', image);
+            });
+    
+            const response = await axios.post('http://127.0.0.1:8000/timeline/addEvent/', formData);
+            
+            if (response.status === 200) {
+                handleAlert('success', 'Event added successfully.');
             }
         } catch (err) {
-            console.log(err)
-        } finally {
-
+            console.log(err);
         }
-    }
+    };
+    
+    
+    
 
 
 
