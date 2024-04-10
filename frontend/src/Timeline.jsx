@@ -81,26 +81,28 @@ const Timeline = () => {
     function handleFileSelect(event) {
         const imgs = Array.from(event.target.files);
         console.log(imgs)
-        setImages(event.target.files)
+        setImages(imgs)
     }
 
     const handleAdd = async (e) => {
         e.preventDefault()
 
         try {
-            // const obj = new FormData();
-            // obj.append('title', title)
-            // obj.append('description', description)
-            // obj.append('timeline_id', id)
-            // obj.append('date', `${day}.${month}.${year}`)
-            // obj.append('images', images)
-            const obj = {
-                title,
-                description,
-                timeline_id: id,
-                date: `${day}.${month}.${year}`,
-                images: images[0]
-            }
+            const obj = new FormData();
+            obj.append('title', title)
+            obj.append('description', description)
+            obj.append('timeline_id', id)
+            obj.append('date', `${day}.${month}.${year}`)
+            obj.append('images', images)
+
+            console.log(images)
+            // const obj = {
+            //     title,
+            //     description,
+            //     timeline_id: id,
+            //     date: `${day}.${month}.${year}`,
+            //     images: images[0]
+            // }
 
             console.log(obj)
 
