@@ -3,6 +3,7 @@ import { TimelineContext } from "./TimelineSettings"
 import { IoCheckmarkDoneOutline, IoCloseOutline, IoPencilOutline } from "react-icons/io5"
 import axios from "axios"
 import { DataContext } from "../context/DataContext"
+import DotSpinner from "../components/DotSpinner"
 
 const ContributorsBox = () => {
     const { handleAlert } = useContext(DataContext)
@@ -26,9 +27,11 @@ const ContributorsBox = () => {
     const [roleEdit, setRoleEdit] = useState(1)
     const [roleLoading, setRoleLoading] = useState(false)
 
+
     useEffect(() => {
         if (editMembers) setRoleEdit(timeline.contributors.find(contributor => contributor.id === editMembers).role)
     }, [editMembers])
+
 
     const handleEditMember = async (e, userId) => {
         e.preventDefault()
@@ -95,6 +98,7 @@ const ContributorsBox = () => {
         <div className="timeline-settings-contributors">
             <h2 className="timeline-settings-heading">Contributors</h2>
 
+            {/* SEARCH BOX */}
             <div className="timeline-settings-search-box">
                 <input
                     type="text"
@@ -104,86 +108,71 @@ const ContributorsBox = () => {
                     onChange={(e) => setSearch(e.target.value)}
                 />
 
+                {/* ADD BUTTON */}
                 {
-                    owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) ?
-                        <button className="btn" onClick={() => setAddMember(!addMember)}>
-                            {
-                                addMember ?
-                                    '- Add'
-                                    :
-                                    '+ Add'
+                    owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) &&
+                    <button className="btn" onClick={() => setAddMember(!addMember)}>
+                        {
+                            addMember ?
+                                '- Add'
+                                :
+                                '+ Add'
 
-                            }
-                        </button>
-                        :
-                        null
+                        }
+                    </button>
                 }
             </div>
 
+
             <div className="members-list">
                 {
-                    shownContributors.length ?
-                        shownContributors.map(user => (
-                            <>
-                                <div className="members-pfp">
+                    shownContributors.length &&
+                    shownContributors.map(user => (
+                        <>
+                            <div className="members-pfp">
+                                {
+                                    owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) && owner.id !== user.id &&
+                                    <IoCloseOutline className="remove-user" onClick={() => setRemoveUser(user.id)} />
+                                }
+                                <img src={user.profile_picture} alt="Profile Pic" />
+                            </div>
+
+                            <p>{user.username}</p>
+
+                            {
+                                editMembers === user.id ?
+                                <form className="members-role" onSubmit={(e) => handleEditMember(e, user.id)}>
+                                    <select className="members-role" value={roleEdit} onChange={(e) => setRoleEdit(e.target.value)}>
+                                        <option value={2}>Editor</option>
+                                        <option value={1}>Member</option>
+                                    </select>
+                                    
+                                    {
+                                        roleLoading ?
+                                            <div class="members-role-edit">
+                                                <DotSpinner />
+                                            </div>
+                                            :
+                                            <button className="members-role-edit" type="submit">
+                                                <IoCheckmarkDoneOutline />
+                                            </button>
+                                    }
+                                </form>
+                                :
+                                <span className="members-role">
+                                    {user.role === 1 && <p>Member</p>}
+                                    {user.role === 2 && <p>Editor</p>}
+                                    {user.role === 3 && <p>Owner</p>}
+
                                     {
                                         owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) && owner.id !== user.id &&
-                                        <IoCloseOutline className="remove-user" onClick={() => setRemoveUser(user.id)} />
+                                        <IoPencilOutline className="members-role-edit" onClick={() => setEditMembers(user.id)} />
                                     }
-                                    <img src={user.profile_picture} alt="Profile Pic" />
-                                </div>
-                                <p>{user.username}</p>
-                                {
-                                    editMembers === user.id ?
-                                        <form className="members-role" onSubmit={(e) => handleEditMember(e, user.id)}>
-                                            <select className="members-role" value={roleEdit} onChange={(e) => setRoleEdit(e.target.value)}>
-                                                <option value={2}>Editor</option>
-                                                <option value={1}>Member</option>
-                                                <option value={0}>Remove</option>
-                                            </select>
-                                            {
-                                                roleLoading ?
-                                                    <div class="members-role-edit">
-                                                        <div className="dot-spinner">
-                                                            {
-                                                                Array.from({ length: 8 }, _ => null).map(_ => (
-                                                                    <div class="dot-spinner__dot"></div>
-                                                                ))
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                    :
-                                                    <button className="members-role-edit" type="submit">
-                                                        <IoCheckmarkDoneOutline />
-                                                    </button>
-                                            }
-                                        </form>
-                                        :
-                                        <span className="members-role">
-                                            <p>
-                                                {
-                                                    user.role === 1 ?
-                                                        'Member' :
-                                                        user.role === 2 ?
-                                                            'Editor' :
-                                                            user.role === 3 ?
-                                                                'Owner' :
-                                                                null
-                                                }
-                                            </p>
-                                            {
-                                                owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) && owner.id !== user.id ?
-                                                    <IoPencilOutline className="members-role-edit" onClick={() => setEditMembers(user.id)} />
-                                                    :
-                                                    null
-                                            }
-                                        </span>
-                                }
-                            </>
+                                </span>
+                            }
+                        </>
 
-                        ))
-                        :
-                        null
+                    ))
                 }
             </div>
         </div>
