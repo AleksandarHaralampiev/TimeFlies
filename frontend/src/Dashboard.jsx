@@ -53,6 +53,7 @@ const Dashboard = () => {
                 settings ?
                 <TimelineSettings
                     id={settings}
+                    // id={37}
                     setSettings={setSettings}
                     list="public-timelines"
                 />
