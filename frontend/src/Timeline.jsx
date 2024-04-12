@@ -5,22 +5,25 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { HashLink } from 'react-router-hash-link'
 import axios from "axios";
 import { DataContext } from "./context/DataContext";
+import { IoHourglassOutline } from "react-icons/io5";
 
 
 const Timeline = () => {
     const { handleAlert, myTimelines, publicTimelines } = useContext(DataContext)
+    const id = useParams().id
+
+
     const [cardHeight, setCardHeight] = useState(null);
     const cardRef = useRef(null);
 
-    const id = useParams().id
 
     const [events, setEvents] = useState([])
     const [timeline, setTimeline] = useState(null)
-
-    const [circleBtn, setCircleBtn] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const fetching = async () => {
+
             try {
                 const response = await axios.get(`http://127.0.0.1:8000/timeline/event/?id=${id}`)
 
@@ -47,6 +50,11 @@ const Timeline = () => {
         if (publicTimelines.find(currentTimeline => currentTimeline.id == id)) setTimeline(publicTimelines.find(currentTimeline => currentTimeline.id == id))
         else if (myTimelines.find(currentTimeline => currentTimeline.id == id)) setTimeline(myTimelines.find(currentTimeline => currentTimeline.id == id))
     }, [publicTimelines, myTimelines, id])
+
+
+    useEffect(() => {
+        if(events.length && timeline) setLoading(false)
+    }, [events, timeline])
 
 
     const handleDateFormat = (date) => {
@@ -119,51 +127,48 @@ const Timeline = () => {
 
 
     return (
+        loading ?
         <>
             <main className="section-main">
                 <div className="timeline">
-                    <div className="grid">
-                        {timeline && <div className="timeline-title">{timeline.name}</div>
-                        }
+                    <IoHourglassOutline className="rotate-center hourglass-animation"/>
+                    <h1 className="hourglass-loading">Loading timeline...</h1>
+                </div>
+            </main>
+        </>
+        :
+        <>
+            <main className="section-main">
+                <div className="timeline">
+                        <div className="grid">
+                            {timeline && <div className="timeline-title">{timeline.name}</div>}
+                            <TimeLineMark name="pillar" />
 
-                        {events.map((event, key) => (
-                            <Fragment key={key}>
-                                {
-                                    key % 2 == 0 &&
-                                    <div className="card-container card-expanded card-container-left">
-                                        <EventCard event={event} date={handleDateFormat(event.date_modified)} />
+                            {events.map((event, key) => (
+                                <Fragment key={key}>
+                                    {
+                                        key % 2 == 0 &&
+                                        <div className="card-container card-expanded card-container-left">
+                                            <EventCard event={event} date={handleDateFormat(event.date_modified)} />
+                                        </div>
+
+                                    }
+
+                                    <div className="circle-container">
+                                        <TimeLineMark name='circle' />
                                     </div>
 
-                                }
+                                    {
+                                        key % 2 != 0 &&
+                                        <div className="card-container card-expanded card-container-right">
+                                            <EventCard event={event} date={handleDateFormat(event.date_modified)} />
+                                        </div>
+                                    }
 
-                                <div className="circle-container">
-                                    <TimeLineMark name='circle' />
-                                </div>
-
-                                {
-                                    key % 2 != 0 &&
-                                    <div className="card-container card-expanded card-container-right">
-                                        <EventCard event={event} date={handleDateFormat(event.date_modified)} />
-                                    </div>
-                                }
-
-                                {key < (events.length - 1) && <TimeLineMark name="pillar" />}
-                            </Fragment>
-                        ))}
-
-                        {/* <TimeLineMark name="pillar" /> */}
-
-                        {
-                            // circleBtn ?
-                            // <div className="circle-container " onMouseEnter={() => setCircleBtn(true)} onMouseLeave={() => setCircleBtn(false)}>
-                            //         <button className="circle">Add event</button>
-                            // </div>
-                            // :
-                            // <div className="circle-container" onMouseEnter={() => setCircleBtn(true)} onMouseLeave={() => setCircleBtn(false)}>
-                            //         <button className="circle">Add event</button>
-                            // </div>
-                        }
-                    </div>
+                                    {key < (events.length - 1) && <TimeLineMark name="pillar" />}
+                                </Fragment>
+                            ))}
+                        </div>
                     <HashLink to={`/timeline/${id}/#add-form`} className="plus">+</HashLink>
                 </div>
                 {/* <div><button className="rounded-btn">+</button></div> */}
