@@ -32,8 +32,6 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
         const fetchData = async (timelines) => {
             const foundTimeline = timelines.find(currentTimeline => currentTimeline.id === id)
 
-            console.log(timelines)
-
             const sortedContributors = foundTimeline.contributors.sort((user1, user2) => {
                 if (user1.role > user2.role) return -1
                 else if (user1.role < user2.role) return 1
@@ -48,8 +46,6 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
                 setOwner(sortedTimeline.contributors.find(user => user.role === 3))
 
                 setLoading(false)
-
-                console.log(timeline)
             }
         }
 
