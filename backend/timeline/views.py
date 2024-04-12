@@ -14,17 +14,20 @@ from django.utils.timezone import make_aware
 def getEvents(request, *args, **kwargs):
     if request.method == "GET":
         id = int(request.GET.get('id'))
-        server = Server.objects.filter(id = id).first()
+        server = Server.objects.filter(id=id).first()
         if server:
-   
-            timelines = models.Timeline.objects.filter(server_id = id).all()
-            data = [{
-                'title': timeline.title,
-                'description': timeline.description,
-                'date_modified': timeline.date_modifired
-            } for timeline in timelines]
+            timelines = models.Timeline.objects.filter(server_id=id).all()
+            data = []
+            for timeline in timelines:
+                timeline_data = {
+                    'title': timeline.title,
+                    'description': timeline.description,
+                    'date_modified': timeline.date_modifired,
+                    'event_pictures': [photo.photo.url for photo in timeline.photo_set.all()]
+                }
+                data.append(timeline_data)
             print(data)
-            return Response(data = data, status=200)
+            return Response(data=data, status=200)
         
 @api_view(['POST'])
 def addEvent(request):
