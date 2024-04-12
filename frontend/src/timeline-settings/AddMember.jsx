@@ -1,10 +1,12 @@
 import { useContext, useState } from "react"
 import { BarLoader } from "react-spinners"
 import { DataContext } from "../context/DataContext"
+import { TimelineContext } from './TimelineSettings'
+import axios from "axios"
 
 const AddMember = () => {
     const { handleAlert } = useContext(DataContext)
-    const { id } = useContext(id)
+    const { id } = useContext(TimelineContext)
 
     // // ADDING NEW MEMBERS
     const [email, setEmail] = useState('')
