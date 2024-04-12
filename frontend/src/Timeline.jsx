@@ -104,6 +104,12 @@ const Timeline = () => {
             }
         } catch (err) {
             console.log(err);
+        } finally {
+            setTitle('')
+            setDescription('')
+            setDay(1)
+            setMonth(1)
+            setYear(2024)
         }
     };
     
@@ -125,7 +131,7 @@ const Timeline = () => {
                                 {
                                     key % 2 == 0 &&
                                     <div className="card-container card-expanded card-container-left">
-                                        <EventCard heading={event.title} subHeading={event.description} date={handleDateFormat(event.date_modified)} />
+                                        <EventCard event={event} date={handleDateFormat(event.date_modified)} />
                                     </div>
 
                                 }
@@ -137,7 +143,7 @@ const Timeline = () => {
                                 {
                                     key % 2 != 0 &&
                                     <div className="card-container card-expanded card-container-right">
-                                        <EventCard heading={event.title} subHeading={event.description} date={handleDateFormat(event.date_modified)} />
+                                        <EventCard event={event} date={handleDateFormat(event.date_modified)} />
                                     </div>
                                 }
 
