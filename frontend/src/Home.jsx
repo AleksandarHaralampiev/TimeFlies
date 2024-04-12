@@ -107,7 +107,7 @@ const Home = () => {
             </section >
             <section id='contact-us' className='tertiary-section'>
                 <div className="contact-us-container">
-                    <h1 className='heading-secondary'>Contact Us</h1>
+                    <h1 className='contact-heading'>Contact Us</h1>
                     <form className="contact-form" onSubmit={(e) => handleContact(e)}>
                         <label htmlFor="name">Name:</label>
                         <input

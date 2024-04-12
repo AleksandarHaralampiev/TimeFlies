@@ -11,6 +11,12 @@
     padding: 20px;
 }
 
+.contact-heading {
+    font-size: 4.8rem;
+    margin-bottom: 1.2rem;
+    text-align: center;
+}
+
 .contact-form {
     display: grid;
     gap: 20px;
