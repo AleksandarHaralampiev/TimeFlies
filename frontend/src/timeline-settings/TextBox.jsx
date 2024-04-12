@@ -57,6 +57,8 @@ const TextBox = () => {
 
     const handleEditTimeline = async () => {
         setLoadingTimeline(true)
+        setEditName(false)
+        setEditDescription(false)
 
         try {
             const obj = {
@@ -77,6 +79,8 @@ const TextBox = () => {
         } catch (err) {
             console.log(err)
             handleAlert('error', "Couldn't save the changes!")
+            setName(timeline.name)
+            setDescription(timeline.description)
         } finally {
             setLoadingTimeline(false)
         }
@@ -130,7 +134,7 @@ const TextBox = () => {
     }
 
     
-    
+
 
 
     return (
