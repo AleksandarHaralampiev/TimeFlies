@@ -50,8 +50,8 @@ const MyTimelines = () => {
                     myLoading ?
                     <div className="container timeline-grid">
                         {
-                            Array.from({length: 6}, _ => null).map(_ => (
-                                <DashboardSkeleton />
+                            Array.from({length: 6}, _ => null).map((_, index) => (
+                                <DashboardSkeleton key={index} />
                             ))
                         }
                     </div>

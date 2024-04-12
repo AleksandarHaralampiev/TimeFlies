@@ -11,7 +11,7 @@ const ButtonBox = () => {
                 <div className="timeline-img-box timeline-settings-img-box">
                     {
                         timeline.contributors.map(user => (
-                            <img src={user.profile_picture} className="timeline-pfp" />
+                            <img src={user.profile_picture} className="timeline-pfp" key={user.id}/>
                         ))
                     }
                 </div>

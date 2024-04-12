@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { Fragment, useContext, useEffect, useState } from "react"
 import { TimelineContext } from "./TimelineSettings"
 import { IoCheckmarkDoneOutline, IoCloseOutline, IoPencilOutline } from "react-icons/io5"
 import axios from "axios"
@@ -214,7 +214,7 @@ const ContributorsBox = () => {
                 {
                     shownContributors.length &&
                     shownContributors.map(user => (
-                        <>
+                        <Fragment key={user.id}>
                             <div className="members-pfp">
                                 {
                                     owner.id === parseInt(JSON.parse(localStorage.getItem('accData')).id) && owner.id !== user.id &&
@@ -256,7 +256,7 @@ const ContributorsBox = () => {
                                     }
                                 </span>
                             }
-                        </>
+                        </Fragment>
 
                     ))
                 }

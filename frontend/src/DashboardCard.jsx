@@ -17,8 +17,8 @@ const DashboardCard = ({ timeline, setSettings }) => {
 
             <div className="timeline-img-box">
                 {
-                    timeline.contributors.slice(0, 5).map(user => (
-                        <img src={user.profile_picture} className="timeline-pfp"/>
+                    timeline.contributors.slice(0, 5).map((user, index) => (
+                        <img src={user.profile_picture} className="timeline-pfp" key={index}/>
                     ))
                 }
 

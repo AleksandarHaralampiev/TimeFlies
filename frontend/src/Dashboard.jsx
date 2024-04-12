@@ -53,7 +53,6 @@ const Dashboard = () => {
                 settings ?
                 <TimelineSettings
                     id={settings}
-                    // id={37}
                     setSettings={setSettings}
                     list="public-timelines"
                 />
@@ -76,8 +75,8 @@ const Dashboard = () => {
                     dashboardLoading ?
                     <div className="container timeline-grid">
                         {
-                            Array.from({length: 6}, _ => null).map(_ => (
-                                <DashboardSkeleton />
+                            Array.from({length: 6}, _ => null).map((_, index) => (
+                                <DashboardSkeleton key={index} />
                             ))
                         }
                     </div>
@@ -93,7 +92,8 @@ const Dashboard = () => {
                     <div className="container timeline-grid">
                         {
                             shownTimelines.map(timeline => (
-                                <DashboardCard 
+                                <DashboardCard
+                                    key={timeline.id} 
                                     timeline={timeline}
                                     setSettings={setSettings}
                                 />

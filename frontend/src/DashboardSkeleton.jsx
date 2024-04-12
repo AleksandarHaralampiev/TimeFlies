@@ -17,8 +17,8 @@ const DashboardSkeleton = () => {
 
             <div className="timeline-img-box">
                 {
-                    Array.from({length: 5}, _ => null).map(_ => (
-                        <Skeleton className="timeline-pfp" />
+                    Array.from({length: 5}, _ => null).map((_, index) => (
+                        <Skeleton className="timeline-pfp" key={index} />
                     ))
                 }
             </div>

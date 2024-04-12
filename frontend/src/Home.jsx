@@ -88,7 +88,7 @@ const Home = () => {
                     {data.map((e, i) => {
                         return (
                             <VerticalTimelineElement
-
+                                key={i}
                                 contentStyle={{ background: '#f0f0f0', color: '#625149', height: '100%', padding: '1rem', fontSize: '4rem' }}
                                 contentArrowStyle={{ borderRight: '7px solid  #f0f0f0' }}
                                 iconStyle={{ background: '#f2e4cb', color: '#625149', height: '3rem', width: '3rem', margin: '0 0 0 -15px' }}
