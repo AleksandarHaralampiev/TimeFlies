@@ -24,8 +24,7 @@ const MyTimelines = () => {
             {
                 settings ?
                 <TimelineSettings
-                    // id={settings}
-                    id={58}
+                    id={settings}
                     setSettings={setSettings}
                     list="my-timelines"
                 />

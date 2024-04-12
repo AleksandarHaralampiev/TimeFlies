@@ -9,8 +9,8 @@ import axios from "axios";
 
 const TextBox = () => {
     // GLOBAL
-    const { handleAlert } = useContext(DataContext)
-    const { id, owner, timeline, setTimeline, setConfirmDelete } = useContext(TimelineContext)
+    const { handleAlert, myTimelines, setMyTimelines, publicTimelines, setPublicTimelines } = useContext(DataContext)
+    const { id, owner, timeline, setTimeline, handleClose } = useContext(TimelineContext)
 
 
 
@@ -22,12 +22,10 @@ const TextBox = () => {
     const [editName, setEditName] = useState(false)
 
 
-
     // // EDIT DESCRIPTION
     const [descriptionPencil, setDescriptionPencil] = useState(false)
     const [description, setDescription] = useState('')
     const [editDescription, setEditDescription] = useState(false)
-
 
 
     // DEFAULT NAME AND DESCRIPTION
@@ -40,6 +38,7 @@ const TextBox = () => {
 
 
 
+
     // CHANGES
     const [changes, setChanges] = useState(false)
 
@@ -49,6 +48,7 @@ const TextBox = () => {
             else setChanges(false)
         }
     }, [name, description])
+
 
 
 
@@ -82,11 +82,80 @@ const TextBox = () => {
         }
     }
 
+
+
+
+
+    // DELETE TIMELINE
+    const [confirmDelete, setConfirmDelete] = useState(false)
+    const [closeDelete, setCloseDelete] = useState(false)
+
+    useEffect(() => {
+        if (closeDelete) {
+            setTimeout(() => {
+                setConfirmDelete(false)
+                setCloseDelete(false)
+            }, [480])
+        }
+    }, [closeDelete])
+
+
+    const handleDelete = async () => {
+        setLoadingTimeline(true)
+
+        setCloseDelete(true)
+
+        try {
+            const obj = {
+                timeline_id: id
+            }
+
+            console.log(obj)
+
+            const response = await axios.post('http://127.0.0.1:8000/server/deleteTimeline/', obj)
+
+            console.log(response)
+            if (response.status == 200) {
+                handleAlert('success', 'Delete successful.')
+                setMyTimelines(myTimelines.filter(currentTimeline => currentTimeline.id !== id))
+                setPublicTimelines(publicTimelines.filter(currentTimeline => currentTimeline.id !== id))
+                handleClose()
+            }
+        } catch (err) {
+            console.log(err)
+            handleAlert('error', "Couldn't delete timeline!")
+        } finally {
+            setLoadingTimeline(false)
+        }
+    }
+
+    
     
 
 
     return (
         <div className="timeline-settings-text-box">
+
+        {
+            confirmDelete &&
+            <div className="timeline-settings confirm-delete-container">
+                <div className={closeDelete ? "timeline-settings-container timeline-settings-closed confirm-delete" : "timeline-settings-container confirm-delete"}>
+                    <p className="confirm-delete-title">Are you sure you want to delete this timeline?</p>
+                    <div className="confirm-delete-btn-box">
+                        <button className="btn save-changes cancel" onClick={() => setCloseDelete(true)}>Cancel</button>
+                        <button className="btn save-changes" onClick={handleDelete}>Delete</button>
+                    </div>
+                </div>
+            </div>
+            // <PopUp closeFunc={() => setCloseDelete(true)}>
+            //     <p className="confirm-delete-title">Are you sure you want to delete this timeline?</p>
+            //     <div className="confirm-delete-btn-box">
+            //         <button className="btn save-changes cancel" /*onClick={() => setCloseDelete(true)}*/>Cancel</button>
+            //         <button className="btn save-changes" onClick={handleDelete}>Delete</button>
+            //     </div>
+            // </PopUp>
+        }
+
             {
                 editName ?
                     <div className="timeline-settings-name">
