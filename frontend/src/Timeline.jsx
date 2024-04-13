@@ -6,6 +6,8 @@ import { HashLink } from 'react-router-hash-link'
 import axios from "axios";
 import { DataContext } from "./context/DataContext";
 import { IoHourglassOutline } from "react-icons/io5";
+import PopUp from './components/PopUp'
+import EventDetails from "./EventDetails";
 
 
 const Timeline = () => {
@@ -123,6 +125,7 @@ const Timeline = () => {
     
     
     
+    const [selectedEvent, setSelectedEvent] = useState(null)
 
 
 
@@ -139,6 +142,13 @@ const Timeline = () => {
         :
         <>
             <main className="section-main">
+                <EventDetails
+                    id={selectedEvent}
+                    events={events}
+                    setSelectedEvent={setSelectedEvent}
+                    handleDateFormat={handleDateFormat}
+                />
+
                 <div className="timeline">
                         <div className="grid">
                             {timeline && <div className="timeline-title">{timeline.name}</div>}
@@ -148,7 +158,7 @@ const Timeline = () => {
                                 <Fragment key={key}>
                                     {
                                         key % 2 == 0 &&
-                                        <div className="card-container card-expanded card-container-left">
+                                        <div className="card-container card-expanded card-container-left" onClick={() => setSelectedEvent(key)}>
                                             <EventCard event={event} date={handleDateFormat(event.date_modified)} />
                                         </div>
 
@@ -160,7 +170,7 @@ const Timeline = () => {
 
                                     {
                                         key % 2 != 0 &&
-                                        <div className="card-container card-expanded card-container-right">
+                                        <div className="card-container card-expanded card-container-right" onClick={() => setSelectedEvent(key)}>
                                             <EventCard event={event} date={handleDateFormat(event.date_modified)} />
                                         </div>
                                     }

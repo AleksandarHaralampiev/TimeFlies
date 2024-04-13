@@ -81,6 +81,8 @@
 .card-container {
     /* background-color: aqua; */
     padding-right: 0.8rem;
+    grid-row: span 2;
+    align-self: flex-start;
 }
 
 .card-container-left {
@@ -105,10 +107,13 @@
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 45rem;
+    cursor: pointer;
+
+    transition: .2s;
 }
 
-.card-expanded {
-    grid-row: span 2;
+.card:hover {
+    transform: scale(1.02);
 }
 
 .pillar {
@@ -806,3 +811,37 @@ select.members-role {
     }
   }
   
+
+
+  /* EVENTS */
+.event-details-container {
+    max-width: 100rem;
+    margin: 16rem auto;
+    padding: 3.2rem 4.8rem;
+
+    overflow: auto;
+}
+
+  .event-details-title {
+    font-size: 5.2rem;
+    letter-spacing: 1.75px;
+    text-align: center;
+}
+
+.event-details-description {
+    font-size: 1.8rem;
+    line-height: 1.8;
+    margin-top: 1.2rem;
+    margin-bottom: 1.6rem;
+
+    text-align: center;
+}
+
+.event-details-date {
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+    color: var(--main-tint1);
+    margin-bottom: 3.2rem;
+
+    text-align: center;
+}
