@@ -7,6 +7,7 @@ import { DataContext } from "./context/DataContext";
 import axios from "axios";
 import ChangePass from "./components/ChangePass";
 import PopUp from "./components/PopUp";
+import ReactModal from 'react-modal';
 
 const MyProfile = () => {
     const { account, handleAlert, fetchAccount, fetchPublicTimelines, fetchMyTimelines, loggedIn, navigate } = useContext(DataContext);
@@ -76,17 +77,8 @@ const MyProfile = () => {
         fileInputRef.current.click();
     }
 
-    const [test, setTest] = useState(true)
-
     return (
         <main className="tertiary-section">
-            {
-                test &&
-                <PopUp closeFunc={() => setTest(null)}>
-                    <button onClick={() => handleClose()}>Close</button>
-                </PopUp>
-            }
-
             <div className="profile-container">
                 <div className="avatar-container">
                     <input

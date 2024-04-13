@@ -1,8 +1,9 @@
 import { IoCloseOutline } from 'react-icons/io5'
 import '../css/popup.css'
 import { useState } from 'react'
+import ReactModal from 'react-modal'
 
-const PopUp = ({ children, closeFunc }) => {
+const PopUp = ({ children, shown, closeFunc }) => {
     const [closed, setClosed] = useState(false)
 
     const handleClose = () => {
@@ -14,15 +15,20 @@ const PopUp = ({ children, closeFunc }) => {
     }
 
     return (
-        <div className='pop-up'>
-            <div className={closed ? "pop-up-container pop-up-closed" : "pop-up-container"}>
-                
-                {children}
+        <ReactModal
+            isOpen={shown}
+            onRequestClose={closeFunc}
+            closeTimeoutMS={500}
+            overlayClassName="pop-up"
+            className={{
+                base: "pop-up-container",
+                beforeClose: "pop-up-closed"
+            }}
+        >
 
-                <IoCloseOutline className="pop-up-close" onClick={handleClose} />
-                
-            </div>
-        </div>
+            {children}
+
+        </ReactModal>
     )
 }
 
