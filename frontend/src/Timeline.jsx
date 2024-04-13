@@ -151,7 +151,13 @@ const Timeline = () => {
 
                 <div className="timeline">
                         <div className="grid">
-                            {timeline && <div className="timeline-title">{timeline.name}</div>}
+                            {
+                                timeline && 
+                                <div className="timeline-heading">
+                                    <h1 className="timeline-events-title">{timeline.name}</h1>
+                                    <p className="timeline-events-description">{timeline.description}</p>
+                                </div>
+                            }
                             <TimeLineMark name="pillar" />
 
                             {events.map((event, key) => (

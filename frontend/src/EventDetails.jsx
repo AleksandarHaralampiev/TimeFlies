@@ -33,13 +33,18 @@ const EventDetails = ({ id, events, setSelectedEvent, handleDateFormat }) => {
                     <p className="event-details-date">{date}</p>
                     <p className="event-details-description">{event.description}</p>
 
-                    <div className="event-details-img-box">
-                        {
-                            event.event_pictures.map(pic => (
-                                <img src={pic} alt="" className="event-details-img"/>
-                            ))
-                        }
-                    </div>
+                    {
+                        event.event_pictures.length ?
+                        <div className="event-details-img-box">
+                            {
+                                event.event_pictures.map(pic => (
+                                    <img src={pic} alt="" className="event-details-img"/>
+                                ))
+                            }
+                        </div>
+                        :
+                        null
+                    }
 
                     <IoCloseOutline className="timeline-settings-close" onClick={() => setSelectedEvent(null)} />
                 </>

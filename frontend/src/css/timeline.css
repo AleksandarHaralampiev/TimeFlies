@@ -62,20 +62,32 @@
     /* margin: 0 10px; */
 }
 
-.timeline-title {
-    display: flex;
+.timeline-heading {
+    /* display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
     justify-self: center;
     background-color: #f0f0f0;
-    padding: 10px;
+    padding: 1.8rem;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     grid-column: 1/-1;
     width: 95.5rem;
-    height: 7rem;
+    /* height: 7rem; */
     margin-bottom: 1rem;
+}
+
+.timeline-events-title {
     font-size: 4rem;
+    text-align: center;
+    margin-bottom: 0.4rem;
+}
+
+.timeline-events-description {
+    text-align: center;
+    font-size: 1.8rem;
+    line-height: 1.8;
+    color: var(--main);
 }
 
 .card-container {
