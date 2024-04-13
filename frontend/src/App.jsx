@@ -11,6 +11,7 @@ import MyTimelines from "./MyTimelines"
 import NewTimeline from "./NewTimeline"
 import Toast from "./Toast"
 import { SkeletonTheme } from "react-loading-skeleton"
+import { Toaster } from "react-hot-toast"
 
 function App() {
 
@@ -31,7 +32,9 @@ function App() {
             <Route path="/myprofile" element={<MyProfile />} />
           </Routes>
 
-          <Toast />
+          <Toaster
+            position="bottom-right"
+          />
         </DataProvider>
       </SkeletonTheme>
     </>

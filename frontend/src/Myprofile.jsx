@@ -1,13 +1,8 @@
 import { useState, useRef, useContext, useEffect } from "react";
-import pfp from './img/pfp.jpg';
 import { IoPencilOutline, IoCheckmarkDoneOutline } from "react-icons/io5";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { VscMail, VscLock } from "react-icons/vsc";
 import { DataContext } from "./context/DataContext";
 import axios from "axios";
-import ChangePass from "./components/ChangePass";
-import PopUp from "./components/PopUp";
-import ReactModal from 'react-modal';
 
 const MyProfile = () => {
     const { account, handleAlert, fetchAccount, fetchPublicTimelines, fetchMyTimelines, loggedIn, navigate } = useContext(DataContext);
@@ -76,6 +71,9 @@ const MyProfile = () => {
     function handleProfilePictureClick() {
         fileInputRef.current.click();
     }
+
+
+
 
     return (
         <main className="tertiary-section">

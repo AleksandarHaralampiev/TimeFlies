@@ -1,6 +1,8 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Toast from "../Toast";
 
 export const DataContext = createContext({})
 
@@ -38,20 +40,27 @@ const DataProvider = ({ children }) => {
 
     // SETTING UP ALERTS
 
-    const [alerts, setAlerts] = useState([])
+    // const [alerts, setAlerts] = useState([])
 
     const handleAlert = (type, message, autoClose, closeTime) => {
-        const id = alerts.length ? alerts[alerts.length - 1].id + 1 : 1
+
+        toast.custom(
+            <Toast
+                type={type}
+                message={message}
+            />, {
+                duration: 5100,
+            }
+        )
 
         const newAlert = {
-            id,
             type,
             message,
             autoClose,
             closeTime
         }
 
-        setAlerts([...alerts, newAlert])
+        // setAlerts([...alerts, newAlert])
     }
 
 
@@ -131,7 +140,7 @@ const DataProvider = ({ children }) => {
 
     return (
         <DataContext.Provider value={{
-            loggedIn, setLoggedIn, navigate, alerts, setAlerts, handleAlert,            //GENERAL 
+            loggedIn, setLoggedIn, navigate, handleAlert,            //GENERAL 
             publicTimelines, setPublicTimelines, dashboardLoading, dashboardError,                          //DASHBOARD
             myTimelines, setMyTimelines, myLoading, myError, fetchMyTimelines, fetchPublicTimelines,                          //MY TIMELINES
             account, fetchAccount, fetchPublicTimelines, accountLoading
