@@ -5,6 +5,7 @@ import TextBox from "./TextBox"
 import ButtonBox from "./ButtonBox"
 import ContributorsBox from "./ContributorsBox"
 import AddMember from "./AddMember"
+import PopUp from "../components/PopUp"
 
 export const TimelineContext = createContext({})
 
@@ -58,16 +59,11 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
 
 
     // // MENU VARIABLES
-    const [closed, setClosed] = useState(false)
     const [openMembers, setOpenMembers] = useState(false)
     const [addMember, setAddMember] = useState(false)
 
     const handleClose = () => {
-        setClosed(true)
-
-        setTimeout(() => {
-            setSettings(null)
-        }, 400)
+        setSettings(null)
     }
 
 
@@ -86,12 +82,17 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
             addMember, setAddMember,
             handleClose
         }}>
-            {
-                loading ?
-                    <p className="timeline-settings">Loading</p>
-                    :
-                    <div className="timeline-settings">
-                        <div className={closed ? "timeline-settings-container timeline-settings-closed" : "timeline-settings-container"}>
+            <PopUp
+                shown={id}
+                closeFunc={() => setSettings(null)}
+                className="timeline-settings-container"
+            >
+
+                {
+                    loading ?
+                        <p>Loading</p>
+                        :
+                        <>
                             <TextBox />
 
                             <ButtonBox />
@@ -108,9 +109,10 @@ const TimelineSettings = ({ id, setSettings, list = 'public-timelines' }) => {
 
                             <IoCloseOutline className="timeline-settings-close" onClick={handleClose} />
 
-                        </div>
-                    </div>
-            }
+                        </>
+                }
+
+            </PopUp>
         </TimelineContext.Provider>
     )
 }

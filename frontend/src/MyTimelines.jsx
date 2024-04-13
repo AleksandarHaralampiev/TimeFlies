@@ -21,16 +21,12 @@ const MyTimelines = () => {
 
     return (
         <section className="section-dashboard">
-            {
-                settings ?
-                <TimelineSettings
-                    id={settings}
-                    setSettings={setSettings}
-                    list="my-timelines"
-                />
-                :
-                null
-            }
+            <TimelineSettings
+                id={settings}
+                setSettings={setSettings}
+                list="my-timelines"
+            />
+
             <div className="container my-timelines-header">
                 <div className="text-box">
                     <h1 className="dashboard-heading">Your Timelines</h1>

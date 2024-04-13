@@ -1,5 +1,5 @@
 .pop-up {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
 
@@ -7,7 +7,7 @@
     /* align-items: center; */
 
     width: 100vw;
-    height: 100%;
+    height: 100vh;
 
     padding: 0 3.2rem;
 

@@ -1,27 +1,17 @@
-import { IoCloseOutline } from 'react-icons/io5'
 import '../css/popup.css'
-import { useState } from 'react'
 import ReactModal from 'react-modal'
 
-const PopUp = ({ children, shown, closeFunc }) => {
-    const [closed, setClosed] = useState(false)
-
-    const handleClose = () => {
-        setClosed(true)
-
-        setTimeout(() => {
-            closeFunc()
-        }, 400)
-    }
+const PopUp = ({ children, shown, closeFunc, className }) => {
 
     return (
         <ReactModal
             isOpen={shown}
             onRequestClose={closeFunc}
-            closeTimeoutMS={500}
+            closeTimeoutMS={490}
+            preventScroll={true}
             overlayClassName="pop-up"
             className={{
-                base: "pop-up-container",
+                base: `pop-up-container ${className}`,
                 beforeClose: "pop-up-closed"
             }}
         >

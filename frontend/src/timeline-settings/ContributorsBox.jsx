@@ -5,6 +5,7 @@ import axios from "axios"
 import { DataContext } from "../context/DataContext"
 import DotSpinner from "../components/DotSpinner"
 import { BarLoader } from "react-spinners"
+import PopUp from "../components/PopUp"
 
 const ContributorsBox = () => {
     const { handleAlert } = useContext(DataContext)
@@ -130,9 +131,10 @@ const ContributorsBox = () => {
             }
         } catch (err) {
             console.log(err)
+            handleAlert('error', 'Error removing user.')
         } finally {
             setRemoveLoading(false)
-            setClosePopUp(true)
+            setRemoveUser(null)
         }
 
     }
@@ -141,46 +143,33 @@ const ContributorsBox = () => {
 
 
 
-    // POP UP
-    const [closePopUp, setClosePopUp] = useState(false)
-    
-    useEffect(() => {
-        if (closePopUp) {
-            setTimeout(() => {
-                setRemoveUser(null)
-                setClosePopUp(false)
-            }, [480])
-        }
-    }, [closePopUp])
-
-
-
 
 
     return (
         <div className="timeline-settings-contributors">
-            {
-                removeUser &&
-                <div className="timeline-settings confirm-delete-container">
-                    <div className={closePopUp ? "timeline-settings-container timeline-settings-closed confirm-delete" : "timeline-settings-container confirm-delete"}>
-                        <p className="confirm-delete-title">Are you sure you want to remove {
-                            ` ${timeline.contributors.find(contributor => contributor.id === removeUser) ?
-                                timeline.contributors.find(contributor => contributor.id === removeUser).username
-                                :
-                                'user'
-                            } `
-                        } from your timeline?</p>
-                        {
-                            removeLoading &&
-                            <BarLoader color="#625149" width={300} className="timeline-settings-loading" />
-                        }
-                        <div className="confirm-delete-btn-box">
-                            <button className="btn save-changes cancel" onClick={() => setClosePopUp(true)}>Cancel</button>
-                            <button className="btn save-changes" onClick={(e) => handleRemoveUser(e, removeUser)}>Remove</button>
-                        </div>
-                    </div>
+            <PopUp
+                shown={removeUser}
+                closeFunc={() => setRemoveUser(null)}
+                className="confirm-delete"
+            >
+                <p className="confirm-delete-title">Are you sure you want to remove {
+                    ` ${timeline.contributors.find(contributor => contributor.id === removeUser) ?
+                        timeline.contributors.find(contributor => contributor.id === removeUser).username
+                        :
+                        'user'
+                    } `
+                } from your timeline?</p>
+
+                {
+                    removeLoading &&
+                    <BarLoader color="#625149" width={300} className="timeline-settings-loading" />
+                }
+
+                <div className="confirm-delete-btn-box">
+                    <button className="btn save-changes cancel" onClick={() => setRemoveUser(null)}>Cancel</button>
+                    <button className="btn save-changes" onClick={(e) => handleRemoveUser(e, removeUser)}>Remove</button>
                 </div>
-            }
+            </PopUp>
 
             <h2 className="timeline-settings-heading">Contributors</h2>
 

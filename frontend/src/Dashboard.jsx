@@ -49,16 +49,12 @@ const Dashboard = () => {
 
     return (
         <section className="section-dashboard" >
-            {
-                settings ?
-                <TimelineSettings
-                    id={settings}
-                    setSettings={setSettings}
-                    list="public-timelines"
-                />
-                :
-                null
-            }
+            <TimelineSettings
+                id={settings}
+                setSettings={setSettings}
+                list="public-timelines"
+            />
+            
             <div className="container">
                 <div className="text-box">
                     <h1 className="dashboard-heading">Dashboard</h1>
