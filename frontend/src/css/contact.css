@@ -20,6 +20,9 @@
 .contact-form {
     display: grid;
     gap: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
 }
 
 .contact-form label {
