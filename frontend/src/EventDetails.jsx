@@ -36,7 +36,7 @@ const EventDetails = ({ id, events, setSelectedEvent, handleDateFormat }) => {
                     <div className="event-details-img-box">
                         {
                             event.event_pictures.map(pic => (
-                                <img src={pic} alt="" />
+                                <img src={pic} alt="" className="event-details-img"/>
                             ))
                         }
                     </div>
