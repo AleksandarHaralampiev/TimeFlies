@@ -117,11 +117,17 @@ const Timeline = () => {
     function handleFileSelect(event) {
         const imgs = Array.from(event.target.files);
         console.log(imgs)
-        setImages([
-            ...images,
-            imgs
-        ])
+        // setImages([
+        //     ...images,
+        //     imgs
+        // ])
+        setImages(imgs)
     }
+
+    useEffect(() => {
+        console.log('IMAGES')
+        console.log(images)
+    }, [images])
 
 
     // Add new event
@@ -292,9 +298,6 @@ const Timeline = () => {
                                 onChange={handleFileSelect}
                                 multiple
                             />
-                            {images.map(image => (
-                                <p>{image.name}</p>
-                            ))}
 
                             
                         </label>
