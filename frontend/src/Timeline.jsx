@@ -7,6 +7,7 @@ import axios from "axios";
 import { DataContext } from "./context/DataContext";
 import { IoHourglassOutline } from "react-icons/io5";
 import EventDetails from "./EventDetails";
+import { BarLoader } from "react-spinners";
 
 
 const Timeline = () => {
@@ -124,8 +125,13 @@ const Timeline = () => {
 
 
     // Add new event
+    const [addLoading, setAddLoading] = useState(false)
+
     const handleAdd = async (e) => {
         e.preventDefault();
+
+        setAddLoading(true)
+
         try {
             const formData = new FormData();
             formData.append('title', title);
@@ -151,6 +157,7 @@ const Timeline = () => {
             setDay(1)
             setMonth(1)
             setYear(2024)
+            setAddLoading(false)
         }
     };
     
@@ -231,6 +238,12 @@ const Timeline = () => {
 
             <section className="tertiary-section-timeline" id="add-form">
                 <h1 className="heading-secondary">New event</h1>
+
+                {
+                    addLoading &&
+                    <BarLoader color="#625149" width={300} className="timeline-settings-loading" />
+                }
+
                 <form className="contact-form" onSubmit={(e) => handleAdd(e)}>
                     <label htmlFor="name">Title:</label>
                     <input
@@ -238,6 +251,7 @@ const Timeline = () => {
                         placeholder="Title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
+                        required
                     />
                     <div className="date">
                         <label htmlFor="date">Date:</label>
@@ -298,7 +312,7 @@ const Timeline = () => {
                         onChange={(e) => setDescription(e.target.value)}
                         placeholder="Description"
                     />
-                    <button type="submit" className="btn">Add Event</button>
+                    <button type="submit" className="btn" disabled={addLoading ? true : false}>Add Event</button>
                 </form>
             </section>
         </>
