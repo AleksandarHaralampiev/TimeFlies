@@ -69,9 +69,9 @@ const Nav = () => {
 
             <ul className={open ? "nav-links-mobile nav-links" : "nav-links"}>
                 <li>
-                    <Link to='/' className='nav-link' onClick={() => setOpen(false)}>
+                    <HashLink to='/#' className='nav-link' onClick={() => setOpen(false)}>
                         <img src={logo} className='logo' />
-                    </Link>
+                    </HashLink>
                 </li>
                 <li>
                     <HashLink to='/#about-us' className='nav-link' onClick={() => setOpen(false)}>About</HashLink>
