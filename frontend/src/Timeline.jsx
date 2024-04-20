@@ -6,47 +6,58 @@ import { HashLink } from 'react-router-hash-link'
 import axios from "axios";
 import { DataContext } from "./context/DataContext";
 import { IoHourglassOutline } from "react-icons/io5";
-import PopUp from './components/PopUp'
 import EventDetails from "./EventDetails";
 
 
 const Timeline = () => {
+    // Global variables
     const { handleAlert, myTimelines, publicTimelines } = useContext(DataContext)
     const id = useParams().id
 
 
-    const [cardHeight, setCardHeight] = useState(null);
-    const cardRef = useRef(null);
 
 
-    const [events, setEvents] = useState([])
-    const [timeline, setTimeline] = useState(null)
+    // Select events
+    const [selectedEvent, setSelectedEvent] = useState(null)
+
+
+
+
+    // Get data for the events
     const [loading, setLoading] = useState(true)
+    const [events, setEvents] = useState(null)
+
+    const fetching = async () => {
+
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/timeline/event/?id=${id}`)
+
+            console.log(response)
+
+            if (response.status == 200) {
+                const eventsArray = response.data.sort((a, b) => {
+                    if (a.date_modified < b.date_modified) return -1;
+                    if (a.date_modified > b.date_modified) return 1;
+                    return 0;
+                })
+                setEvents(eventsArray)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     useEffect(() => {
-        const fetching = async () => {
-
-            try {
-                const response = await axios.get(`http://127.0.0.1:8000/timeline/event/?id=${id}`)
-
-                console.log(response)
-
-                if (response.status == 200) {
-                    const eventsArray = response.data.sort((a, b) => {
-                        if (a.date_modified < b.date_modified) return -1;
-                        if (a.date_modified > b.date_modified) return 1;
-                        return 0;
-                    })
-                    setEvents(eventsArray)
-                }
-            } catch (err) {
-                console.log(err)
-            }
-        }
-
-
         fetching()
     }, [id])
+
+
+
+
+
+
+    // Get the data of the timeline
+    const [timeline, setTimeline] = useState(null)
 
     useEffect(() => {
         if (publicTimelines.find(currentTimeline => currentTimeline.id == id)) setTimeline(publicTimelines.find(currentTimeline => currentTimeline.id == id))
@@ -55,10 +66,14 @@ const Timeline = () => {
 
 
     useEffect(() => {
-        if(events.length && timeline) setLoading(false)
+        if(events && timeline) setLoading(false)
     }, [events, timeline])
 
 
+
+
+
+    // Format the date of an event
     const handleDateFormat = (date) => {
         const day = date.slice(8, 10)
         const month = date.slice(5, 7)
@@ -67,6 +82,12 @@ const Timeline = () => {
         return `${day}-${month}-${year}`
     }
 
+
+
+    // Calculate the height of a card
+    const [cardHeight, setCardHeight] = useState(null);
+    const cardRef = useRef(null);
+
     useEffect(() => {
         if (cardRef.current) {
             const height = cardRef.current.offsetHeight;
@@ -74,9 +95,10 @@ const Timeline = () => {
         }
     }, [events]);
 
-    useEffect(() => {
-        if(timeline) console.log(timeline)
-    }, [timeline])
+
+
+
+
 
     // ADD EVENT
     const [title, setTitle] = useState('')
@@ -88,12 +110,20 @@ const Timeline = () => {
 
     const fileInputRef = useRef(null)
 
+
+
+    // Append selected files to the images array
     function handleFileSelect(event) {
         const imgs = Array.from(event.target.files);
         console.log(imgs)
-        setImages(imgs)
+        setImages([
+            ...images,
+            imgs
+        ])
     }
 
+
+    // Add new event
     const handleAdd = async (e) => {
         e.preventDefault();
         try {
@@ -111,6 +141,7 @@ const Timeline = () => {
             
             if (response.status === 200) {
                 handleAlert('success', 'Event added successfully.');
+                fetching()
             }
         } catch (err) {
             console.log(err);
@@ -123,9 +154,6 @@ const Timeline = () => {
         }
     };
     
-    
-    
-    const [selectedEvent, setSelectedEvent] = useState(null)
 
 
 
@@ -159,6 +187,14 @@ const Timeline = () => {
                                 </div>
                             }
                             <TimeLineMark name="pillar" />
+
+                            {
+                                (!events || !events.length) &&
+                                <HashLink to={`/timeline/${id}/#add-form`} className="card card-add">
+                                    <div className="heading">Empty timeline :(</div>
+                                    <p className="sub-heading">This timeline is still empty. Let the story begin by clicking here and adding your own event!</p>
+                                </HashLink>
+                            }
 
                             {events.map((event, key) => (
                                 <Fragment key={key}>
@@ -233,13 +269,29 @@ const Timeline = () => {
                         </div>
 
                     </div>
+                    <div className="date">                    
+                        <label className="file-input btn"> Upload photos
+                            <input
+                                className="btn-input"
+                                type="file"
+                                ref={fileInputRef}
+                                onChange={handleFileSelect}
+                                multiple
+                            />
+                            {images.map(image => (
+                                <p>{image.name}</p>
+                            ))}
 
-                    <input
-                        type="file"
-                        ref={fileInputRef}
-                        onChange={handleFileSelect}
-                        multiple
-                    />
+                            
+                        </label>
+                        <div className="chislo" onClick={() => images && images.length ? setImageModal(true) : null}>
+                            {
+                                images.length
+                            } 
+                            {images.length === 1 ? " photo" : " photos"}
+                        </div>
+                    </div>
+                    
 
                     <textarea
                         value={description}

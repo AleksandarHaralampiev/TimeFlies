@@ -31,6 +31,7 @@
 }
 
 .contact-form input,
+.file-input,
 .contact-form textarea {
     padding: 10px;
     /* border: 1px solid #ccc; */
@@ -38,6 +39,7 @@
     width: 100%;
     background-color: var(--bg-tint1);
     border: none;
+    text-decoration: none;
 }
 
 .contact-form textarea {

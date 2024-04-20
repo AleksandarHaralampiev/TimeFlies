@@ -121,11 +121,24 @@
     width: 45rem;
     cursor: pointer;
 
+    grid-column: 2;
+    justify-self: center;
+
     transition: .2s;
 }
 
 .card:hover {
     transform: scale(1.02);
+}
+
+.card-add:link,
+.card-add:visited {
+    text-decoration: none;
+    color: inherit;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
 }
 
 .pillar {
@@ -872,4 +885,35 @@ select.members-role {
 .event-details-img {
     width: 24rem;
     box-shadow: 0 0 1.2rem rgba(0, 0, 0, 0.2);
+}
+
+.btn-input{
+    display: none;
+}
+
+.file-input{
+    color: var(--main-shade1);
+    display: flex;
+    padding: 0.8rem 1.6rem !important;
+}
+
+.file-input:hover,
+.file-input:active {
+    color: white;
+    font-size: 2rem;
+    padding: 0.8rem 1.6rem;
+}
+
+.chislo{
+    display: flex;
+    width: 17.5%;
+    padding: 10px;
+    /* height: ; */
+    justify-content: center;
+    /* border: 1px solid #ccc; */
+    border-radius: 5px;
+    background-color: var(--bg-tint1);
+    border: none;
+    text-decoration: none;
+    font-size: 2rem;
 }
